@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using GeneticAlgorithmSettingDefinition;
 using ChromosomeDefinition;
 
+using ParticleSwarmOptimizationSettingDefinition;
+
 public class Generate : MonoBehaviour {
 
 	//public GameObject Tile_Empty;
@@ -15,6 +17,7 @@ public class Generate : MonoBehaviour {
 	private AutoTacticRenderHandler TacticRenderHandlar;
 	private GameObject GeneticAlgorithmSetting;
 	private GeneticAlgorithmSetting GeneticAlgorithm;
+	private ParticleSwarmOptimizationSetting ParticleSwarmOptimization;
 
 	private Chromosome BestChromesome = new Chromosome();
 
@@ -24,6 +27,7 @@ public class Generate : MonoBehaviour {
 		AutoTacticRender = GameObject.Find("AutoTacticRender");
 		TacticRenderHandlar = GameObject.Find("AutoTacticRender").GetComponent<AutoTacticRenderHandler>();
 		GeneticAlgorithm = GameObject.Find("GeneticAlgorithmSetting").GetComponent<GeneticAlgorithmSetting>();
+		ParticleSwarmOptimization = GameObject.Find("ParticleSwarmOptimizationSetting").GetComponent<ParticleSwarmOptimizationSetting>();
 	}
 	
 	// Update is called once per frame
@@ -42,19 +46,32 @@ public class Generate : MonoBehaviour {
 		float rato_crossover = 0.5f;
 		float rato_mutation = 0.9f;
 
-		GeneticAlgorithm.InitialPopulation(length, width, length * width, 100);
+		//GeneticAlgorithm.InitialPopulation(length, width, length * width, 100);
 
-		for (int num_generation = 0; num_generation < 100; num_generation++)
-		{		
-			GeneticAlgorithm.CalculateFitnessScores();
-			GeneticAlgorithm.Selection();
-			GeneticAlgorithm.Crossover(rato_crossover);
-			GeneticAlgorithm.Mutation(rato_mutation);
-			GeneticAlgorithm.Replace();
-		}
+		//for (int num_generation = 0; num_generation < 100; num_generation++)
+		//{		
+		//	GeneticAlgorithm.CalculateFitnessScores();
+		//	GeneticAlgorithm.Selection();
+		//	GeneticAlgorithm.Crossover(rato_crossover);
+		//	GeneticAlgorithm.Mutation(rato_mutation);
+		//	GeneticAlgorithm.Replace();
+		//}
 
-		BestChromesome = GeneticAlgorithm.BestChromesome();
-		GeneticAlgorithm.DebugTest();
+		//BestChromesome = GeneticAlgorithm.BestChromesome();
+		//GeneticAlgorithm.DebugTest();
+
+		// Start ParticleSwarmOptimization
+		ParticleSwarmOptimization.InitialPopulation(length, width, length * width, 10);
+
+
+		ParticleSwarmOptimization.CalculateFitnessScores();
+		ParticleSwarmOptimization.UpdateVelocities();
+		ParticleSwarmOptimization.UpdatePosition();
+	
+
+		BestChromesome = ParticleSwarmOptimization.BestChromesome();
+
+		ParticleSwarmOptimization.DebugTest();
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);

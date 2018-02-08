@@ -63,11 +63,12 @@ public class Generate : MonoBehaviour {
 		// Start ParticleSwarmOptimization
 		ParticleSwarmOptimization.InitialPopulation(length, width, length * width, 10);
 
-
-		ParticleSwarmOptimization.CalculateFitnessScores();
-		ParticleSwarmOptimization.UpdateVelocities();
-		ParticleSwarmOptimization.UpdatePosition();
-	
+		for (int num_generation = 0; num_generation < 100; num_generation++)
+		{
+			ParticleSwarmOptimization.CalculateFitnessScores();
+			ParticleSwarmOptimization.UpdateVelocities();
+			ParticleSwarmOptimization.UpdatePosition();
+		}
 
 		BestChromesome = ParticleSwarmOptimization.BestChromesome();
 

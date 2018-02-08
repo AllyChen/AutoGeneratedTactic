@@ -65,25 +65,26 @@ namespace ParticleSwarmOptimizationSettingDefinition
 					}		
 				}
 			}
-			Debug.Log("BeforeCreateInitial_velocityPopulation.Count = " + _velocityPopulation.Count);
+					
 			// Initial the fitness score of chromosomes
 			for (int i = 0; i < _numChromosomes; i++)
 			{
 				_particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = 0.0f;
 			}
 
-			if (_velocityPopulation.Count != 0)
+			// Initial the person best of chromosomes in personBestPopulation
+			for (int x = 0; x < numChromosome; x++)
 			{
-				for (int i = 0; i < _numChromosomes; i++)
+				_personBestPopulation.Add(new Chromosome());
+
+				// Copy the genes in each chromosomes from particlePopulation.
+				for (int y = 0; y < numGene; y++)
 				{
-					Debug.Log("initial_velocityPopulation[" + i + "].genesList.Count = " + _velocityPopulation[i].genesList.Count);
+					_personBestPopulation[x].genesList.Add(new Gene());
+					_personBestPopulation[x].genesList[y] = _particlePopulation[x].genesList[y];
 				}
 			}
-			else
-			{
-				Debug.Log("initial_velocityPopulation.Count = 0");
-			}
-			
+
 			// Randomly initial the personal velocity of chromosomes
 			for (int x = 0; x < numChromosome; x++)
 			{
@@ -104,53 +105,66 @@ namespace ParticleSwarmOptimizationSettingDefinition
 					}
 				}
 			}
-			Debug.Log("AfterCreateInitial_velocityPopulation.Count = " + _velocityPopulation.Count);
 		}
 		#endregion
 
 		#region Fitness & Update personal bests and global best
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
-		Chromosome tempGlobalBestChromosome = new Chromosome();
+		int tempGlobalBestChromosome_index = 0;
+		float tempGlobalBestChromosome_FitnessSumScore = 0;
 
 		public void CalculateFitnessScores()
 		{
 			// Calculate the fitness score of chromosomes in population
-			for (int i = 0; i < _numChromosomes; i++)
-			{
-				_particlePopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_ImpassableDensity(_particlePopulation[i], _numGenes, _mapLength, _mapWidth);
-			}
-			// Calculate the sum of fitness score
+			// & Calculate the sum of fitness score
 			// & Save the personal best of chromosome
 			// & Calculate the global best of chromosome.
 			for (int i = 0; i < _numChromosomes; i++)
 			{
+				#region Calculate the fitness score
+				// Calculate the fitness score of chromosomes in population
+				_particlePopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_ImpassableDensity(_particlePopulation[i], _numGenes, _mapLength, _mapWidth);
+				#endregion
+
 				// Sum the fitness score of new chromosome
-				float tempSumFitnessScore = _particlePopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity];
+				_particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _particlePopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity];//A+B+C+D
 
 				// New chromosome is better than previous chromosome.
-				if (tempSumFitnessScore >= _particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore])
+				if (_particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] >= _personBestPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore])
 				{
-					_personBestPopulation.Add(_particlePopulation[i]);
+					// Copy Genes
+					for (int indexGene = 0; indexGene < _personBestPopulation[i].genesList.Count; indexGene++)
+					{
+						_personBestPopulation[i].genesList[indexGene] = _particlePopulation[i].genesList[indexGene];
+					}
+					//Copy FitnssScore
+					_personBestPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 				}
-
-				// Update the SumFitnessScore of each chromosome.
-				_particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = tempSumFitnessScore;
 
 				// Update the global best chromosome.
 				if (i == 0)
 				{
-					tempGlobalBestChromosome = _particlePopulation[i];
+					tempGlobalBestChromosome_index = 0;
+					tempGlobalBestChromosome_FitnessSumScore = _particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 				}
 				else
 				{
-					if (_particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] >= tempGlobalBestChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore])
+					if (_particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] >= tempGlobalBestChromosome_FitnessSumScore)
 					{
-						tempGlobalBestChromosome = _particlePopulation[i];
+						tempGlobalBestChromosome_index = i;
+						tempGlobalBestChromosome_FitnessSumScore = _particlePopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 					}
 				}
 			}
 			// Save the global best of chromosome.
-			_globalBestChromosome = tempGlobalBestChromosome;
+			_globalBestChromosome.genesList.Clear();
+			//Copy Genes
+			for (int indexGene = 0; indexGene < _particlePopulation[tempGlobalBestChromosome_index].genesList.Count; indexGene++)
+			{
+				_globalBestChromosome.genesList.Add(_particlePopulation[tempGlobalBestChromosome_index].genesList[indexGene]);
+			}
+			//Copy FitnssScore
+			_globalBestChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = tempGlobalBestChromosome_FitnessSumScore;
 		}
 		#endregion
 
@@ -161,49 +175,46 @@ namespace ParticleSwarmOptimizationSettingDefinition
 		/// 根據影響係數，計算出要被替換的基因數量，方法類似crossover。
 		/// </remarks>
 		/// </summary>
-		List<Chromosome> tempVelocityPopulation = new List<Chromosome>();// temp personal velocity
+		List<Gene> tempVelocityGeneList = new List<Gene>();// temp personal velocity
+		List<Gene> swapGeneListParent = new List<Gene>();
+		List<Gene> swapGeneListChild = new List<Gene>();
+		List<Gene> afterSwapGeneList = new List<Gene>();
 
 		public void UpdateVelocities()
 		{
-			tempVelocityPopulation.Clear();
+			tempVelocityGeneList.Clear();
+
 			int numInertiaGene = (int)(_inertia * _numGenes);
 			int numPersonalInfluenceGene;
 			int numSocialInfluenceGene;
 
 			for (int i = 0; i < _numChromosomes; i++)
 			{
-				Debug.Log("_velocityPopulation[" + i + "].genesList.Count = " + _velocityPopulation[i].genesList.Count);
-			}
-
-			for (int i = 0; i < _numChromosomes; i++)
-			{
-				Debug.Log("inertiaMethod("+i+", "+numInertiaGene+")");
 				// Inertia
-				tempVelocityPopulation.Add(inertiaMethod(i, numInertiaGene));
+				inertiaMethod(i, numInertiaGene);
+
 				// PersonalInfluence
 				numPersonalInfluenceGene = (int)( _personalInfluence * _numGenes * Random.Range(0.0f, 1.0f) );
 				if (numPersonalInfluenceGene != 0)
 				{
-					tempVelocityPopulation[i] = personalInfluenceMethod(i, numPersonalInfluenceGene);
+					personalInfluenceMethod(i, numPersonalInfluenceGene);
 				}
 				// SocialInfluence
 				numSocialInfluenceGene = (int)( _socialInfluence * _numGenes * Random.Range(0.0f, 1.0f) );
 				if (numSocialInfluenceGene != 0)
 				{
-					tempVelocityPopulation[i] = socialInfluenceMethod(i, numSocialInfluenceGene);
+					socialInfluenceMethod(i, numSocialInfluenceGene);
 				}
-				_velocityPopulation[i] = tempVelocityPopulation[i];
+				// Get the gene list of Velocity
+				for (int indexGenes = 0; indexGenes < _numGenes; indexGenes++)
+				{
+					_velocityPopulation[i].genesList[indexGenes] = tempVelocityGeneList[indexGenes];
+				}		
 			}
 		}
 
-		Chromosome tempVelocity = new Chromosome();
-
-		Chromosome inertiaMethod(int indexChromosome, int _numInertiaGene)
+		void inertiaMethod(int indexChromosome, int _numInertiaGene)
 		{
-			for (int i = 0; i < _numChromosomes; i++)
-			{
-				Debug.Log("Before_velocityPopulation[" + i + "].genesList.Count = " + _velocityPopulation[i].genesList.Count);
-			}
 			int numGene = _velocityPopulation[indexChromosome].genesList.Count;
 			int startIndex = Random.Range(0, numGene);
 			int endIndex;
@@ -216,26 +227,39 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			{
 				endIndex = startIndex + _numInertiaGene - 1;
 			}
-			// First, copy the origenial position.
-			tempVelocity = _particlePopulation[indexChromosome];
-			// Swap!!
-			tempVelocity = afterSwap(tempVelocity, _velocityPopulation[indexChromosome], numGene, startIndex, endIndex);
-
-			for (int i = 0; i < _numChromosomes; i++)
+			// First, copy the origenial position's GeneList.
+			for (int indexGenes = 0; indexGenes < numGene; indexGenes++)
 			{
-				Debug.Log("After_velocityPopulation[" + i + "].genesList.Count = " + _velocityPopulation[i].genesList.Count);
+				tempVelocityGeneList.Add(_particlePopulation[indexChromosome].genesList[indexGenes]);
 			}
+			// Create swapGeneListParent
+			swapGeneListParent.Clear();
+			for (int indexGenes = 0; indexGenes < numGene; indexGenes++)
+			{
+				swapGeneListParent.Add(tempVelocityGeneList[indexGenes]);
+			}
+			// Create swapGeneListChild
+			swapGeneListChild.Clear();
+			for (int indexGenes = 0; indexGenes < numGene; indexGenes++)
+			{
+				swapGeneListChild.Add(_velocityPopulation[indexChromosome].genesList[indexGenes]);
+			}
+			// Swap!!
+			afterSwap(swapGeneListParent, swapGeneListChild, numGene, startIndex, endIndex);
 
-			return tempVelocity;
+			// Finished -- Copy Genes
+			for (int indexGene = 0; indexGene < swapGeneListChild.Count; indexGene++)
+			{
+				tempVelocityGeneList[indexGene] = afterSwapGeneList[indexGene];
+			}
 		}
 
-		Chromosome personalInfluenceMethod(int indexChromosome, int _numPersonalInfluenceGene)
+		void personalInfluenceMethod(int indexChromosome, int _numPersonalInfluenceGene)
 		{
-			tempVelocity.genesList.Clear();
 			int numGene = _particlePopulation[indexChromosome].genesList.Count;
 			int startIndex = Random.Range(0, numGene);
 			int endIndex;
-			Debug.Log("_particlePopulation[indexChromosome].genesList.Count=" + _particlePopulation[indexChromosome].genesList.Count);
+
 			// Calculate the index of gene which need to swap.
 			if (( numGene - startIndex ) < _numPersonalInfluenceGene)
 			{
@@ -245,18 +269,30 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			{
 				endIndex = startIndex + _numPersonalInfluenceGene - 1;
 			}
-			// First, copy the origenial position.
-			tempVelocity = tempVelocityPopulation[indexChromosome];
+			// Create swapGeneListParent
+			swapGeneListParent.Clear();
+			for (int indexGenes = 0; indexGenes < numGene; indexGenes++)
+			{
+				swapGeneListParent.Add(tempVelocityGeneList[indexGenes]);
+			}
+			// Create swapGeneListChild
+			swapGeneListChild.Clear();
+			for (int indexGenes = 0; indexGenes < numGene; indexGenes++)
+			{
+				swapGeneListChild.Add(_particlePopulation[indexChromosome].genesList[indexGenes]);
+			}
 			// Swap!!
-			Debug.Log("tempVelocity.genesList.Count=" + tempVelocity.genesList.Count);
-			Debug.Log("_particlePopulation["+indexChromosome+"].genesList.Count=" + _particlePopulation[indexChromosome].genesList.Count);
-			tempVelocity = afterSwap(tempVelocity, _particlePopulation[indexChromosome], numGene, startIndex, endIndex);
-			return tempVelocity;
+			afterSwap(swapGeneListParent, swapGeneListChild, numGene, startIndex, endIndex);
+
+			// Finished -- Copy Genes
+			for (int indexGene = 0; indexGene < swapGeneListChild.Count; indexGene++)
+			{
+				tempVelocityGeneList[indexGene] = afterSwapGeneList[indexGene];
+			}
 		}
 
-		Chromosome socialInfluenceMethod(int indexChromosome, int _numSocialInfluenceGene)
+		void socialInfluenceMethod(int indexChromosome, int _numSocialInfluenceGene)
 		{
-			tempVelocity.genesList.Clear();
 			int numGene = _personBestPopulation[indexChromosome].genesList.Count;
 			int startIndex = Random.Range(0, numGene);
 			int endIndex;
@@ -270,15 +306,31 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			{
 				endIndex = startIndex + _numSocialInfluenceGene - 1;
 			}
-			// First, copy the origenial position.
-			tempVelocity = tempVelocityPopulation[indexChromosome];
+			// Create swapGeneListParent
+			swapGeneListParent.Clear();
+			for (int indexGenes = 0; indexGenes < numGene; indexGenes++)
+			{
+				swapGeneListParent.Add(tempVelocityGeneList[indexGenes]);
+			}
+			// Create swapGeneListChild
+			swapGeneListChild.Clear();
+			for (int indexGenes = 0; indexGenes < numGene; indexGenes++)
+			{
+				swapGeneListChild.Add(_personBestPopulation[indexChromosome].genesList[indexGenes]);
+			}
 			// Swap!!
-			tempVelocity = afterSwap(tempVelocity, _personBestPopulation[indexChromosome], numGene, startIndex, endIndex);
-			return tempVelocity;
+			afterSwap(swapGeneListParent, swapGeneListChild, numGene, startIndex, endIndex);
+
+			// Finished -- Copy Genes
+			for (int indexGene = 0; indexGene < swapGeneListChild.Count; indexGene++)
+			{
+				tempVelocityGeneList[indexGene] = afterSwapGeneList[indexGene];
+			}
 		}
 
-		Chromosome afterSwap(Chromosome swapChromosomeParent, Chromosome swapChromosomeChild, int numGene, int startIndex, int endIndex)
+		void afterSwap(List<Gene> swapGeneListParent, List<Gene> swapGeneListChild, int numGene, int startIndex, int endIndex)
 		{
+			afterSwapGeneList.Clear();
 			// Swap
 			// 0 1 2 3 4 5
 			// x s o o e x
@@ -286,7 +338,7 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			{
 				for (int i = startIndex; i <= endIndex; i++)
 				{
-					swapChromosomeChild.genesList[i] = swapChromosomeParent.genesList[i];
+					swapGeneListChild[i] = swapGeneListParent[i];
 				}
 			}
 			// 0 1 2 3 4 5
@@ -295,11 +347,11 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			{
 				for (int i = startIndex; i < numGene; i++)
 				{
-					swapChromosomeChild.genesList[i] = swapChromosomeParent.genesList[i];
+					swapGeneListChild[i] = swapGeneListParent[i];
 				}
 				for (int i = 0; i <= endIndex; i++)
 				{
-					swapChromosomeChild.genesList[i] = swapChromosomeParent.genesList[i];
+					swapGeneListChild[i] = swapGeneListParent[i];
 				}
 			}
 			// 0 1 2 3 4 5
@@ -308,9 +360,14 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			// x x x x o x
 			else if (startIndex == endIndex)
 			{
-				swapChromosomeChild.genesList[startIndex] = swapChromosomeParent.genesList[startIndex];
+				swapGeneListChild[startIndex] = swapGeneListParent[startIndex];
 			}
-			return swapChromosomeChild;
+
+			// Finished -- Copy Genes
+			for (int indexGene = 0; indexGene < swapGeneListChild.Count; indexGene++)
+			{
+				afterSwapGeneList.Add(swapGeneListChild[indexGene]);
+			}
 		}
 
 		#endregion
@@ -320,14 +377,16 @@ namespace ParticleSwarmOptimizationSettingDefinition
 		{
 			for (int indexChromosome = 0; indexChromosome < _particlePopulation.Count; indexChromosome++)
 			{
-				_particlePopulation[indexChromosome] = _velocityPopulation[indexChromosome];
+				// Copy Genes
+				for (int indexGene = 0; indexGene < _particlePopulation[indexChromosome].genesList.Count; indexGene++)
+				{
+					_particlePopulation[indexChromosome].genesList[indexGene] = _velocityPopulation[indexChromosome].genesList[indexGene];
+				}
 			}
 		}
 		#endregion
 
 		#region BestChromesome
-		int index_BestChromesome = 0;
-
 		public Chromosome BestChromesome()//Chromosome bestChromesome
 		{
 			CalculateFitnessScores();
@@ -342,7 +401,7 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			{
 				Debug.Log("Chromosome[" + x + "] Fitness =" + _particlePopulation[x].FitnessScore[FitnessFunctionName.SumOfFitnessScore]);
 			}
-			Debug.Log("index_BestChromesome = " + index_BestChromesome);
+			Debug.Log("BestChromesome_SumOfFitnessScore = " + _globalBestChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore]);
 		}
 		#endregion
 	}

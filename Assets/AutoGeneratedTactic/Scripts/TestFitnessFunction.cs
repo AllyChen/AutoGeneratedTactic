@@ -7,22 +7,24 @@ using GeneticAlgorithmSettingDefinition;
 
 public class TestFitnessFunction : MonoBehaviour {
 
+	FitnessFunctions FitnessFunction = new FitnessFunctions();
+
 	private int[,] TestMapArray = {
-	{0,1,1,1,0,0,0,1},
-	{1,0,0,1,0,0,0,1},
-	{0,1,1,1,0,1,1,0},
-	{0,0,0,0,0,1,1,0},
-	{0,1,1,0,0,0,0,0},
-	{0,0,1,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0},
-	{0,0,1,0,0,0,0,0}};
+	{0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,0,0,0}};
 
 	private Chromosome TestMap = new Chromosome();
 
 	void Start()
 	{
-		//InitialTestMap();
-		//Debug.Log(Fitness_ImpassableDensity(TestMap, 8, 6));
+		InitialTestMap();
+		Debug.Log(FitnessFunction.Fitness_ImpassableDensity(TestMap, 64, 8, 8));
 	}
 
 	public void InitialTestMap()

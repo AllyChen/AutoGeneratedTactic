@@ -53,8 +53,10 @@ public class FitnessFunctions {
 			fitnessScore = fitnessScore + subImpassableDensity[i];
 		}
 
-		fitnessScore = (float)fitnessScore / subImpassableDensity.Count;
-
+		if (subImpassableDensity.Count != 0)
+		{
+			fitnessScore = (float)fitnessScore / subImpassableDensity.Count;
+		}
 		return fitnessScore;
 	}
 

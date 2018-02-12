@@ -30,17 +30,17 @@ public class Generate : MonoBehaviour {
 		ParticleSwarmOptimization = GameObject.Find("ParticleSwarmOptimizationSetting").GetComponent<ParticleSwarmOptimizationSetting>();
 	}
 
-
-	int useMethod = 0;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
+	int useMethod = 1;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
 
 	public void OnClick_Generate()
 	{
+		var startTime = Time.realtimeSinceStartup;
 		int length;
 		int width;
 		length = ParameterSetting.GetComponent<Parameters>().GetTheLenghOfTile();
 		width = ParameterSetting.GetComponent<Parameters>().GetTheWidthOfTile();
-		int numGeneration = 10;
-		int numChromosome = 10;
+		int numGeneration = 100;
+		int numChromosome = 100;
 
 		switch (useMethod)
 		{
@@ -65,8 +65,9 @@ public class Generate : MonoBehaviour {
 				GeneticAlgorithm.SaveData(numGeneration);
 				GeneticAlgorithm.OutputData(runGenerate);
 
-				GeneticAlgorithm.DebugTest();
-
+				//GeneticAlgorithm.DebugTest();
+				var GAendTime = Time.realtimeSinceStartup - startTime;
+				Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
 				break;
 			case 1:
 				// Start ParticleSwarmOptimization
@@ -84,8 +85,9 @@ public class Generate : MonoBehaviour {
 				ParticleSwarmOptimization.SaveData(numGeneration);
 				ParticleSwarmOptimization.OutputData(runGenerate);
 
-				ParticleSwarmOptimization.DebugTest();
-
+				//ParticleSwarmOptimization.DebugTest();
+				var PSOendTime = Time.realtimeSinceStartup - startTime;
+				Debug.Log(length + " x " + width + "ParticleSwarmOptimization_Time = " + PSOendTime);
 				break;
 		}
 

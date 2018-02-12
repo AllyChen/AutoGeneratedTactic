@@ -54,10 +54,23 @@ namespace GeneticAlgorithmSettingDefinition
 				_population.Add(new Chromosome());
 
 				// Create the genes in each chromosomes.
+				//for (int y = 0; y < numGene; y++)
+				//{
+				//	_population[x].genesList.Add(new Gene());
+				//	_population[x].genesList[y].type = GeneType.Empty;
+				//}
+				// Random
 				for (int y = 0; y < numGene; y++)
 				{
 					_population[x].genesList.Add(new Gene());
-					_population[x].genesList[y].type = GeneType.Empty;
+					if (Random.Range(0, 2) == 0)
+					{
+						_population[x].genesList[y].type = GeneType.Empty;
+					}
+					else
+					{
+						_population[x].genesList[y].type = GeneType.Forbidden;
+					}
 				}
 			}
 

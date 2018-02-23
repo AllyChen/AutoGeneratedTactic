@@ -30,7 +30,7 @@ public class Generate : MonoBehaviour {
 		ParticleSwarmOptimization = GameObject.Find("ParticleSwarmOptimizationSetting").GetComponent<ParticleSwarmOptimizationSetting>();
 	}
 
-	int useMethod = 1;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
+	int useMethod = 0;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
 
 	public void OnClick_Generate()
 	{
@@ -66,8 +66,9 @@ public class Generate : MonoBehaviour {
 				GeneticAlgorithm.OutputData(runGenerate);
 
 				//GeneticAlgorithm.DebugTest();
-				var GAendTime = Time.realtimeSinceStartup - startTime;
-				Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
+				//Time
+				//var GAendTime = Time.realtimeSinceStartup - startTime;
+				//Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
 				break;
 			case 1:
 				// Start ParticleSwarmOptimization
@@ -86,8 +87,9 @@ public class Generate : MonoBehaviour {
 				ParticleSwarmOptimization.OutputData(runGenerate);
 
 				//ParticleSwarmOptimization.DebugTest();
-				var PSOendTime = Time.realtimeSinceStartup - startTime;
-				Debug.Log(length + " x " + width + "ParticleSwarmOptimization_Time = " + PSOendTime);
+				//Time
+				//var PSOendTime = Time.realtimeSinceStartup - startTime;
+				//Debug.Log(length + " x " + width + "ParticleSwarmOptimization_Time = " + PSOendTime);
 				break;
 		}
 

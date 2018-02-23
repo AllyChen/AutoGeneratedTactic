@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.Linq;
+
 using ChromosomeDefinition;
 using GeneticAlgorithmSettingDefinition;
 
@@ -21,12 +22,32 @@ public class TestFitnessFunction : MonoBehaviour {
 
 	private Chromosome TestMap = new Chromosome();
 
+	List<Chromosome> _old = new List<Chromosome>();
+	List<Chromosome> _new = new List<Chromosome>();
+
 	void Start()
 	{
-		InitialTestMap();
-		Debug.Log(FitnessFunction.Fitness_ImpassableDensity(TestMap, 64, 8, 8));
-	}
+		//List<Chromosome> list = new List<Chromosome>();
+		//list.Add(new Chromosome());
+		//list[0].genesList.Add(new Gene());
+		//list[0].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = 2.0f;
+		//list[0].genesList[0].type = GeneType.Empty;
 
+		//List<Chromosome> copy = new List<Chromosome>();
+		//copy.Add(list[0].Clone());
+
+		////Chromosome c1 = list[0].Clone();
+
+		//list[0].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = 1.0f;
+		//list[0].genesList[0].type = GeneType.Forbidden;
+
+		//Debug.Log(list[0].FitnessScore[FitnessFunctionName.SumOfFitnessScore] + " , " + /*c1.FitnessScore[FitnessFunctionName.SumOfFitnessScore]);//*/copy[0].FitnessScore[FitnessFunctionName.SumOfFitnessScore]);
+		//Debug.Log(list[0].genesList[0].type + " , " + /*c1.genesList[0].type);//*/copy[0].genesList[0].type);
+
+
+		//InitialTestMap();
+		//Debug.Log(FitnessFunction.Fitness_ImpassableDensity(TestMap, 64, 8, 8));
+	}
 	public void InitialTestMap()
 	{
 		// Create the genes in each chromosomes.

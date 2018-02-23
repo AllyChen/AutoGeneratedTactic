@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 using ChromosomeDefinition;
 
@@ -91,6 +92,17 @@ namespace GeneticAlgorithmSettingDefinition
 				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _population[i].FitnessScore[FitnessFunctionName.ImpassableDensity];
 			}
 		}
+		// Calculate the fitness score of chromosomes in specific population.
+		void CalculatePopulationFitnessScores(List<Chromosome> _specificPopulation)
+		{
+			// Calculate the fitness score of chromosomes in population.
+			for (int i = 0; i < _numChromosomes; i++)
+			{
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity];
+			}
+		}
+
 		#endregion
 
 		#region Selection
@@ -209,8 +221,8 @@ namespace GeneticAlgorithmSettingDefinition
 				parent_2.genesList[i] = swapGene;
 			}
 			// After crossover
-			_childsPopulation.Add(parent_1);
-			_childsPopulation.Add(parent_2);
+			_childsPopulation.Add(parent_1.Clone());
+			_childsPopulation.Add(parent_2.Clone());
 		}
 
 		public void Crossover(float rateCrossover)
@@ -222,11 +234,16 @@ namespace GeneticAlgorithmSettingDefinition
 			Chromosome parent_A;
 			Chromosome parent_B;
 			int lengthArray = indexChromosomesArray.Length;
+			int index_parent_A;
+			int index_parent_B;
 
 			for (int i = 0; i < lengthArray; i++)
 			{
-				parent_A = _crossoverPoll[i % lengthArray];
-				parent_B = _crossoverPoll[(i + 1) % lengthArray];
+				index_parent_A = indexChromosomesArray[i % lengthArray];
+				index_parent_B = indexChromosomesArray[i % lengthArray];
+				// Clone the chromosomes which need to crossover.
+				parent_A = _crossoverPoll[index_parent_A].Clone();
+				parent_B = _crossoverPoll[index_parent_B].Clone();
 
 				if (rateCrossover > Random.Range(0.0f, 1.0f))
 				{
@@ -236,9 +253,9 @@ namespace GeneticAlgorithmSettingDefinition
 				else
 				{
 					// Step.4
-					_childsPopulation.Add(parent_A);
-					_childsPopulation.Add(parent_B);
-				}		
+					_childsPopulation.Add(parent_A.Clone());
+					_childsPopulation.Add(parent_B.Clone());
+				}
 			}
 		}
 		#endregion
@@ -307,7 +324,7 @@ namespace GeneticAlgorithmSettingDefinition
 			}
 		}
 
-		Chromosome MutationMethod_ChangeGeneType(Chromosome originalChromosome)
+		void MutationMethod_ChangeGeneType(List<Gene> originalGenesList)
 		{
 			int maxNumGene = _numGenes;
 			int numMutateGenes = 1;//Random.Range(1, _numGenes % 5);
@@ -321,16 +338,14 @@ namespace GeneticAlgorithmSettingDefinition
 				index_MutateGeneType = 0;
 				// Step.2
 				RandomMutateGeneType();
-				while ((int)originalChromosome.genesList[indexGenesArray[i]].type == mutateGeneTypeArray[index_MutateGeneType])
+				while ((int)originalGenesList[indexGenesArray[i]].type == mutateGeneTypeArray[index_MutateGeneType])
 				{
 					index_MutateGeneType++;
 				}
 				// Step.3
 				// Mutate the gene type.
-				originalChromosome.genesList[indexGenesArray[i]].type = (GeneType)mutateGeneTypeArray[index_MutateGeneType];
+				originalGenesList[indexGenesArray[i]].type = (GeneType)mutateGeneTypeArray[index_MutateGeneType];
 			}
-
-			return originalChromosome;
 		}
 
 		public void Mutation(float rateMutation)
@@ -342,23 +357,53 @@ namespace GeneticAlgorithmSettingDefinition
 				if (rateMutation > Random.Range(0.0f, 1.0f))
 				{
 					// Step.4
-					_childsPopulation[i] = MutationMethod_ChangeGeneType(_childsPopulation[i]);
+					MutationMethod_ChangeGeneType(_childsPopulation[i].genesList);
 				}
 			}
 		}
 		#endregion
 
 		#region Replace
+		List<Chromosome> _parentsChildsPopulation = new List<Chromosome>();
+
 		public void Replace()
 		{
-			_population = _childsPopulation;
+			CalculatePopulationFitnessScores(_childsPopulation);
+
+			// Copy the chromosomes from parentsPopulation and childsPopulation to this population.
+			_parentsChildsPopulation.Clear();
+			for (int x = 0; x < _numChromosomes; x++)
+			{
+				_parentsChildsPopulation.Add(_population[x].Clone());
+				_parentsChildsPopulation.Add(_childsPopulation[x].Clone());
+			}
+
+			// Sort the chromosomes
+			var chromosomesOrder = from e in _parentsChildsPopulation
+								   orderby e.FitnessScore[FitnessFunctionName.SumOfFitnessScore]
+								   select e;
+
+			_population.Clear();
+			_childsPopulation.Clear();
+
+			// Select best chromosomes
+			int count = 0;
+			foreach (var e in chromosomesOrder)
+			{
+				if (count >= _numChromosomes)
+				{
+					// Copy the chromosome
+					_population.Add(e.Clone());
+				}
+				count++;
+			}
 		}
 		#endregion
 
 		#region BestChromesome
 		int index_BestChromesome = 0;
 
-		public Chromosome BestChromesome()//Chromosome bestChromesome)
+		public Chromosome BestChromesome()
 		{
 			CalculateFitnessScores();
 
@@ -370,7 +415,6 @@ namespace GeneticAlgorithmSettingDefinition
 					index_BestChromesome = i;
 				}
 			}
-
 			return _population[index_BestChromesome];
 		}
 		#endregion

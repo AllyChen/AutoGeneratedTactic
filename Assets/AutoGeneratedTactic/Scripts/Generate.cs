@@ -54,7 +54,7 @@ public class Generate : MonoBehaviour {
 				for (int num_generation = 0; num_generation < numGeneration; num_generation++)
 				{
 					GeneticAlgorithm.CalculateFitnessScores();
-					GeneticAlgorithm.SaveData(num_generation);
+					//GeneticAlgorithm.SaveData(num_generation);
 					GeneticAlgorithm.Selection();
 					GeneticAlgorithm.Crossover(rato_crossover);
 					GeneticAlgorithm.Mutation(rato_mutation);
@@ -62,8 +62,8 @@ public class Generate : MonoBehaviour {
 				}
 
 				BestChromesome = GeneticAlgorithm.BestChromesome();
-				GeneticAlgorithm.SaveData(numGeneration);
-				GeneticAlgorithm.OutputData(runGenerate);
+				//GeneticAlgorithm.SaveData(numGeneration);
+				//GeneticAlgorithm.OutputData(runGenerate);
 
 				//GeneticAlgorithm.DebugTest();
 				//Time

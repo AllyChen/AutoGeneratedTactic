@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 using ChromosomeDefinition;
 using GeneticAlgorithmSettingDefinition;
@@ -298,6 +300,125 @@ public class FitnessFunctions {
 			}
 		}
 		#endregion
+	}
+
+	#endregion
+
+	/// <summary>
+	/// 計算Rectangle Quality。
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <returns></returns>
+	#region Fitness_RectangleQuality
+	public float Fitness_RectangleQuality(Chromosome chromosome, int length, int width)
+	{
+		float fitnessScore = 0.0f;
+		int numEmpty = 0;
+		int numRectangleGene = 0;
+		int numRectangle = calculateRectangleNumber(chromosome, length, width);
+
+		numEmpty = ( from gene in chromosome.genesList
+					 where gene.type == GeneType.Empty
+					 select gene ).Count();
+
+		numRectangleGene = ( from gene in chromosome.genesList
+							 where gene.SpaceAttribute == GeneSpaceAttribute.Rectangle
+							 select gene ).Count();
+
+		fitnessScore = (float)numRectangleGene / numEmpty;
+
+		return fitnessScore;
+	}
+
+	int calculateRectangleNumber(Chromosome _chromosome, int length, int width)
+	{
+		int numRectangle = 0;
+		int numGene = _chromosome.genesList.Count;
+		bool isFindRectangle;
+		int rectangleLength = 2;
+		int rectangleWidth = 2;
+
+		for (int indexGene = 0; indexGene < numGene; indexGene++)
+		{
+			// Find the start point of Rectangle
+			if (_chromosome.genesList[indexGene].type == GeneType.Empty && _chromosome.genesList[indexGene].SpaceAttribute == GeneSpaceAttribute.None)
+			{
+				rectangleLength = 2;
+				rectangleWidth = 2;
+				// Find 2*2
+				isFindRectangle = findRectangle(_chromosome, length, width, indexGene, rectangleLength, rectangleWidth);
+
+				if (isFindRectangle == true)
+				{
+					// Extend the length
+					isFindRectangle = findRectangle(_chromosome, length, width, indexGene, rectangleLength + 1, rectangleWidth);
+					while (isFindRectangle)
+					{
+						rectangleLength++;
+						isFindRectangle = findRectangle(_chromosome, length, width, indexGene, rectangleLength + 1, rectangleWidth);
+					}
+
+					// Extend the width
+					isFindRectangle = findRectangle(_chromosome, length, width, indexGene, rectangleLength, rectangleWidth + 1);
+					while (isFindRectangle)
+					{
+						rectangleWidth++;
+						isFindRectangle = findRectangle(_chromosome, length, width, indexGene, rectangleLength, rectangleWidth + 1);
+					}
+
+					// Set Rectangle
+					setRectangle(_chromosome, length, width, indexGene, rectangleLength, rectangleWidth);
+
+					// Get one Rectangle
+					numRectangle++;
+				}
+			}
+		}
+		return numRectangle;
+	}
+
+	bool findRectangle(Chromosome _chromosome, int length, int width, int startPos, int rectangleLength, int rectangleWidth)
+	{
+		bool isRectangle = true;
+		int startPos_x = (int)startPos / length;
+		int startPos_y = (int)startPos % length;
+
+		for (int x = startPos_x; x < ( startPos_x + rectangleWidth ); x++)
+		{
+			for (int y = startPos_y; y < ( startPos_y + rectangleLength ); y++)
+			{
+				// Out of range
+				if (x >= width || y >= length)
+				{
+					isRectangle = false;
+				}
+				else
+				{
+					if (_chromosome.genesList[x * length + y].type != GeneType.Empty
+					|| _chromosome.genesList[x * length + y].SpaceAttribute != GeneSpaceAttribute.None)
+					{
+						isRectangle = false;
+					}
+				}
+			}
+		}
+		return isRectangle;
+	}
+
+	void setRectangle(Chromosome _chromosome, int length, int width, int startPos, int rectangleLength, int rectangleWidth)
+	{
+		int startPos_x = (int)startPos / length;
+		int startPos_y = (int)startPos % length;
+
+		for (int x = startPos_x; x < ( startPos_x + rectangleWidth ); x++)
+		{
+			for (int y = startPos_y; y < ( startPos_y + rectangleLength ); y++)
+			{
+				_chromosome.genesList[x * length + y].SpaceAttribute = GeneSpaceAttribute.Rectangle;
+			}
+		}
 	}
 
 	#endregion

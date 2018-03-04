@@ -9,21 +9,6 @@ using ChromosomeDefinition;
 
 namespace GeneticAlgorithmSettingDefinition
 {
-	// Enum for type of gene.
-	public enum GeneType
-	{
-		Forbidden = 0,
-		Empty = 1,
-		NumberOfGeneType
-	}
-	// Enum for fitness function.
-	public enum FitnessFunctionName
-	{
-		ImpassableDensity,
-		NumberOfFitnessFunctionName,
-		SumOfFitnessScore
-	}
-
 	public class GeneticAlgorithmSetting : MonoBehaviour
 	{
 		#region Initial
@@ -89,7 +74,9 @@ namespace GeneticAlgorithmSettingDefinition
 			for (int i = 0; i < _numChromosomes; i++)
 			{
 				_population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
-				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _population[i].FitnessScore[FitnessFunctionName.ImpassableDensity];
+				_population[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _population[i].FitnessScore[FitnessFunctionName.ImpassableDensity]
+																					+ _population[i].FitnessScore[FitnessFunctionName.RectangleQuality];
 			}
 		}
 		// Calculate the fitness score of chromosomes in specific population.
@@ -99,7 +86,9 @@ namespace GeneticAlgorithmSettingDefinition
 			for (int i = 0; i < _numChromosomes; i++)
 			{
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity];
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_population[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity]
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality];
 			}
 		}
 
@@ -421,7 +410,7 @@ namespace GeneticAlgorithmSettingDefinition
 
 		#region OutputData
 		private List<string[]> basicData = new List<string[]>();
-		string[] tileData = new string[4];
+		string[] tileData = new string[5];
 
 		void InitialData()
 		{
@@ -431,7 +420,8 @@ namespace GeneticAlgorithmSettingDefinition
 			tileData[0] = "Generation";
 			tileData[1] = "ChromosomeIndex";
 			tileData[2] = "Fitness_ImpassableDensity";
-			tileData[3] = "Fitness_SumOfFitnessScore";
+			tileData[3] = "Fitness_RectangleQuality";
+			tileData[4] = "Fitness_SumOfFitnessScore";
 			basicData.Add(tileData);
 		}
 
@@ -443,7 +433,8 @@ namespace GeneticAlgorithmSettingDefinition
 				contentData[0] = indexGeneration.ToString(); // Generation
 				contentData[1] = indexChromosome.ToString(); // ChromosomeIndex
 				contentData[2] = _population[indexChromosome].FitnessScore[FitnessFunctionName.ImpassableDensity].ToString(); // Fitness_ImpassableDensity
-				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
+				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.RectangleQuality].ToString(); // Fitness_RectangleQuality
+				contentData[4] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
 				basicData.Add(contentData);
 			}
 		}

@@ -24,7 +24,7 @@ namespace ParticleSwarmOptimizationSettingDefinition
 		// Define the basic parameters of PSO.
 		private List<Chromosome> _velocityPopulation = new List<Chromosome>();// personal velocity
 		private List<Chromosome> _personBestPopulation = new List<Chromosome>();// personal bests
-		private Chromosome _globalBestChromosome = new Chromosome();// global best
+		private Chromosome _globalBestChromosome;// = new Chromosome();// global best
 		private float _inertia;
 		private float _personalInfluence;
 		private float _socialInfluence;
@@ -78,14 +78,16 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			// Initial the person best of chromosomes in personBestPopulation
 			for (int x = 0; x < numChromosome; x++)
 			{
-				_personBestPopulation.Add(new Chromosome());
+				// Copy the chromosomes from particlePopulation.
+				_personBestPopulation.Add(_particlePopulation[x].Clone());
+				//_personBestPopulation.Add(new Chromosome());
 
-				// Copy the genes in each chromosomes from particlePopulation.
-				for (int y = 0; y < numGene; y++)
-				{
-					_personBestPopulation[x].genesList.Add(new Gene());
-					_personBestPopulation[x].genesList[y] = _particlePopulation[x].genesList[y];
-				}
+				//// Copy the genes in each chromosomes from particlePopulation.
+				//for (int y = 0; y < numGene; y++)
+				//{
+				//	_personBestPopulation[x].genesList.Add(new Gene());
+				//	_personBestPopulation[x].genesList[y] = _particlePopulation[x].genesList[y];
+				//}
 			}
 
 			// Randomly initial the personal velocity of chromosomes
@@ -162,12 +164,13 @@ namespace ParticleSwarmOptimizationSettingDefinition
 				}
 			}
 			// Save the global best of chromosome.
-			_globalBestChromosome.genesList.Clear();
-			//Copy Genes
-			for (int indexGene = 0; indexGene < _particlePopulation[tempGlobalBestChromosome_index].genesList.Count; indexGene++)
-			{
-				_globalBestChromosome.genesList.Add(_particlePopulation[tempGlobalBestChromosome_index].genesList[indexGene]);
-			}
+			//_globalBestChromosome.genesList.Clear();
+			_globalBestChromosome = _particlePopulation[tempGlobalBestChromosome_index].Clone();
+			////Copy Genes
+			//for (int indexGene = 0; indexGene < _particlePopulation[tempGlobalBestChromosome_index].genesList.Count; indexGene++)
+			//{
+			//	_globalBestChromosome.genesList.Add(_particlePopulation[tempGlobalBestChromosome_index].genesList[indexGene]);
+			//}
 			//Copy FitnssScore
 			_globalBestChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = tempGlobalBestChromosome_FitnessSumScore;
 		}

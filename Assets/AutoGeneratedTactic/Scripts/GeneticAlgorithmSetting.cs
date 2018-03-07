@@ -67,16 +67,30 @@ namespace GeneticAlgorithmSettingDefinition
 
 		#region Fitness
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
+		float weight_ImpassableDensity = 0.0f;
+		float weight_RectangleQuality = 1.0f;
+		float weight_CorridorQuality = 0.5f;
+		float weight_ConnectedQuality = 1.0f;
 
 		public void CalculateFitnessScores()
 		{
 			// Calculate the fitness score of chromosomes in population.
 			for (int i = 0; i < _numChromosomes; i++)
 			{
-				_population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
+				//inital
+				foreach (Gene gene in _population[i].genesList)
+				{
+					gene.SpaceAttribute = GeneSpaceAttribute.None;
+				}
+				// Fitness function
+				_population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = 0;//FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_population[i], _mapLength, _mapWidth);
-				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _population[i].FitnessScore[FitnessFunctionName.ImpassableDensity]
-																					+ _population[i].FitnessScore[FitnessFunctionName.RectangleQuality];
+				_population[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( 0// _population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] * weight_ImpassableDensity
+																					+ _population[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+																					+ _population[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+																					+ _population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
 			}
 		}
 		// Calculate the fitness score of chromosomes in specific population.
@@ -85,11 +99,21 @@ namespace GeneticAlgorithmSettingDefinition
 			// Calculate the fitness score of chromosomes in population.
 			for (int i = 0; i < _numChromosomes; i++)
 			{
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_population[i], _mapLength, _mapWidth);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity]
-																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality];
-			}
+				//inital
+				foreach (Gene gene in _specificPopulation[i].genesList)
+				{
+					gene.SpaceAttribute = GeneSpaceAttribute.None;
+				}
+				// Fitness function
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = 0;//FitnessFunction.Fitness_ImpassableDensity(_specificPopulation[i], _numGenes, _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( 0//_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] * weight_ImpassableDensity
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+		}
 		}
 
 		#endregion
@@ -410,7 +434,7 @@ namespace GeneticAlgorithmSettingDefinition
 
 		#region OutputData
 		private List<string[]> basicData = new List<string[]>();
-		string[] tileData = new string[5];
+		string[] tileData = new string[7];
 
 		void InitialData()
 		{
@@ -421,7 +445,9 @@ namespace GeneticAlgorithmSettingDefinition
 			tileData[1] = "ChromosomeIndex";
 			tileData[2] = "Fitness_ImpassableDensity";
 			tileData[3] = "Fitness_RectangleQuality";
-			tileData[4] = "Fitness_SumOfFitnessScore";
+			tileData[4] = "Fitness_CorridorQuality";
+			tileData[5] = "Fitness_ConnectedQuality";
+			tileData[6] = "Fitness_SumOfFitnessScore";
 			basicData.Add(tileData);
 		}
 
@@ -434,7 +460,9 @@ namespace GeneticAlgorithmSettingDefinition
 				contentData[1] = indexChromosome.ToString(); // ChromosomeIndex
 				contentData[2] = _population[indexChromosome].FitnessScore[FitnessFunctionName.ImpassableDensity].ToString(); // Fitness_ImpassableDensity
 				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.RectangleQuality].ToString(); // Fitness_RectangleQuality
-				contentData[4] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
+				contentData[4] = _population[indexChromosome].FitnessScore[FitnessFunctionName.CorridorQuality].ToString(); // Fitness_CorridorQuality
+				contentData[5] = _population[indexChromosome].FitnessScore[FitnessFunctionName.ConnectedQuality].ToString(); // Fitness_ConnectedQuality
+				contentData[6] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
 				basicData.Add(contentData);
 			}
 		}

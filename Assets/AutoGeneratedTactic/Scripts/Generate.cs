@@ -67,8 +67,8 @@ public class Generate : MonoBehaviour {
 
 				//GeneticAlgorithm.DebugTest();
 				//Time
-				//var GAendTime = Time.realtimeSinceStartup - startTime;
-				//Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
+				var GAendTime = Time.realtimeSinceStartup - startTime;
+				Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
 				break;
 			case 1:
 				// Start ParticleSwarmOptimization

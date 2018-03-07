@@ -6,6 +6,7 @@ using System.Linq;
 
 using ChromosomeDefinition;
 using GeneticAlgorithmSettingDefinition;
+using NesScripts.Controls.PathFind;
 
 public class FitnessFunctions {
 
@@ -421,5 +422,354 @@ public class FitnessFunctions {
 		}
 	}
 
+	#endregion
+
+	/// <summary>
+	/// 計算Corridor Quality。
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <returns></returns>
+	#region Fitness_CorridorQuality
+	public float Fitness_CorridorQuality(Chromosome chromosome, int length, int width)
+	{
+		float fitnessScore = 0.0f;
+		int numEmpty = 0;
+		int numCorridorGene = 0;
+		int numCorridor = calculateCorridorNumber(chromosome, length, width);
+
+		numEmpty = ( from gene in chromosome.genesList
+					 where gene.type == GeneType.Empty
+					 select gene ).Count();
+
+		numCorridorGene = ( from gene in chromosome.genesList
+							where gene.SpaceAttribute == GeneSpaceAttribute.Corridor
+							select gene ).Count();
+
+		fitnessScore = (float)numCorridorGene / numEmpty;
+
+		return fitnessScore;
+	}
+
+	int calculateCorridorNumber(Chromosome _chromosome, int length, int width)
+	{
+		int numCorridor = 0;
+		int numGene = _chromosome.genesList.Count;
+		bool isFindCorridor = true;
+		int corridorLength = 2;
+		bool isRowCorridor = true;
+
+		for (int indexGene = 0; indexGene < numGene; indexGene++)
+		{
+			// Find the start point of Rectangle
+			if (_chromosome.genesList[indexGene].type == GeneType.Empty && _chromosome.genesList[indexGene].SpaceAttribute == GeneSpaceAttribute.None)
+			{
+				// Find the row corridor first
+				isRowCorridor = true;
+				corridorLength = 2;
+				// Find row corridor
+				isFindCorridor = findCorridor(_chromosome, length, width, indexGene, corridorLength, isRowCorridor);
+				// Can't find row corridor
+				if (isFindCorridor == false)
+				{
+					isRowCorridor = false;
+					// Find column corridor
+					isFindCorridor = findCorridor(_chromosome, length, width, indexGene, corridorLength, isRowCorridor);
+				}
+
+				if (isFindCorridor == true)
+				{
+					// There is a corridor and length of corridor is 2 at least.
+					// Start to find whole corridor
+					isFindCorridor = findCorridor(_chromosome, length, width, indexGene, ( corridorLength + 1 ), isRowCorridor);
+					while (isFindCorridor)
+					{
+						corridorLength++;
+						isFindCorridor = findCorridor(_chromosome, length, width, indexGene, ( corridorLength + 1 ), isRowCorridor);
+					}
+					// Set Corridor
+					setCorridor(_chromosome, length, width, indexGene, corridorLength, isRowCorridor);
+					// Get one Corridor
+					numCorridor++;
+				}
+			}
+		}
+		return numCorridor;
+	}
+
+	bool findCorridor(Chromosome _chromosome, int length, int width, int startPos, int corridorlength, bool isRow)
+	{
+		bool isCorridor = true;
+		int startPos_x = (int)startPos / length;
+		int startPos_y = (int)startPos % length;
+		bool upForbidden = false;
+		bool downForbidden = false;
+		bool rightForbidden = false;
+		bool leftForbidden = false;
+
+
+		if (isRow == true)
+		{
+			// Out of range
+			if (( startPos_y + corridorlength ) > length)
+			{
+				isCorridor = false;
+			}
+			else
+			{
+				#region Find Row
+				// Find Row
+				for (int y = startPos_y; y < ( startPos_y + corridorlength ); y++)
+				{
+					// The previous tile is Corridor.
+					if (isCorridor == true)
+					{
+						if (_chromosome.genesList[startPos_x * length + y].type == GeneType.Empty
+						&& _chromosome.genesList[startPos_x * length + y].SpaceAttribute == GeneSpaceAttribute.None)
+						{
+							// Check the up forbidden
+							if (( startPos_x - 1 ) < 0) // boundary
+							{
+								upForbidden = true;
+							}
+							else
+							{
+								upForbidden = false;
+								if (_chromosome.genesList[( startPos_x - 1 ) * length + y].type == GeneType.Forbidden)
+								{
+									upForbidden = true;
+								}
+								else
+								{
+									upForbidden = false;
+								}
+							}
+
+							// Check the down forbidden
+							if (( startPos_x + 1 ) == width) // boundary
+							{
+								downForbidden = true;
+							}
+							else
+							{
+								downForbidden = false;
+								if (_chromosome.genesList[( startPos_x + 1 ) * length + y].type == GeneType.Forbidden)
+								{
+									downForbidden = true;
+								}
+								else
+								{
+									downForbidden = false;
+								}
+							}
+							if (upForbidden == true && downForbidden == true)
+							{
+								isCorridor = true;
+							}
+							else
+							{
+								isCorridor = false;
+							}
+						}
+						else
+						{
+							isCorridor = false;
+						}
+					}
+				}
+				#endregion
+			}
+		}
+		else
+		{
+			// Out of range
+			if (( startPos_x + corridorlength ) > width)
+			{
+				isCorridor = false;
+			}
+			else
+			{
+				#region Find Column
+				// Find Column
+				for (int x = startPos_x; x < ( startPos_x + corridorlength ); x++)
+				{
+					// The previous tile is Corridor.
+					if (isCorridor == true)
+					{
+						if (_chromosome.genesList[x * length + startPos_y].type == GeneType.Empty
+						&& _chromosome.genesList[x * length + startPos_y].SpaceAttribute == GeneSpaceAttribute.None)
+						{
+							// Check the left forbidden
+							if (( startPos_y - 1 ) < 0) // boundary
+							{
+								leftForbidden = true;
+							}
+							else
+							{
+								leftForbidden = false;
+								if (_chromosome.genesList[x * length + startPos_y - 1].type == GeneType.Forbidden)
+								{
+									leftForbidden = true;
+								}
+								else
+								{
+									leftForbidden = false;
+								}
+							}
+
+							// Check the right forbidden
+							if (( startPos_y + 1 ) == length) // boundary
+							{
+								rightForbidden = true;
+							}
+							else
+							{
+								rightForbidden = false;
+								if (_chromosome.genesList[x * length + startPos_y + 1].type == GeneType.Forbidden)
+								{
+									rightForbidden = true;
+								}
+								else
+								{
+									rightForbidden = false;
+								}
+							}
+							if (leftForbidden == true && rightForbidden == true)
+							{
+								isCorridor = true;
+							}
+							else
+							{
+								isCorridor = false;
+							}
+						}
+						else
+						{
+							isCorridor = false;
+						}
+					}
+				}
+				#endregion
+			}
+		}
+		return isCorridor;
+	}
+
+	void setCorridor(Chromosome _chromosome, int length, int width, int startPos, int corridorlength, bool isRow)
+	{
+		int startPos_x = (int)startPos / length;
+		int startPos_y = (int)startPos % length;
+
+		if (isRow == true)
+		{
+			for (int y = startPos_y; y < ( startPos_y + corridorlength ); y++)
+			{
+				_chromosome.genesList[startPos_x * length + y].SpaceAttribute = GeneSpaceAttribute.Corridor;
+			}
+		}
+		else
+		{
+			for (int x = startPos_x; x < ( startPos_x + corridorlength ); x++)
+			{
+				_chromosome.genesList[x * length + startPos_y].SpaceAttribute = GeneSpaceAttribute.Corridor;
+			}
+		}
+	}
+	#endregion
+
+	/// <summary>
+	/// 計算Empty tiles 是否彼此 Connect。
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <returns></returns>
+	#region Fitness_ConnectedQuality
+	public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
+	{
+		float fitnessScore = 0.0f;
+
+		if (isConnected(chromosome.genesList, length, width) == true)
+		{
+			fitnessScore = 1.0f;
+		}
+		else
+		{
+			fitnessScore = 0.0f;
+		}
+
+		return fitnessScore;
+	}
+
+	bool isConnected(List<Gene> chromosome, int length, int width)
+	{
+		// Is the empty tiles are connected?
+		bool isConnected = true;
+		// create the tiles map
+		bool[,] tilesmap = new bool[width, length];
+		// set values here....
+		// true = walkable, false = blocking
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < length; y++)
+			{
+				if (chromosome[x * length + y].type == GeneType.Empty)
+				{
+					tilesmap[x, y] = true;
+				}
+				else if (chromosome[x * length + y].type == GeneType.Forbidden)
+				{
+					tilesmap[x, y] = false;
+				}
+			}
+		}
+		// create a grid
+		Grid grid = new Grid(tilesmap);
+
+		// Find the first empty tile
+		bool isFirstEmptyTile = false;
+		int indexFirstEmptyTile = 0;
+		while (isFirstEmptyTile == false)
+		{
+			if (chromosome[indexFirstEmptyTile].type == GeneType.Empty)
+			{
+				isFirstEmptyTile = true;
+			}
+			else
+			{
+				indexFirstEmptyTile++;
+			}
+		}
+
+		// Start to check the map is connected.
+		// create source and target points
+		Point _from = new Point(indexFirstEmptyTile / length, indexFirstEmptyTile % length);
+		Point _to = new Point(0, 0);
+
+		// for Manhattan distance (4 directions)
+		List<Point> pathSearch = new List<Point>();
+
+		for (int index = indexFirstEmptyTile + 1; index < chromosome.Count; index++)
+		{
+			pathSearch.Clear();
+
+			if (chromosome[index].type == GeneType.Empty)
+			{
+				// Initial the goal.
+				_to.x = index / length;
+				_to.y = index % length;
+				// for Manhattan distance (4 directions)
+				pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
+
+				// NOT connect
+				if (pathSearch.Count == 0)
+				{
+					isConnected = false;
+				}
+			}
+		}
+		return isConnected;
+	}
 	#endregion
 }

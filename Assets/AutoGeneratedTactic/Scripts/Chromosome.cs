@@ -29,6 +29,8 @@ namespace ChromosomeDefinition
 	{
 		ImpassableDensity,
 		RectangleQuality,
+		CorridorQuality,
+		ConnectedQuality,
 		NumberOfFitnessFunctionName,
 		SumOfFitnessScore
 	}
@@ -41,6 +43,8 @@ namespace ChromosomeDefinition
 		public Dictionary<FitnessFunctionName, float> FitnessScore = new Dictionary<FitnessFunctionName, float>() {
 					{ FitnessFunctionName.ImpassableDensity   , 0.0f },
 					{ FitnessFunctionName.RectangleQuality   , 0.0f },
+					{ FitnessFunctionName.CorridorQuality   , 0.0f },
+					{ FitnessFunctionName.ConnectedQuality   , 0.0f },
 					{ FitnessFunctionName.SumOfFitnessScore   , 0.0f },
 				};
 
@@ -61,6 +65,8 @@ namespace ChromosomeDefinition
 			// FitnessScore
 			ChromosomeClone.FitnessScore[FitnessFunctionName.ImpassableDensity] = this.FitnessScore[FitnessFunctionName.ImpassableDensity];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.RectangleQuality] = this.FitnessScore[FitnessFunctionName.RectangleQuality];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.CorridorQuality] = this.FitnessScore[FitnessFunctionName.CorridorQuality];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.ConnectedQuality] = this.FitnessScore[FitnessFunctionName.ConnectedQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = this.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 
 			return ChromosomeClone;

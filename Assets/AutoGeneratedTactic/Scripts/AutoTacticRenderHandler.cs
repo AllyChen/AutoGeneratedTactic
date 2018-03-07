@@ -11,6 +11,7 @@ public class AutoTacticRenderHandler : MonoBehaviour {
 	public GameObject Tile_Empty;
 	public GameObject Tile_Forbidden;
 	public GameObject Tile_Rectangle;
+	public GameObject Tile_Corridor;
 
 	public void CleanBoard(GameObject board)
 	{
@@ -51,6 +52,10 @@ public class AutoTacticRenderHandler : MonoBehaviour {
 				if (bestChromosome.genesList[indexGene].SpaceAttribute == GeneSpaceAttribute.Rectangle)
 				{
 					TileStyle = Tile_Rectangle;
+				}
+				else if (bestChromosome.genesList[indexGene].SpaceAttribute == GeneSpaceAttribute.Corridor)
+				{
+					TileStyle = Tile_Corridor;
 				}
 
 				indexGene++;

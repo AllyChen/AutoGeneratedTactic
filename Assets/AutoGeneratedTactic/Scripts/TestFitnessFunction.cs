@@ -14,22 +14,32 @@ public class TestFitnessFunction : MonoBehaviour {
 	//345 //[1,0][1,1][1,2]
 	//678 //[2,0][2,1][2,2]
 	private int[,] TestMapArray = {
-	{0,1,0,1,0,1,1,1},//  00 01 02 03 04 05 06 07
-	{0,1,0,1,0,1,0,0},//  08 09 10 11 12 13 14 15
-	{0,1,0,1,0,1,1,0},//  16 17 18 19 20 21 22 23
-	{0,1,0,1,0,1,1,0},//  24 25 26 27 28 29 30 31
-	{0,0,0,0,0,0,0,0},//  32 33 34 35 36 37 38 39
-	{0,1,1,1,1,1,1,1},//  40 41 42 43 44 45 46 47
-	{0,0,0,1,1,1,0,0},//  48 49 50 51 52 53 54 55
-	{1,1,0,0,0,0,0,0}};// 56 57 58 59 60 61 62 63
+	{0,0,0,0,0,0,1,1},//  00 01 02 03 04 05 06 07
+	{0,0,0,0,1,1,1,1},//  08 09 10 11 12 13 14 15
+	{0,1,1,0,1,1,1,1},//  16 17 18 19 20 21 22 23
+	{0,1,1,0,0,0,1,1},//  24 25 26 27 28 29 30 31
+	{0,0,0,0,0,1,1,1},//  32 33 34 35 36 37 38 39
+	{1,1,1,0,0,1,1,1},//  40 41 42 43 44 45 46 47
+	{0,0,0,0,0,0,1,1},//  48 49 50 51 52 53 54 55
+	{1,1,1,1,1,1,1,1}};// 56 57 58 59 60 61 62 63
 
 	private Chromosome TestMap = new Chromosome();
 
 	void Start()
 	{
-		//InitialTestMap();
-		//Debug.Log(Fitness_ConnectedQuality(TestMap, 8, 8));
-		//Debug.Log(AStar(TestMap.genesList, 8, 8));
+		InitialTestMap();
+		Debug.Log(Fitness_RectangleQuality(TestMap, 8, 8));
+		Debug.Log(Fitness_CorridorQuality(TestMap, 8, 8));
+		detectedSpaceAttribute(TestMap);
+		//for (int i = 0; i < TestMap.spaceList.Count; i++)
+		//{
+		//	Debug.Log("==Index_"+i+"==");
+		//	Debug.Log("startPos = " + TestMap.spaceList[i].startPos);
+		//	Debug.Log("length = " + TestMap.spaceList[i].length);
+		//	Debug.Log("width = " + TestMap.spaceList[i].width);
+		//	Debug.Log("SpaceAttribute = " + TestMap.spaceList[i].SpaceAttribute);
+		//}
+		bool test = isConnected(TestMap, 8, 8);
 
 	}
 	#region InitialTestMap
@@ -54,12 +64,30 @@ public class TestFitnessFunction : MonoBehaviour {
 	}
 	#endregion
 
+	void detectedSpaceAttribute(Chromosome _chromosome)
+	{
+		int indexGene = 0;
+		foreach (Gene gene in _chromosome.genesList)
+		{
+			if (gene.SpaceAttribute == GeneSpaceAttribute.None && gene.type == GeneType.Empty)
+			{
+				// Save the information of None
+				_chromosome.spaceList.Add(new SpaceInfo());
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].startPos = indexGene;
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = 0;
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = 0;
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].SpaceAttribute = GeneSpaceAttribute.None;
+			}
+			indexGene++;
+		}
+	}
+
 	#region Fitness_ConnectedQuality
 	public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
 	{
 		float fitnessScore = 0.0f;
 
-		if (isConnected(chromosome.genesList, length, width) == true)
+		if (isConnected(chromosome, length, width) == true)
 		{
 			fitnessScore = 1.0f;
 		}
@@ -71,75 +99,246 @@ public class TestFitnessFunction : MonoBehaviour {
 		return fitnessScore;
 	}
 
-	bool isConnected(List<Gene> chromosome, int length, int width)
+	bool isConnected(Chromosome _chromosome, int length, int width)
 	{
+		#region A-star
+		//// create the tiles map
+		//bool[,] tilesmap = new bool[8, 8];
+		//// set values here....
+		//// true = walkable, false = blocking
+		//for (int x = 0; x < width; x++)
+		//{
+		//	for (int y = 0; y < length; y++)
+		//	{
+		//		if (chromosome[x * length + y].type == GeneType.Empty)
+		//		{
+		//			tilesmap[x, y] = true;
+		//		}
+		//		else if (chromosome[x * length + y].type == GeneType.Forbidden)
+		//		{
+		//			tilesmap[x, y] = false;
+		//		}
+		//	}
+		//}
+		//// create a grid
+		//Grid grid = new Grid(tilesmap);
+
+		//// Find the first empty tile
+		//bool isFirstEmptyTile = false;
+		//int indexFirstEmptyTile = 0;
+		//while (isFirstEmptyTile == false)
+		//{
+		//	if (chromosome[indexFirstEmptyTile].type == GeneType.Empty)
+		//	{
+		//		isFirstEmptyTile = true;
+		//	}
+		//	else
+		//	{
+		//		indexFirstEmptyTile++;
+		//	}
+		//}
+
+		//// Start to check the map is connected.
+		//// create source and target points
+		//Point _from = new Point(indexFirstEmptyTile / length, indexFirstEmptyTile % length);
+		//Point _to = new Point(0, 0);
+
+		//// for Manhattan distance (4 directions)
+		//List<Point> pathSearch = new List<Point>();
+
+		//for (int index = indexFirstEmptyTile + 1; index < chromosome.Count; index++)
+		//{
+		//	pathSearch.Clear();
+
+		//	if (chromosome[index].type == GeneType.Empty)
+		//	{
+		//		// Initial the goal.
+		//		_to.x = index / length;
+		//		_to.y = index % length;
+		//		// for Manhattan distance (4 directions)
+		//		pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
+
+		//		// NOT connect
+		//		if (pathSearch.Count == 0)
+		//		{
+		//			isConnected = false;
+		//		}
+		//	}
+		//}
+		#endregion
 		// Is the empty tiles are connected?
 		bool isConnected = true;
-		// create the tiles map
-		bool[,] tilesmap = new bool[8, 8];
-		// set values here....
-		// true = walkable, false = blocking
-		for (int x = 0; x < width; x++)
-		{
-			for (int y = 0; y < length; y++)
-			{
-				if (chromosome[x * length + y].type == GeneType.Empty)
-				{
-					tilesmap[x, y] = true;
-				}
-				else if (chromosome[x * length + y].type == GeneType.Forbidden)
-				{
-					tilesmap[x, y] = false;
-				}
-			}
-		}
-		// create a grid
-		Grid grid = new Grid(tilesmap);
+		List<SpaceConnected_Root> Root = new List<SpaceConnected_Root>();
+		int[] beVisited = new int[_chromosome.spaceList.Count];// 紀錄有無拜訪過
+		int index_checking = 0;
 
-		// Find the first empty tile
-		bool isFirstEmptyTile = false;
-		int indexFirstEmptyTile = 0;
-		while (isFirstEmptyTile == false)
-		{
-			if (chromosome[indexFirstEmptyTile].type == GeneType.Empty)
+		// Finding the space which haven't be visited.
+		while (index_checking < _chromosome.spaceList.Count)
+		{			
+			// Find!!
+			if (beVisited[index_checking] == 0)
 			{
-				isFirstEmptyTile = true;
+				// The index of space we find be set a root.
+				Root.Add(new SpaceConnected_Root());
+				Root[Root.Count - 1].spaceIndex = index_checking;
+				// Start to find the leaf of root.
+				beVisited = findRootLeaf(_chromosome, length, width, Root[Root.Count - 1], beVisited);
 			}
-			else
+			index_checking++;
+		}
+
+		Debug.Log("Root_Count = " + Root.Count);
+		for (int i = 0; i < Root.Count; i++)
+		{
+			Debug.Log("Root_" + i + "：" + Root[i].spaceIndex);
+			for (int j = 0; j < Root[i].connectedLeaf.Count; j++)
 			{
-				indexFirstEmptyTile++;
+				Debug.Log("Leaf_" + Root[i].connectedLeaf[j].spaceIndex);
 			}
 		}
 
-		// Start to check the map is connected.
-		// create source and target points
-		Point _from = new Point(indexFirstEmptyTile / length, indexFirstEmptyTile % length);
-		Point _to = new Point(0, 0);
 
-		// for Manhattan distance (4 directions)
-		List<Point> pathSearch = new List<Point>();
-
-		for (int index = indexFirstEmptyTile + 1; index < chromosome.Count; index++)
-		{
-			pathSearch.Clear();
-
-			if (chromosome[index].type == GeneType.Empty)
-			{
-				// Initial the goal.
-				_to.x = index / length;
-				_to.y = index % length;
-				// for Manhattan distance (4 directions)
-				pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
-
-				// NOT connect
-				if (pathSearch.Count == 0)
-				{
-					isConnected = false;
-				}
-			}
-		}
 		return isConnected;
 	}
+
+	int[] findRootLeaf(Chromosome _chromosome, int length, int width, SpaceConnected_Root _Root, int[] _beVisited)
+	{
+		int[] _beVisitedFinished = _beVisited;
+		// Get the information of root space.
+		int rootSpace_startPos_x = (int)_chromosome.spaceList[_Root.spaceIndex].startPos / length;
+		int rootSpace_startPos_y = (int)_chromosome.spaceList[_Root.spaceIndex].startPos % length;
+		int rootSpace_length = _chromosome.spaceList[_Root.spaceIndex].length;
+		int rootSpace_width = _chromosome.spaceList[_Root.spaceIndex].width;
+		GeneSpaceAttribute rootSpaceAttribute = _chromosome.spaceList[_Root.spaceIndex].SpaceAttribute;
+		
+		#region Top row
+		// Top row
+		if (rootSpace_startPos_x - 1 >= 0)
+		{
+			for (int y = rootSpace_startPos_y; y < ( rootSpace_startPos_y + rootSpace_length ); y++)
+			{
+				if (_chromosome.genesList[( rootSpace_startPos_x - 1 ) * length + y].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, ( rootSpace_startPos_x - 1 ), y);
+					// Visited!!
+					if (_beVisited[indexNeighborSpace] == 0)
+					{
+						_beVisited[indexNeighborSpace] = 1;
+						// Save in root.
+						_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+						_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region Bottom row
+		// Bottom row
+		if (rootSpace_startPos_x + rootSpace_width < width)
+		{
+			for (int y = rootSpace_startPos_y; y < ( rootSpace_startPos_y + rootSpace_length ); y++)
+			{
+				if (_chromosome.genesList[( rootSpace_startPos_x + rootSpace_width ) * length + y].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, ( rootSpace_startPos_x + rootSpace_width ), y);
+					// Visited!!
+					if (_beVisited[indexNeighborSpace] == 0)
+					{
+						_beVisited[indexNeighborSpace] = 1;
+						// Save in root.
+						_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+						_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region Left column
+		// Left column
+		if (rootSpace_startPos_y - 1 >= 0)
+		{
+			for (int x = rootSpace_startPos_x; x < ( rootSpace_startPos_y + rootSpace_width ); x++)
+			{
+				if (_chromosome.genesList[x * length + ( rootSpace_startPos_y - 1 )].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, x, ( rootSpace_startPos_y - 1 ));
+					// Visited!!
+					if (_beVisited[indexNeighborSpace] == 0)
+					{
+						_beVisited[indexNeighborSpace] = 1;
+						// Save in root.
+						_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+						_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region Right column
+		// Right column
+		if (rootSpace_startPos_y + rootSpace_length < length)
+		{
+			for (int x = rootSpace_startPos_x; x < ( rootSpace_startPos_y + rootSpace_width ); x++)
+			{
+				if (_chromosome.genesList[x * length + ( rootSpace_startPos_y + rootSpace_length )].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, x, ( rootSpace_startPos_y + rootSpace_length ));
+					// Visited!!
+					if (_beVisited[indexNeighborSpace] == 0)
+					{
+						_beVisited[indexNeighborSpace] = 1;
+						// Save in root.
+						_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+						_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+					}
+				}
+			}
+		}
+		#endregion
+
+		return _beVisitedFinished;
+	}
+	// Checking the index of Neighbor. 
+	int checkNeighbor(Chromosome _chromosome, int length, int width, int neighbor_x, int neighbor_y)
+	{
+		GeneSpaceAttribute neighborSpaceAttribute = _chromosome.genesList[neighbor_x * length + neighbor_y].SpaceAttribute;
+		int indexNeighborSpace = 0;
+		bool isNeighbor = false;
+
+		for (int index = 0; index < _chromosome.spaceList.Count; index++)
+		{
+			if (isNeighbor == false && _chromosome.spaceList[index].SpaceAttribute == neighborSpaceAttribute)
+			{
+				// Get the information of space in spaceList.
+				int spaceStartPos_x = _chromosome.spaceList[index].startPos / length;
+				int spaceStartPos_y = _chromosome.spaceList[index].startPos % length;
+				int spaceLength = _chromosome.spaceList[index].length;
+				int spaceWidth = _chromosome.spaceList[index].width;
+				// Find the empty tile is belonged to which space.
+				if (neighbor_x >= spaceStartPos_x
+					&& neighbor_x < ( spaceStartPos_x + spaceWidth )
+					&& neighbor_y >= spaceStartPos_y
+					&& neighbor_y < ( spaceStartPos_y + spaceLength ))
+				{
+					isNeighbor = true;
+					indexNeighborSpace = index;
+				}
+				else
+				{
+					isNeighbor = false;
+				}
+			}
+		}
+		return indexNeighborSpace;
+	}
+
 	#endregion
 
 	#region Fitness_CorridorQuality
@@ -202,7 +401,7 @@ public class TestFitnessFunction : MonoBehaviour {
 
 					// Set Rectangle
 					setCorridor(_chromosome, length, width, indexGene, corridorLength, isRowCorridor);
-					Debug.Log("StartPoint = " + indexGene + ", corridorLength = " + corridorLength + ", isRowCorridor = " + isRowCorridor);
+					//Debug.Log("StartPoint = " + indexGene + ", corridorLength = " + corridorLength + ", isRowCorridor = " + isRowCorridor);
 					// Get one Corridor
 					numCorridor++;
 				}				
@@ -388,6 +587,21 @@ public class TestFitnessFunction : MonoBehaviour {
 				_chromosome.genesList[x * length + startPos_y].SpaceAttribute = GeneSpaceAttribute.Corridor;
 			}
 		}
+
+		// Save the information of Corridor
+		_chromosome.spaceList.Add(new SpaceInfo());
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].startPos = startPos;
+		if (isRow == true)
+		{
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = corridorlength;
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = 0;
+		}
+		else
+		{
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = 0;
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = corridorlength;
+		}		
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].SpaceAttribute = GeneSpaceAttribute.Corridor;
 	}
 	#endregion
 
@@ -499,6 +713,12 @@ public class TestFitnessFunction : MonoBehaviour {
 				_chromosome.genesList[x * length + y].SpaceAttribute = GeneSpaceAttribute.Rectangle;
 			}
 		}
+		// Save the information of Rectangle
+		_chromosome.spaceList.Add(new SpaceInfo());
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].startPos = startPos;
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = rectangleLength;
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = rectangleWidth;
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].SpaceAttribute = GeneSpaceAttribute.Rectangle;
 	}
 	#endregion
 	

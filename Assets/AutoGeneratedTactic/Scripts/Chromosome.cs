@@ -71,6 +71,9 @@ namespace ChromosomeDefinition
 
 			return ChromosomeClone;
 		}
+
+		// Space
+		public List<SpaceInfo> spaceList = new List<SpaceInfo>();
 	}
 
 	public class Gene
@@ -78,6 +81,25 @@ namespace ChromosomeDefinition
 		public Vector3 position;
 		public GeneType type;
 		public GeneSpaceAttribute SpaceAttribute;
+	}
+
+	public class SpaceInfo
+	{
+		public int startPos;
+		public int length;
+		public int width;
+		public GeneSpaceAttribute SpaceAttribute;
+	}
+	// we calculate the root which connected the other spaces
+	public class SpaceConnected_Root
+	{
+		public int spaceIndex;
+		public List<SpaceConnected_Leaf> connectedLeaf = new List<SpaceConnected_Leaf>();
+	}
+	// we calculate the Leaf which connected the Root
+	public class SpaceConnected_Leaf
+	{
+		public int spaceIndex;
 	}
 }
 

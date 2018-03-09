@@ -86,7 +86,7 @@ namespace GeneticAlgorithmSettingDefinition
 				_population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = 0;//FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_population[i], _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_population[i], _mapLength, _mapWidth);
-				_population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = 0;//FitnessFunction.Fitness_ConnectedQuality(_population[i], _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( 0// _population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] * weight_ImpassableDensity
 																					+ _population[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
 																					+ _population[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
@@ -108,7 +108,7 @@ namespace GeneticAlgorithmSettingDefinition
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = 0;//FitnessFunction.Fitness_ImpassableDensity(_specificPopulation[i], _numGenes, _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_specificPopulation[i], _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_specificPopulation[i], _mapLength, _mapWidth);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] =  0;//FitnessFunction.Fitness_ConnectedQuality(_specificPopulation[i], _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( 0//_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] * weight_ImpassableDensity
 																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
 																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality

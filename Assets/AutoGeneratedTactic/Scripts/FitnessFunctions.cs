@@ -420,6 +420,12 @@ public class FitnessFunctions {
 				_chromosome.genesList[x * length + y].SpaceAttribute = GeneSpaceAttribute.Rectangle;
 			}
 		}
+		// Save the information of Rectangle
+		_chromosome.spaceList.Add(new SpaceInfo());
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].startPos = startPos;
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = rectangleLength;
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = rectangleWidth;
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].SpaceAttribute = GeneSpaceAttribute.Rectangle;
 	}
 
 	#endregion
@@ -675,6 +681,20 @@ public class FitnessFunctions {
 				_chromosome.genesList[x * length + startPos_y].SpaceAttribute = GeneSpaceAttribute.Corridor;
 			}
 		}
+		// Save the information of Corridor
+		_chromosome.spaceList.Add(new SpaceInfo());
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].startPos = startPos;
+		if (isRow == true)
+		{
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = corridorlength;
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = 1;
+		}
+		else
+		{
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = 1;
+			_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = corridorlength;
+		}
+		_chromosome.spaceList[_chromosome.spaceList.Count - 1].SpaceAttribute = GeneSpaceAttribute.Corridor;
 	}
 	#endregion
 
@@ -685,91 +705,311 @@ public class FitnessFunctions {
 	/// <param name="length"></param>
 	/// <param name="width"></param>
 	/// <returns></returns>
+	//#region Fitness_ConnectedQuality
+	//public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
+	//{
+	//	float fitnessScore = 0.0f;
+
+	//	if (isConnected(chromosome.genesList, length, width) == true)
+	//	{
+	//		fitnessScore = 1.0f;
+	//	}
+	//	else
+	//	{
+	//		fitnessScore = 0.0f;
+	//	}
+
+	//	return fitnessScore;
+	//}
+
+	//bool isConnected(List<Gene> chromosome, int length, int width)
+	//{
+	//	// Is the empty tiles are connected?
+	//	bool isConnected = true;
+	//	// create the tiles map
+	//	bool[,] tilesmap = new bool[width, length];
+	//	// set values here....
+	//	// true = walkable, false = blocking
+	//	for (int x = 0; x < width; x++)
+	//	{
+	//		for (int y = 0; y < length; y++)
+	//		{
+	//			if (chromosome[x * length + y].type == GeneType.Empty)
+	//			{
+	//				tilesmap[x, y] = true;
+	//			}
+	//			else if (chromosome[x * length + y].type == GeneType.Forbidden)
+	//			{
+	//				tilesmap[x, y] = false;
+	//			}
+	//		}
+	//	}
+	//	// create a grid
+	//	Grid grid = new Grid(tilesmap);
+
+	//	// Find the first empty tile
+	//	bool isFirstEmptyTile = false;
+	//	int indexFirstEmptyTile = 0;
+	//	while (isFirstEmptyTile == false)
+	//	{
+	//		if (chromosome[indexFirstEmptyTile].type == GeneType.Empty)
+	//		{
+	//			isFirstEmptyTile = true;
+	//		}
+	//		else
+	//		{
+	//			indexFirstEmptyTile++;
+	//		}
+	//	}
+
+	//	// Start to check the map is connected.
+	//	// create source and target points
+	//	Point _from = new Point(indexFirstEmptyTile / length, indexFirstEmptyTile % length);
+	//	Point _to = new Point(0, 0);
+
+	//	// for Manhattan distance (4 directions)
+	//	List<Point> pathSearch = new List<Point>();
+
+	//	for (int index = indexFirstEmptyTile + 1; index < chromosome.Count; index++)
+	//	{
+	//		pathSearch.Clear();
+
+	//		if (chromosome[index].type == GeneType.Empty)
+	//		{
+	//			// Initial the goal.
+	//			_to.x = index / length;
+	//			_to.y = index % length;
+	//			// for Manhattan distance (4 directions)
+	//			pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
+
+	//			// NOT connect
+	//			if (pathSearch.Count == 0)
+	//			{
+	//				isConnected = false;
+	//			}
+	//		}
+	//	}
+	//	return isConnected;
+	//}
+	//#endregion
+
 	#region Fitness_ConnectedQuality
 	public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
 	{
+		detectedSpaceAttribute(chromosome);
+
 		float fitnessScore = 0.0f;
 
-		if (isConnected(chromosome.genesList, length, width) == true)
+		if (chromosome.spaceList.Count != 0)
 		{
-			fitnessScore = 1.0f;
+			if (isConnected(chromosome, length, width) == true)
+			{
+				fitnessScore = 1.0f;
+			}
+			else
+			{
+				fitnessScore = 0.0f;
+			}
 		}
 		else
 		{
 			fitnessScore = 0.0f;
 		}
-
 		return fitnessScore;
 	}
 
-	bool isConnected(List<Gene> chromosome, int length, int width)
+	void detectedSpaceAttribute(Chromosome _chromosome)
+	{
+		int indexGene = 0;
+		foreach (Gene gene in _chromosome.genesList)
+		{
+			if (gene.SpaceAttribute == GeneSpaceAttribute.None && gene.type == GeneType.Empty)
+			{
+				// Save the information of None
+				_chromosome.spaceList.Add(new SpaceInfo());
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].startPos = indexGene;
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].length = 1;
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].width = 1;
+				_chromosome.spaceList[_chromosome.spaceList.Count - 1].SpaceAttribute = GeneSpaceAttribute.None;
+			}
+			indexGene++;
+		}
+	}
+
+	bool isConnected(Chromosome _chromosome, int length, int width)
 	{
 		// Is the empty tiles are connected?
 		bool isConnected = true;
-		// create the tiles map
-		bool[,] tilesmap = new bool[width, length];
-		// set values here....
-		// true = walkable, false = blocking
-		for (int x = 0; x < width; x++)
+		List<SpaceConnected_Root> RootList = new List<SpaceConnected_Root>();
+		int[] beVisited = new int[_chromosome.spaceList.Count];// 紀錄有無拜訪過
+		int index_checking = 0;
+
+		// Finding the space which haven't be visited.
+		while (index_checking < _chromosome.spaceList.Count)
 		{
-			for (int y = 0; y < length; y++)
-			{
-				if (chromosome[x * length + y].type == GeneType.Empty)
-				{
-					tilesmap[x, y] = true;
-				}
-				else if (chromosome[x * length + y].type == GeneType.Forbidden)
-				{
-					tilesmap[x, y] = false;
-				}
-			}
+			// The index of space we find be set a root.
+			RootList.Add(new SpaceConnected_Root());
+			RootList[RootList.Count - 1].spaceIndex = index_checking;
+			// Start to find the leaf of root.
+			beVisited = findRootLeaf(_chromosome, length, width, RootList[RootList.Count - 1], beVisited);
+			index_checking++;
 		}
-		// create a grid
-		Grid grid = new Grid(tilesmap);
+		// -----End of Searching Root & Leaf-----
 
-		// Find the first empty tile
-		bool isFirstEmptyTile = false;
-		int indexFirstEmptyTile = 0;
-		while (isFirstEmptyTile == false)
+		int spaceCount = _chromosome.spaceList.Count;
+		int[] checkSpaceConnected = new int[spaceCount];// 紀錄是否連通
+		int indexRoot = 0;
+
+		visitedConnectedSpace(indexRoot, RootList, checkSpaceConnected);
+
+		for (int i = 0; i < checkSpaceConnected.Length; i++)
 		{
-			if (chromosome[indexFirstEmptyTile].type == GeneType.Empty)
+			if (checkSpaceConnected[i] == 0)
 			{
-				isFirstEmptyTile = true;
-			}
-			else
-			{
-				indexFirstEmptyTile++;
-			}
-		}
-
-		// Start to check the map is connected.
-		// create source and target points
-		Point _from = new Point(indexFirstEmptyTile / length, indexFirstEmptyTile % length);
-		Point _to = new Point(0, 0);
-
-		// for Manhattan distance (4 directions)
-		List<Point> pathSearch = new List<Point>();
-
-		for (int index = indexFirstEmptyTile + 1; index < chromosome.Count; index++)
-		{
-			pathSearch.Clear();
-
-			if (chromosome[index].type == GeneType.Empty)
-			{
-				// Initial the goal.
-				_to.x = index / length;
-				_to.y = index % length;
-				// for Manhattan distance (4 directions)
-				pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
-
-				// NOT connect
-				if (pathSearch.Count == 0)
-				{
-					isConnected = false;
-				}
+				isConnected = false;
 			}
 		}
 		return isConnected;
+	}
+
+	int[] findRootLeaf(Chromosome _chromosome, int length, int width, SpaceConnected_Root _Root, int[] _beVisited)
+	{
+		int[] _beVisitedFinished = _beVisited;
+		// Get the information of root space.
+		int rootSpace_startPos_x = (int)_chromosome.spaceList[_Root.spaceIndex].startPos / length;
+		int rootSpace_startPos_y = (int)_chromosome.spaceList[_Root.spaceIndex].startPos % length;
+		int rootSpace_length = _chromosome.spaceList[_Root.spaceIndex].length;
+		int rootSpace_width = _chromosome.spaceList[_Root.spaceIndex].width;
+		GeneSpaceAttribute rootSpaceAttribute = _chromosome.spaceList[_Root.spaceIndex].SpaceAttribute;
+
+		#region Top row
+		// Top row
+		if (rootSpace_startPos_x - 1 >= 0)
+		{
+			for (int y = rootSpace_startPos_y; y < ( rootSpace_startPos_y + rootSpace_length ); y++)
+			{
+				if (_chromosome.genesList[( rootSpace_startPos_x - 1 ) * length + y].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, ( rootSpace_startPos_x - 1 ), y);
+					_beVisited[indexNeighborSpace] = 1;
+					// Save in root.
+					_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+					_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+				}
+			}
+		}
+		#endregion
+
+		#region Right column
+		// Right column
+		if (rootSpace_startPos_y + rootSpace_length < length)
+		{
+			for (int x = rootSpace_startPos_x; x < ( rootSpace_startPos_x + rootSpace_width ); x++)
+			{
+				if (_chromosome.genesList[x * length + ( rootSpace_startPos_y + rootSpace_length )].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, x, ( rootSpace_startPos_y + rootSpace_length ));
+					_beVisited[indexNeighborSpace] = 1;
+					// Save in root.
+					_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+					_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+				}
+			}
+		}
+		#endregion
+
+		#region Bottom row
+		// Bottom row
+		if (rootSpace_startPos_x + rootSpace_width < width)
+		{
+			for (int y = rootSpace_startPos_y; y < ( rootSpace_startPos_y + rootSpace_length ); y++)
+			{
+				if (_chromosome.genesList[( rootSpace_startPos_x + rootSpace_width ) * length + y].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, ( rootSpace_startPos_x + rootSpace_width ), y);
+					_beVisited[indexNeighborSpace] = 1;
+					// Save in root.
+					_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+					_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+				}
+			}
+		}
+		#endregion
+
+		#region Left column
+		// Left column
+		if (rootSpace_startPos_y - 1 >= 0)
+		{
+			for (int x = rootSpace_startPos_x; x < ( rootSpace_startPos_x + rootSpace_width ); x++)
+			{
+				if (_chromosome.genesList[x * length + ( rootSpace_startPos_y - 1 )].type == GeneType.Empty)
+				{
+					// Find the index of the space that contain the empty tile.
+					int indexNeighborSpace = checkNeighbor(_chromosome, length, width, x, ( rootSpace_startPos_y - 1 ));
+					_beVisited[indexNeighborSpace] = 1;
+					// Save in root.
+					_Root.connectedLeaf.Add(new SpaceConnected_Leaf());
+					_Root.connectedLeaf[_Root.connectedLeaf.Count - 1].spaceIndex = indexNeighborSpace;
+				}
+			}
+		}
+		#endregion
+
+		return _beVisitedFinished;
+	}
+	// Checking the index of Neighbor. 
+	int checkNeighbor(Chromosome _chromosome, int length, int width, int neighbor_x, int neighbor_y)
+	{
+		GeneSpaceAttribute neighborSpaceAttribute = _chromosome.genesList[neighbor_x * length + neighbor_y].SpaceAttribute;
+		int indexNeighborSpace = 0;
+		bool isNeighbor = false;
+
+		for (int index = 0; index < _chromosome.spaceList.Count; index++)
+		{
+			if (isNeighbor == false && _chromosome.spaceList[index].SpaceAttribute == neighborSpaceAttribute)
+			{
+				// Get the information of space in spaceList.
+				int spaceStartPos_x = _chromosome.spaceList[index].startPos / length;
+				int spaceStartPos_y = _chromosome.spaceList[index].startPos % length;
+				int spaceLength = _chromosome.spaceList[index].length;
+				int spaceWidth = _chromosome.spaceList[index].width;
+
+				// Find the empty tile is belonged to which space.
+				if (neighbor_x >= spaceStartPos_x
+					&& neighbor_x < ( spaceStartPos_x + spaceWidth )
+					&& neighbor_y >= spaceStartPos_y
+					&& neighbor_y < ( spaceStartPos_y + spaceLength ))
+				{
+					isNeighbor = true;
+					indexNeighborSpace = index;
+				}
+				else
+				{
+					isNeighbor = false;
+				}
+			}
+		}
+		return indexNeighborSpace;
+	}
+
+	void visitedConnectedSpace(int indexRoot, List<SpaceConnected_Root> _RootList, int[] _checkSpaceConnected)
+	{
+		// Connected itself!!		
+		_checkSpaceConnected[indexRoot] = 1;
+
+		for (int indexLeaf = 0; indexLeaf < _RootList[indexRoot].connectedLeaf.Count; indexLeaf++)
+		{
+			if (_checkSpaceConnected[_RootList[indexRoot].connectedLeaf[indexLeaf].spaceIndex] == 0)
+			{
+				// Connect the leaf!!
+				_checkSpaceConnected[_RootList[indexRoot].connectedLeaf[indexLeaf].spaceIndex] = 1;
+				// visit the leafs of leaf.
+				visitedConnectedSpace(_RootList[indexRoot].connectedLeaf[indexLeaf].spaceIndex, _RootList, _checkSpaceConnected);
+			}
+		}
 	}
 	#endregion
 }

@@ -68,8 +68,8 @@ namespace GeneticAlgorithmSettingDefinition
 		#region Fitness
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
 		float weight_ImpassableDensity = 0.0f;
-		float weight_RectangleQuality = 1.0f;
-		float weight_CorridorQuality = 0.5f;
+		float weight_RectangleQuality = 0.5f;
+		float weight_CorridorQuality = 1.0f;
 		float weight_ConnectedQuality = 1.0f;
 
 		public void CalculateFitnessScores()
@@ -86,11 +86,11 @@ namespace GeneticAlgorithmSettingDefinition
 				_population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = 0;//FitnessFunction.Fitness_ImpassableDensity(_population[i], _numGenes, _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_population[i], _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_population[i], _mapLength, _mapWidth);
-				_population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = 0;//FitnessFunction.Fitness_ConnectedQuality(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(_population[i], _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( 0// _population[i].FitnessScore[FitnessFunctionName.ImpassableDensity] * weight_ImpassableDensity
 																					+ _population[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
-																					+ _population[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
-																					+ _population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+																					+ _population[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality ) * _population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] / 2.0f;
+				//+ _population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
 			}
 		}
 		// Calculate the fitness score of chromosomes in specific population.
@@ -108,12 +108,12 @@ namespace GeneticAlgorithmSettingDefinition
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = 0;//FitnessFunction.Fitness_ImpassableDensity(_specificPopulation[i], _numGenes, _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_specificPopulation[i], _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_specificPopulation[i], _mapLength, _mapWidth);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] =  0;//FitnessFunction.Fitness_ConnectedQuality(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] =  FitnessFunction.Fitness_ConnectedQuality(_specificPopulation[i], _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( 0//_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] * weight_ImpassableDensity
 																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
-																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
-																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
-		}
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality ) * _specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] / 2.0f;
+				//+ _specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+			}
 		}
 
 		#endregion
@@ -423,7 +423,8 @@ namespace GeneticAlgorithmSettingDefinition
 			// Search the best chromosome in population.
 			for (int i = 0; i < _numChromosomes; i++)
 			{
-				if (_population[index_BestChromesome].FitnessScore[FitnessFunctionName.SumOfFitnessScore] < _population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore])
+				if (_population[index_BestChromesome].FitnessScore[FitnessFunctionName.SumOfFitnessScore] < _population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore]
+					&& _population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] == 1)
 				{
 					index_BestChromesome = i;
 				}

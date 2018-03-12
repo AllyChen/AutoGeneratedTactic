@@ -46,8 +46,8 @@ public class Generate : MonoBehaviour {
 		{
 			case 0:
 				// Start GeneticAlgorithm
-				float rato_crossover = 0.5f;
-				float rato_mutation = 0.9f;
+				float rato_crossover = 0.8f;
+				float rato_mutation = 1.0f;
 
 				GeneticAlgorithm.InitialPopulation(length, width, length * width, numChromosome, numGeneration);
 
@@ -65,7 +65,7 @@ public class Generate : MonoBehaviour {
 				//GeneticAlgorithm.SaveData(numGeneration);
 				//GeneticAlgorithm.OutputData(runGenerate);
 
-				//GeneticAlgorithm.DebugTest();
+				GeneticAlgorithm.DebugTest();
 				//Time
 				var GAendTime = Time.realtimeSinceStartup - startTime;
 				Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);

@@ -63,7 +63,7 @@ public class TestFitnessFunction : MonoBehaviour {
 	}
 	#endregion
 
-	
+
 
 	#region Fitness_ConnectedQuality
 	public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
@@ -74,14 +74,8 @@ public class TestFitnessFunction : MonoBehaviour {
 
 		if (chromosome.spaceList.Count != 0)
 		{
-			if (isConnected(chromosome, length, width) == true)
-			{
-				fitnessScore = 1.0f;
-			}
-			else
-			{
-				fitnessScore = 0.0f;
-			}
+			Debug.Log("HERE?");
+			fitnessScore = isConnected(chromosome, length, width);
 		}
 		else
 		{
@@ -108,75 +102,8 @@ public class TestFitnessFunction : MonoBehaviour {
 		}
 	}
 
-	bool isConnected(Chromosome _chromosome, int length, int width)
+	float isConnected(Chromosome _chromosome, int length, int width)
 	{
-		#region A-star
-		//// create the tiles map
-		//bool[,] tilesmap = new bool[8, 8];
-		//// set values here....
-		//// true = walkable, false = blocking
-		//for (int x = 0; x < width; x++)
-		//{
-		//	for (int y = 0; y < length; y++)
-		//	{
-		//		if (chromosome[x * length + y].type == GeneType.Empty)
-		//		{
-		//			tilesmap[x, y] = true;
-		//		}
-		//		else if (chromosome[x * length + y].type == GeneType.Forbidden)
-		//		{
-		//			tilesmap[x, y] = false;
-		//		}
-		//	}
-		//}
-		//// create a grid
-		//Grid grid = new Grid(tilesmap);
-
-		//// Find the first empty tile
-		//bool isFirstEmptyTile = false;
-		//int indexFirstEmptyTile = 0;
-		//while (isFirstEmptyTile == false)
-		//{
-		//	if (chromosome[indexFirstEmptyTile].type == GeneType.Empty)
-		//	{
-		//		isFirstEmptyTile = true;
-		//	}
-		//	else
-		//	{
-		//		indexFirstEmptyTile++;
-		//	}
-		//}
-
-		//// Start to check the map is connected.
-		//// create source and target points
-		//Point _from = new Point(indexFirstEmptyTile / length, indexFirstEmptyTile % length);
-		//Point _to = new Point(0, 0);
-
-		//// for Manhattan distance (4 directions)
-		//List<Point> pathSearch = new List<Point>();
-
-		//for (int index = indexFirstEmptyTile + 1; index < chromosome.Count; index++)
-		//{
-		//	pathSearch.Clear();
-
-		//	if (chromosome[index].type == GeneType.Empty)
-		//	{
-		//		// Initial the goal.
-		//		_to.x = index / length;
-		//		_to.y = index % length;
-		//		// for Manhattan distance (4 directions)
-		//		pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
-
-		//		// NOT connect
-		//		if (pathSearch.Count == 0)
-		//		{
-		//			isConnected = false;
-		//		}
-		//	}
-		//}
-		#endregion
-		// Is the empty tiles are connected?
-		bool isConnected = true;
 		List<SpaceConnected_Root> RootList = new List<SpaceConnected_Root>();
 		int[] beVisited = new int[_chromosome.spaceList.Count];// 紀錄有無拜訪過
 		int index_checking = 0;
@@ -196,17 +123,22 @@ public class TestFitnessFunction : MonoBehaviour {
 		int spaceCount = _chromosome.spaceList.Count;
 		int[] checkSpaceConnected = new int[spaceCount];// 紀錄是否連通
 		int indexRoot = 0;
+		float connectedCount = 0.0f;
+		float connectedRatio = 0.0f;
 
 		visitedConnectedSpace(indexRoot, RootList, checkSpaceConnected);
 
 		for (int i = 0; i < checkSpaceConnected.Length; i++)
 		{
-			if (checkSpaceConnected[i] == 0)
+			if (checkSpaceConnected[i] == 1)
 			{
-				isConnected = false;
+				connectedCount++;
 			}
 		}
-		return isConnected;
+
+		connectedRatio = connectedCount / checkSpaceConnected.Length;
+
+		return connectedRatio;
 	}
 
 	int[] findRootLeaf(Chromosome _chromosome, int length, int width, SpaceConnected_Root _Root, int[] _beVisited)
@@ -334,7 +266,7 @@ public class TestFitnessFunction : MonoBehaviour {
 
 	void visitedConnectedSpace(int indexRoot, List<SpaceConnected_Root> _RootList, int[] _checkSpaceConnected)
 	{
-		// Connected itself!!
+		// Connected itself!!		
 		_checkSpaceConnected[indexRoot] = 1;
 
 		for (int indexLeaf = 0; indexLeaf < _RootList[indexRoot].connectedLeaf.Count; indexLeaf++)

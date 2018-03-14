@@ -8,10 +8,13 @@ using ChromosomeDefinition;
 public class AutoTacticRenderHandler : MonoBehaviour {
 
 	private GameObject TileStyle;
+	private GameObject GameObjectStyle;
 	public GameObject Tile_Empty;
 	public GameObject Tile_Forbidden;
 	public GameObject Tile_Rectangle;
 	public GameObject Tile_Corridor;
+	public GameObject Entrance;
+	public GameObject Exit;
 
 	public void CleanBoard(GameObject board)
 	{
@@ -58,13 +61,32 @@ public class AutoTacticRenderHandler : MonoBehaviour {
 					TileStyle = Tile_Corridor;
 				}
 
-				indexGene++;
+				switch ((int)bestChromosome.genesList[indexGene].GameObjectAttribute)
+				{
+					case 1:
+						GameObjectStyle = Entrance;
+						break;
+					case 2:
+						GameObjectStyle = Exit;
+						break;
+				}				
 
 				var newTile = Instantiate(TileStyle);
 				newTile.name = "Tile(" + Convert.ToString(y) +"," + Convert.ToString(x) + ")";
 				newTile.transform.parent = render.transform;
 				newTile.GetComponent<RectTransform>().localPosition = new Vector3(x * tile_size - offset_x, -(y * tile_size - offset_y), 0);
 				newTile.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
+				if (bestChromosome.genesList[indexGene].GameObjectAttribute != GeneGameObjectAttribute.None)
+				{
+					var gameObject = Instantiate(GameObjectStyle);
+					gameObject.name = bestChromosome.genesList[indexGene].GameObjectAttribute.ToString();
+					gameObject.transform.parent = newTile.transform;
+					gameObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+					gameObject.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
+				}
+
+				indexGene++;
 			}
 		}
 	}

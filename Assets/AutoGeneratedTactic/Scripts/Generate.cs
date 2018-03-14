@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 using GeneticAlgorithmSettingDefinition;
 using ChromosomeDefinition;
-
+using GeneticAlgorithmSettingGameObjectDefinition;
 using ParticleSwarmOptimizationSettingDefinition;
 
 public class Generate : MonoBehaviour {
@@ -17,8 +17,10 @@ public class Generate : MonoBehaviour {
 	private AutoTacticRenderHandler TacticRenderHandlar;
 	private GameObject GeneticAlgorithmSetting;
 	private GeneticAlgorithmSetting GeneticAlgorithm;
+	private GeneticAlgorithmSettingGameObject GeneticAlgorithmSettingGameObject;
 	private ParticleSwarmOptimizationSetting ParticleSwarmOptimization;
 	private int runGenerate = 0;
+	private Chromosome BestChromesome_Space = new Chromosome();
 	private Chromosome BestChromesome = new Chromosome();
 
 	// Use this for initialization
@@ -27,20 +29,23 @@ public class Generate : MonoBehaviour {
 		AutoTacticRender = GameObject.Find("AutoTacticRender");
 		TacticRenderHandlar = GameObject.Find("AutoTacticRender").GetComponent<AutoTacticRenderHandler>();
 		GeneticAlgorithm = GameObject.Find("GeneticAlgorithmSetting").GetComponent<GeneticAlgorithmSetting>();
+		GeneticAlgorithmSettingGameObject = GameObject.Find("GeneticAlgorithmSettingGameObject").GetComponent<GeneticAlgorithmSettingGameObject>();
 		ParticleSwarmOptimization = GameObject.Find("ParticleSwarmOptimizationSetting").GetComponent<ParticleSwarmOptimizationSetting>();
 	}
 
 	int useMethod = 0;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
+	int length;
+	int width;
+	int numGeneration;
+	int numChromosome;
 
 	public void OnClick_Generate()
 	{
 		var startTime = Time.realtimeSinceStartup;
-		int length;
-		int width;
 		length = ParameterSetting.GetComponent<Parameters>().GetTheLenghOfTile();
 		width = ParameterSetting.GetComponent<Parameters>().GetTheWidthOfTile();
-		int numGeneration = 100;
-		int numChromosome = 100;
+		numGeneration = 100;
+		numChromosome = 100;
 
 		switch (useMethod)
 		{
@@ -61,11 +66,11 @@ public class Generate : MonoBehaviour {
 					GeneticAlgorithm.Replace();
 				}
 
-				BestChromesome = GeneticAlgorithm.BestChromesome();
+				BestChromesome_Space = GeneticAlgorithm.BestChromesome().CloneSpace();
 				//GeneticAlgorithm.SaveData(numGeneration);
 				//GeneticAlgorithm.OutputData(runGenerate);
 
-				GeneticAlgorithm.DebugTest();
+				//GeneticAlgorithm.DebugTest();
 				//Time
 				var GAendTime = Time.realtimeSinceStartup - startTime;
 				Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
@@ -93,10 +98,24 @@ public class Generate : MonoBehaviour {
 				break;
 		}
 
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosome, numGeneration, BestChromesome_Space);
+		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
+
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
 		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromesome);
 
 		runGenerate++;
 	}
+
+	public void OnClick_GenerateGameObject()
+	{
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosome, numGeneration, BestChromesome_Space);
+		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
+
+		// Render the tiles.
+		TacticRenderHandlar.CleanBoard(AutoTacticRender);
+		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromesome);
+	}
+
 }

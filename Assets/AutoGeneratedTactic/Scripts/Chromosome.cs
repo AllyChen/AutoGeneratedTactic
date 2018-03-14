@@ -24,6 +24,18 @@ namespace ChromosomeDefinition
 		NumberOfGeneSpaceAttribute
 	}
 
+	// Enum for GameObject attribute of gene.
+	public enum GeneGameObjectAttribute
+	{
+		None = 0,
+		entrance = 1,
+		exit = 2,
+		enemy = 3,
+		trap = 4,
+		treasure = 5,
+		NumberOfGeneSpaceAttribute
+	}
+
 	// Enum for fitness function.
 	public enum FitnessFunctionName
 	{
@@ -74,6 +86,38 @@ namespace ChromosomeDefinition
 
 		// Space
 		public List<SpaceInfo> spaceList = new List<SpaceInfo>();
+
+		public Chromosome CloneSpace()
+		{
+			var ChromosomeClone = new Chromosome();
+			// Genes
+			var genesListClone = new List<Gene>();
+			foreach (var originalGene in this.genesList)
+			{
+				Gene gene = new Gene();
+				gene.position = originalGene.position;
+				gene.type = originalGene.type;
+				gene.SpaceAttribute = originalGene.SpaceAttribute;
+				genesListClone.Add(gene);
+			}
+			ChromosomeClone.genesList = genesListClone;
+
+			// SpaceList
+			var spaceListClone = new List<SpaceInfo>();
+			foreach (var originalSpaceInfo in this.spaceList)
+			{
+				SpaceInfo spaceInfo = new SpaceInfo();
+				spaceInfo.startPos = originalSpaceInfo.startPos;
+				spaceInfo.length = originalSpaceInfo.length;
+				spaceInfo.width = originalSpaceInfo.width;
+				spaceInfo.SpaceAttribute = originalSpaceInfo.SpaceAttribute;
+				spaceListClone.Add(spaceInfo);
+			}
+			ChromosomeClone.spaceList = spaceListClone;
+
+			return ChromosomeClone;
+		}
+
 	}
 
 	public class Gene
@@ -81,6 +125,7 @@ namespace ChromosomeDefinition
 		public Vector3 position;
 		public GeneType type;
 		public GeneSpaceAttribute SpaceAttribute;
+		public GeneGameObjectAttribute GameObjectAttribute;
 	}
 
 	public class SpaceInfo

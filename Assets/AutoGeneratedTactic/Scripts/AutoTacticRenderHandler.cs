@@ -15,6 +15,9 @@ public class AutoTacticRenderHandler : MonoBehaviour {
 	public GameObject Tile_Corridor;
 	public GameObject Entrance;
 	public GameObject Exit;
+	public GameObject Enemy;
+	public GameObject Trap;
+	public GameObject Treasure;
 
 	public void CleanBoard(GameObject board)
 	{
@@ -68,6 +71,15 @@ public class AutoTacticRenderHandler : MonoBehaviour {
 						break;
 					case 2:
 						GameObjectStyle = Exit;
+						break;
+					case 3:
+						GameObjectStyle = Enemy;
+						break;
+					case 4:
+						GameObjectStyle = Trap;
+						break;
+					case 5:
+						GameObjectStyle = Treasure;
 						break;
 				}				
 

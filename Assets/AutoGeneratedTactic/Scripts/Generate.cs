@@ -98,7 +98,7 @@ public class Generate : MonoBehaviour {
 				break;
 		}
 
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosome, numGeneration, BestChromesome_Space);
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, 10, 10, BestChromesome_Space);
 		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
 
 		// Render the tiles.
@@ -110,7 +110,7 @@ public class Generate : MonoBehaviour {
 
 	public void OnClick_GenerateGameObject()
 	{
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosome, numGeneration, BestChromesome_Space);
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, 10, 10, BestChromesome_Space);
 		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
 
 		// Render the tiles.

@@ -705,94 +705,6 @@ public class FitnessFunctions {
 	/// <param name="length"></param>
 	/// <param name="width"></param>
 	/// <returns></returns>
-	//#region Fitness_ConnectedQuality
-	//public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
-	//{
-	//	float fitnessScore = 0.0f;
-
-	//	if (isConnected(chromosome.genesList, length, width) == true)
-	//	{
-	//		fitnessScore = 1.0f;
-	//	}
-	//	else
-	//	{
-	//		fitnessScore = 0.0f;
-	//	}
-
-	//	return fitnessScore;
-	//}
-
-	//bool isConnected(List<Gene> chromosome, int length, int width)
-	//{
-	//	// Is the empty tiles are connected?
-	//	bool isConnected = true;
-	//	// create the tiles map
-	//	bool[,] tilesmap = new bool[width, length];
-	//	// set values here....
-	//	// true = walkable, false = blocking
-	//	for (int x = 0; x < width; x++)
-	//	{
-	//		for (int y = 0; y < length; y++)
-	//		{
-	//			if (chromosome[x * length + y].type == GeneType.Empty)
-	//			{
-	//				tilesmap[x, y] = true;
-	//			}
-	//			else if (chromosome[x * length + y].type == GeneType.Forbidden)
-	//			{
-	//				tilesmap[x, y] = false;
-	//			}
-	//		}
-	//	}
-	//	// create a grid
-	//	Grid grid = new Grid(tilesmap);
-
-	//	// Find the first empty tile
-	//	bool isFirstEmptyTile = false;
-	//	int indexFirstEmptyTile = 0;
-	//	while (isFirstEmptyTile == false)
-	//	{
-	//		if (chromosome[indexFirstEmptyTile].type == GeneType.Empty)
-	//		{
-	//			isFirstEmptyTile = true;
-	//		}
-	//		else
-	//		{
-	//			indexFirstEmptyTile++;
-	//		}
-	//	}
-
-	//	// Start to check the map is connected.
-	//	// create source and target points
-	//	Point _from = new Point(indexFirstEmptyTile / length, indexFirstEmptyTile % length);
-	//	Point _to = new Point(0, 0);
-
-	//	// for Manhattan distance (4 directions)
-	//	List<Point> pathSearch = new List<Point>();
-
-	//	for (int index = indexFirstEmptyTile + 1; index < chromosome.Count; index++)
-	//	{
-	//		pathSearch.Clear();
-
-	//		if (chromosome[index].type == GeneType.Empty)
-	//		{
-	//			// Initial the goal.
-	//			_to.x = index / length;
-	//			_to.y = index % length;
-	//			// for Manhattan distance (4 directions)
-	//			pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
-
-	//			// NOT connect
-	//			if (pathSearch.Count == 0)
-	//			{
-	//				isConnected = false;
-	//			}
-	//		}
-	//	}
-	//	return isConnected;
-	//}
-	//#endregion
-
 	#region Fitness_ConnectedQuality
 	public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
 	{
@@ -1005,6 +917,80 @@ public class FitnessFunctions {
 				// visit the leafs of leaf.
 				visitedConnectedSpace(_RootList[indexRoot].connectedLeaf[indexLeaf].spaceIndex, _RootList, _checkSpaceConnected);
 			}
+		}
+	}
+	#endregion
+
+	/// <summary>
+	/// 計算MainPath在EmptyTiles中的比例。
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <param name="numEmpty"></param>
+	/// <returns></returns>
+	#region Fitness_MainPathQuality
+	public float Fitness_MainPathQuality(Chromosome chromosome, int length, int width, int numEmpty)
+	{
+		float fitnessScore = 0.0f;
+
+		FindMainPath(chromosome, length, width);
+		fitnessScore = (float)chromosome.mainPath.Count / numEmpty;
+
+		return fitnessScore;
+	}
+
+	void FindMainPath(Chromosome chromosome, int length, int width)
+	{
+		// Initial
+		int startPos_x = 0;
+		int startPos_y = 0;
+		int endPos_x = 0;
+		int endPos_y = 0;
+		chromosome.mainPath.Clear();
+
+		// create the tiles map
+		bool[,] tilesmap = new bool[width, length];
+		// set values here....
+		// true = walkable, false = blocking
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < length; y++)
+			{
+				if (chromosome.genesList[x * length + y].type == GeneType.Empty)
+				{
+					tilesmap[x, y] = true;
+				}
+				if (chromosome.genesList[x * length + y].type == GeneType.Forbidden)
+				{
+					tilesmap[x, y] = false;
+				}
+				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.entrance)
+				{
+					startPos_x = x;
+					startPos_y = y;
+				}
+				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.exit)
+				{
+					endPos_x = x;
+					endPos_y = y;
+				}
+			}
+		}
+
+		// create a grid
+		Grid grid = new Grid(tilesmap);
+		// create source and target points
+		Point _from = new Point(startPos_x, startPos_y);
+		Point _to = new Point(endPos_x, endPos_y);
+
+		// for Manhattan distance (4 directions)
+		List<Point> pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
+
+		chromosome.mainPath.Add(chromosome.genesList[startPos_x * length + startPos_y]); // Add Start point
+		foreach (var item in pathSearch)
+		{
+			chromosome.mainPath.Add(chromosome.genesList[item.x * length + item.y]);
 		}
 	}
 	#endregion

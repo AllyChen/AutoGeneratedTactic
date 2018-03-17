@@ -14,56 +14,146 @@ public class TestFitnessFunction : MonoBehaviour {
 	//345 //[1,0][1,1][1,2]
 	//678 //[2,0][2,1][2,2]
 	private int[,] TestMapArray = {
-	{0,0,0,0,0,0,1,1},//  00 01 02 03 04 05 06 07
+	{0,1,1,1,1,1,1,1},//  00 01 02 03 04 05 06 07
 	{0,0,0,0,1,1,1,1},//  08 09 10 11 12 13 14 15
 	{0,1,1,0,1,1,1,1},//  16 17 18 19 20 21 22 23
-	{0,1,1,0,0,0,1,1},//  24 25 26 27 28 29 30 31
-	{0,0,0,0,0,1,1,1},//  32 33 34 35 36 37 38 39
-	{1,1,1,0,0,1,1,1},//  40 41 42 43 44 45 46 47
-	{0,0,0,0,0,0,1,1},//  48 49 50 51 52 53 54 55
-	{1,1,1,1,1,1,0,0}};// 56 57 58 59 60 61 62 63
+	{0,1,1,0,1,1,1,1},//  24 25 26 27 28 29 30 31
+	{0,1,1,0,0,0,0,1},//  32 33 34 35 36 37 38 39
+	{0,0,0,0,0,0,0,1},//  40 41 42 43 44 45 46 47
+	{1,1,1,1,1,1,0,1},//  48 49 50 51 52 53 54 55
+	{1,1,1,1,1,1,0,1}};// 56 57 58 59 60 61 62 63
 
 	private Chromosome TestMap = new Chromosome();
+	private Chromosome TestMap2 = new Chromosome();
 
 	void Start()
 	{
-		//InitialTestMap();
-		//float test1 = Fitness_RectangleQuality(TestMap, 8, 8);
-		//float test2 = Fitness_CorridorQuality(TestMap, 8, 8);
-		////detectedSpaceAttribute(TestMap);
-		////for (int i = 0; i < TestMap.spaceList.Count; i++)
-		////{
-		////	Debug.Log("==Index_" + i + "==");
-		////	Debug.Log("startPos = " + TestMap.spaceList[i].startPos);
-		////	Debug.Log("length = " + TestMap.spaceList[i].length);
-		////	Debug.Log("width = " + TestMap.spaceList[i].width);
-		////	Debug.Log("SpaceAttribute = " + TestMap.spaceList[i].SpaceAttribute);
-		////}
-		//Debug.Log(Fitness_ConnectedQuality(TestMap, 8, 8));
+		//InitialTestMap(TestMapArray, TestMap);
+		//InitialTestMap(TestMapArray, TestMap2);
+		//float test1 = Fitness_CorridorQuality(TestMap, 8, 8);
+		//float test2 = Fitness_RectangleQuality(TestMap, 8, 8);
+
+		//TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
+		//TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		//TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
+		//TestMap.AddGameObjectInList(45, GeneGameObjectAttribute.enemy);
+		//TestMap.AddGameObjectInList(11, GeneGameObjectAttribute.trap);
+		//TestMap.AddGameObjectInList(24, GeneGameObjectAttribute.trap);
+		//TestMap.AddGameObjectInList(40, GeneGameObjectAttribute.treasure);
+
+		//TestMap2.AddGameObjectInList(40, GeneGameObjectAttribute.entrance);
+		//TestMap2.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		//TestMap2.AddGameObjectInList(9, GeneGameObjectAttribute.enemy);
+		//TestMap2.AddGameObjectInList(10, GeneGameObjectAttribute.enemy);
+		//TestMap2.AddGameObjectInList(35, GeneGameObjectAttribute.enemy);
+		//TestMap2.AddGameObjectInList(24, GeneGameObjectAttribute.treasure);
+		//TestMap2.AddGameObjectInList(45, GeneGameObjectAttribute.treasure);
+
+		//TestMap.settingGameObject();
+		//TestMap2.settingGameObject();
+
+		//CrossoverMethod(TestMap.gameObjectList, TestMap2.gameObjectList);
+
+		//int num = 0;
+		//foreach (var indivial in _childsGameObjectListPopulation)
+		//{
+		//	Debug.Log("===" + num + "===");
+		//	foreach (var item in indivial)
+		//	{
+		//		Debug.Log(item.GameObjectAttribute);
+		//		Debug.Log(item.Position);
+		//	}
+		//	num++;
+		//}
 	}
+
 	#region InitialTestMap
-	public void InitialTestMap()
+	public void InitialTestMap(int[,] MapArray, Chromosome Map)
 	{
 		// Create the genes in each chromosomes.
 		for (int x = 0; x < 8; x++)
 		{
 			for (int y = 0; y < 8; y++)
 			{
-				TestMap.genesList.Add(new Gene());
-				if (TestMapArray[x, y] == 0)
+				Map.genesList.Add(new Gene());
+				if (MapArray[x, y] == 0)
 				{
-					TestMap.genesList[8 * x + y].type = GeneType.Empty;
+					Map.genesList[8 * x + y].type = GeneType.Empty;
 				}
-				else if (TestMapArray[x, y] == 1)
+				else if (MapArray[x, y] == 1)
 				{
-					TestMap.genesList[8 * x + y].type = GeneType.Forbidden;
+					Map.genesList[8 * x + y].type = GeneType.Forbidden;
 				}
 			}
 		}
 	}
 	#endregion
 
+	#region Fitness_MainPathQuality
+	public float Fitness_MainPathQuality(Chromosome chromosome, int length, int width, int numEmpty)
+	{
+		float fitnessScore = 0.0f;
 
+		FindMainPath(chromosome, length, width);
+		fitnessScore = (float)chromosome.mainPath.Count / numEmpty;
+
+		return fitnessScore;
+	}
+
+	void FindMainPath(Chromosome chromosome, int length, int width)
+	{
+		// Initial
+		int startPos_x = 0;
+		int startPos_y = 0;
+		int endPos_x = 0;
+		int endPos_y = 0;
+		chromosome.mainPath.Clear();
+
+		// create the tiles map
+		bool[,] tilesmap = new bool[width, length];
+		// set values here....
+		// true = walkable, false = blocking
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < length; y++)
+			{
+				if (chromosome.genesList[x * length + y].type == GeneType.Empty)
+				{
+					tilesmap[x, y] = true;
+				}
+				if (chromosome.genesList[x * length + y].type == GeneType.Forbidden)
+				{
+					tilesmap[x, y] = false;
+				}
+				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.entrance)
+				{
+					startPos_x = x;
+					startPos_y = y;
+				}
+				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.exit)
+				{
+					endPos_x = x;
+					endPos_y = y;
+				}
+			}
+		}
+
+		// create a grid
+		Grid grid = new Grid(tilesmap);
+		// create source and target points
+		Point _from = new Point(startPos_x, startPos_y);
+		Point _to = new Point(endPos_x, endPos_y);
+
+		// for Manhattan distance (4 directions)
+		List<Point> pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
+	
+		chromosome.mainPath.Add(chromosome.genesList[startPos_x * length + startPos_y]); // Add Start point
+		foreach (var item in pathSearch)
+		{
+			chromosome.mainPath.Add(chromosome.genesList[item.x * length + item.y]);
+		}	
+	}
+	#endregion
 
 	#region Fitness_ConnectedQuality
 	public float Fitness_ConnectedQuality(Chromosome chromosome, int length, int width)
@@ -942,6 +1032,184 @@ public class TestFitnessFunction : MonoBehaviour {
 		}
 		#endregion
 	}
+	#endregion
+
+	#region Test_GameObject_Crossover
+
+	List<List<GameObjectInfo>> _childsGameObjectListPopulation = new List<List<GameObjectInfo>>();
+
+	// Determine which type of gameobject is the first one to crossover.
+	int[] RandomGameObjectType()
+	{
+		// Initial the array.
+		int[] indexGameObjectTypeArray = new int[(int)GeneGameObjectAttribute.NumberOfGeneSpaceAttribute - 1];
+		for (int index = 0; index < (int)GeneGameObjectAttribute.NumberOfGeneSpaceAttribute - 1; index++)
+		{
+			indexGameObjectTypeArray[index] = index + 1;
+		}
+
+		// Random the index array.
+		for (int index = indexGameObjectTypeArray.Length - 1; index > 0; index--)
+		{
+			int randomArrayIndex = Random.Range(0, index);
+			int tempValue = indexGameObjectTypeArray[randomArrayIndex];
+			// Swap the value with the last one.
+			indexGameObjectTypeArray[randomArrayIndex] = indexGameObjectTypeArray[index];
+			indexGameObjectTypeArray[index] = tempValue;
+		}
+		return indexGameObjectTypeArray;
+	}
+	// Search each kind of Game Object in Parent
+	List<List<GameObjectInfo>> SearchGameObject(List<GameObjectInfo> GameObjectList)
+	{
+		List<List<GameObjectInfo>> GameObjectPositionList = new List<List<GameObjectInfo>>();
+		// Initial
+		for (int num = 0; num < (int)GeneGameObjectAttribute.NumberOfGeneSpaceAttribute - 1; num++)
+		{
+			GameObjectPositionList.Add(new List<GameObjectInfo>());
+		}
+		foreach (var gameObject in GameObjectList)
+		{
+			switch (gameObject.GameObjectAttribute)
+			{
+				case GeneGameObjectAttribute.entrance:
+					GameObjectPositionList[0].Add(new GameObjectInfo());
+					GameObjectPositionList[0][GameObjectPositionList[0].Count - 1].Position = gameObject.Position;
+					GameObjectPositionList[0][GameObjectPositionList[0].Count - 1].GameObjectAttribute = gameObject.GameObjectAttribute;
+					break;
+				case GeneGameObjectAttribute.exit:
+					GameObjectPositionList[1].Add(new GameObjectInfo());
+					GameObjectPositionList[1][GameObjectPositionList[1].Count - 1].Position = gameObject.Position;
+					GameObjectPositionList[1][GameObjectPositionList[1].Count - 1].GameObjectAttribute = gameObject.GameObjectAttribute;
+					break;
+				case GeneGameObjectAttribute.enemy:
+					GameObjectPositionList[2].Add(new GameObjectInfo());
+					GameObjectPositionList[2][GameObjectPositionList[2].Count - 1].Position = gameObject.Position;
+					GameObjectPositionList[2][GameObjectPositionList[2].Count - 1].GameObjectAttribute = gameObject.GameObjectAttribute;
+					break;
+				case GeneGameObjectAttribute.trap:
+					GameObjectPositionList[3].Add(new GameObjectInfo());
+					GameObjectPositionList[3][GameObjectPositionList[3].Count - 1].Position = gameObject.Position;
+					GameObjectPositionList[3][GameObjectPositionList[3].Count - 1].GameObjectAttribute = gameObject.GameObjectAttribute;
+					break;
+				case GeneGameObjectAttribute.treasure:
+					GameObjectPositionList[4].Add(new GameObjectInfo());
+					GameObjectPositionList[4][GameObjectPositionList[4].Count - 1].Position = gameObject.Position;
+					GameObjectPositionList[4][GameObjectPositionList[4].Count - 1].GameObjectAttribute = gameObject.GameObjectAttribute;
+					break;
+			}
+		}
+		return GameObjectPositionList;
+	}
+
+	List<GameObjectInfo> gameObjectListCopy(List<List<GameObjectInfo>> originalgGameObjectList)
+	{
+		var GameObjectListClone = new List<GameObjectInfo>();
+		foreach (var type in originalgGameObjectList)
+		{
+			foreach (var item in type)
+			{
+				GameObjectListClone.Add(new GameObjectInfo());
+				GameObjectListClone[GameObjectListClone.Count - 1].Position = item.Position;
+				GameObjectListClone[GameObjectListClone.Count - 1].GameObjectAttribute = item.GameObjectAttribute;
+			}				
+		}
+		return GameObjectListClone;
+	}
+
+	void CrossoverMethod(List<GameObjectInfo> parent_1, List<GameObjectInfo> parent_2)
+	{
+		List<List<GameObjectInfo>> child_1_GameObjectPositionList = SearchGameObject(parent_1);
+		List<List<GameObjectInfo>> child_2_GameObjectPositionList = SearchGameObject(parent_2);
+
+		// Save the position of Game Object
+		List<List<GameObjectInfo>> Parent_1_GameObjectPositionList = SearchGameObject(parent_1);
+		List<List<GameObjectInfo>> Parent_2_GameObjectPositionList = SearchGameObject(parent_2);
+		
+		//// Random select the type of game object which need to crossocver
+		//int[] gameObjectTypeArray = RandomGameObjectType();
+		//int numCrossoverGameObject = Random.Range(1, (int)GeneGameObjectAttribute.NumberOfGeneSpaceAttribute); // The number of GameObject type need to crossover.
+		
+		//// Set the value to know that this game object will crossover or not.
+		//int[] isCrossoverArray = new int[(int)GeneGameObjectAttribute.NumberOfGeneSpaceAttribute - 1];
+		//for (int typeCrossover = 0; typeCrossover < numCrossoverGameObject; typeCrossover++)
+		//{
+		//	isCrossoverArray[gameObjectTypeArray[typeCrossover] - 1] = 1;
+		//}
+
+		//for (int i = 0; i < isCrossoverArray.Length; i++)
+		//{
+		//	Debug.Log(isCrossoverArray[i]);
+		//}
+
+		//Debug.Log("==================");
+		// Start to Crossover
+		#region Start to Crossover
+		for (int typeGameObject = 0; typeGameObject < (int)GeneGameObjectAttribute.NumberOfGeneSpaceAttribute - 1; typeGameObject++)
+		{
+			// If parent_1 has this type of game object
+			if (Parent_1_GameObjectPositionList[typeGameObject].Count > 0)
+			{
+				// Start to swap the content of gameObjectList from Parent_2
+				for (int indexParent_1 = 0; indexParent_1 < Parent_1_GameObjectPositionList[typeGameObject].Count; indexParent_1++)
+				{
+					for (int indexParent_2 = 0; indexParent_2 < Parent_2_GameObjectPositionList[typeGameObject].Count; indexParent_2++)
+					{
+						bool isNone = true;
+						foreach (var type in child_1_GameObjectPositionList)
+						{
+							foreach (var item in type)
+							{
+								if (item.Position == Parent_2_GameObjectPositionList[typeGameObject][indexParent_2].Position)
+								{
+									isNone = false;
+								}
+							}
+						}
+
+						if (isNone == true)
+						{
+							child_1_GameObjectPositionList[typeGameObject][indexParent_1].Position = Parent_2_GameObjectPositionList[typeGameObject][indexParent_2].Position;
+							break;
+						}
+					}
+				}
+			}
+			// If parent_2 has this type of game object
+			if (Parent_2_GameObjectPositionList[typeGameObject].Count > 0)
+			{
+				// Start to swap the content of gameObjectList from Parent_1
+				for (int indexParent_2 = 0; indexParent_2 < Parent_2_GameObjectPositionList[typeGameObject].Count; indexParent_2++)
+				{
+					for (int indexParent_1 = 0; indexParent_1 < Parent_1_GameObjectPositionList[typeGameObject].Count; indexParent_1++)
+					{
+						bool isNone = true;
+						foreach (var type in child_2_GameObjectPositionList)
+						{
+							foreach (var item in type)
+							{
+								if (item.Position == Parent_1_GameObjectPositionList[typeGameObject][indexParent_1].Position)
+								{
+									isNone = false;
+								}
+							}
+						}
+
+						if (isNone == true)
+						{
+							child_2_GameObjectPositionList[typeGameObject][indexParent_2].Position = Parent_1_GameObjectPositionList[typeGameObject][indexParent_1].Position;
+							break;
+						}
+					}
+				}
+			}
+		}
+		#endregion
+
+		_childsGameObjectListPopulation.Add(gameObjectListCopy(child_1_GameObjectPositionList));
+		_childsGameObjectListPopulation.Add(gameObjectListCopy(child_2_GameObjectPositionList));
+	}
+
 	#endregion
 
 

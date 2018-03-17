@@ -43,6 +43,7 @@ namespace ChromosomeDefinition
 		RectangleQuality,
 		CorridorQuality,
 		ConnectedQuality,
+		MainPathQuality,
 		NumberOfFitnessFunctionName,
 		SumOfFitnessScore
 	}
@@ -57,6 +58,7 @@ namespace ChromosomeDefinition
 					{ FitnessFunctionName.RectangleQuality   , 0.0f },
 					{ FitnessFunctionName.CorridorQuality   , 0.0f },
 					{ FitnessFunctionName.ConnectedQuality   , 0.0f },
+					{ FitnessFunctionName.MainPathQuality   , 0.0f },
 					{ FitnessFunctionName.SumOfFitnessScore   , 0.0f },
 				};
 
@@ -68,7 +70,6 @@ namespace ChromosomeDefinition
 			foreach (var originalGene in this.genesList)
 			{
 				Gene gene = new Gene();
-				gene.position = originalGene.position;
 				gene.type = originalGene.type;
 				genesListClone.Add(gene);
 			}
@@ -79,6 +80,7 @@ namespace ChromosomeDefinition
 			ChromosomeClone.FitnessScore[FitnessFunctionName.RectangleQuality] = this.FitnessScore[FitnessFunctionName.RectangleQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.CorridorQuality] = this.FitnessScore[FitnessFunctionName.CorridorQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.ConnectedQuality] = this.FitnessScore[FitnessFunctionName.ConnectedQuality];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.MainPathQuality] = this.FitnessScore[FitnessFunctionName.MainPathQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = this.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 
 			return ChromosomeClone;
@@ -95,7 +97,6 @@ namespace ChromosomeDefinition
 			foreach (var originalGene in this.genesList)
 			{
 				Gene gene = new Gene();
-				gene.position = originalGene.position;
 				gene.type = originalGene.type;
 				gene.SpaceAttribute = originalGene.SpaceAttribute;
 				genesListClone.Add(gene);
@@ -117,12 +118,35 @@ namespace ChromosomeDefinition
 
 			return ChromosomeClone;
 		}
+		// GameObject
+		public List<GameObjectInfo> gameObjectList = new List<GameObjectInfo>();
 
+		public void AddGameObjectInList(int Position, GeneGameObjectAttribute GameObjectAttribute)
+		{
+			this.gameObjectList.Add(new GameObjectInfo());
+			this.gameObjectList[gameObjectList.Count - 1].Position = Position;
+			this.gameObjectList[gameObjectList.Count - 1].GameObjectAttribute = GameObjectAttribute;
+		}
+
+		public void settingGameObject()
+		{
+			// Initial
+			foreach (var gene in this.genesList)
+			{
+				gene.GameObjectAttribute = GeneGameObjectAttribute.None;
+			}
+			// Setting the game object
+			foreach (var gameObject in this.gameObjectList)
+			{
+				genesList[gameObject.Position].GameObjectAttribute = gameObject.GameObjectAttribute;
+			}
+		}
+		// Main Path
+		public List<Gene> mainPath = new List<Gene>();
 	}
 
 	public class Gene
 	{
-		public Vector3 position;
 		public GeneType type;
 		public GeneSpaceAttribute SpaceAttribute;
 		public GeneGameObjectAttribute GameObjectAttribute;
@@ -145,6 +169,12 @@ namespace ChromosomeDefinition
 	public class SpaceConnected_Leaf
 	{
 		public int spaceIndex;
+	}
+
+	public class GameObjectInfo
+	{
+		public int Position;
+		public GeneGameObjectAttribute GameObjectAttribute;
 	}
 }
 

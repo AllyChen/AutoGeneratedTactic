@@ -26,45 +26,46 @@ public class TestFitnessFunction : MonoBehaviour {
 	private Chromosome TestMap = new Chromosome();
 	private Chromosome TestMap2 = new Chromosome();
 
+	int[] _numMinGameObject = new int[5] { 1, 1, 1, 1, 1 };
+	int[] _numMaxGameObject = new int[5] { 1, 1, 3, 2 ,2 };
+
+	private List<int> EmptyTiles = new List<int>();
+
 	void Start()
 	{
-		//InitialTestMap(TestMapArray, TestMap);
-		//InitialTestMap(TestMapArray, TestMap2);
-		//float test1 = Fitness_CorridorQuality(TestMap, 8, 8);
-		//float test2 = Fitness_RectangleQuality(TestMap, 8, 8);
+		EmptyTiles.Clear();
+		InitialTestMap(TestMapArray, TestMap);
+		InitialTestMap(TestMapArray, TestMap2);
+		float test1 = Fitness_CorridorQuality(TestMap, 8, 8);
+		float test2 = Fitness_RectangleQuality(TestMap, 8, 8);
 
-		//TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
-		//TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		//TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
-		//TestMap.AddGameObjectInList(45, GeneGameObjectAttribute.enemy);
-		//TestMap.AddGameObjectInList(11, GeneGameObjectAttribute.trap);
-		//TestMap.AddGameObjectInList(24, GeneGameObjectAttribute.trap);
-		//TestMap.AddGameObjectInList(40, GeneGameObjectAttribute.treasure);
+		TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
+		TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
+		TestMap.AddGameObjectInList(45, GeneGameObjectAttribute.enemy);
+		TestMap.AddGameObjectInList(11, GeneGameObjectAttribute.trap);
+		TestMap.AddGameObjectInList(24, GeneGameObjectAttribute.trap);
+		TestMap.AddGameObjectInList(40, GeneGameObjectAttribute.treasure);
 
-		//TestMap2.AddGameObjectInList(40, GeneGameObjectAttribute.entrance);
-		//TestMap2.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		//TestMap2.AddGameObjectInList(9, GeneGameObjectAttribute.enemy);
-		//TestMap2.AddGameObjectInList(10, GeneGameObjectAttribute.enemy);
-		//TestMap2.AddGameObjectInList(35, GeneGameObjectAttribute.enemy);
-		//TestMap2.AddGameObjectInList(24, GeneGameObjectAttribute.treasure);
-		//TestMap2.AddGameObjectInList(45, GeneGameObjectAttribute.treasure);
+		TestMap2.AddGameObjectInList(40, GeneGameObjectAttribute.entrance);
+		TestMap2.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		TestMap2.AddGameObjectInList(9, GeneGameObjectAttribute.enemy);
+		TestMap2.AddGameObjectInList(10, GeneGameObjectAttribute.enemy);
+		TestMap2.AddGameObjectInList(35, GeneGameObjectAttribute.enemy);
+		TestMap2.AddGameObjectInList(24, GeneGameObjectAttribute.treasure);
+		TestMap2.AddGameObjectInList(45, GeneGameObjectAttribute.treasure);
 
-		//TestMap.settingGameObject();
-		//TestMap2.settingGameObject();
+		TestMap.settingGameObject();
+		TestMap2.settingGameObject();
 
-		//CrossoverMethod(TestMap.gameObjectList, TestMap2.gameObjectList);
+		for (int index = 0; index < TestMap2.genesList.Count; index++)
+		{
+			if (TestMap2.genesList[index].type == GeneType.Empty)
+			{
+				EmptyTiles.Add(index);
+			}
+		}
 
-		//int num = 0;
-		//foreach (var indivial in _childsGameObjectListPopulation)
-		//{
-		//	Debug.Log("===" + num + "===");
-		//	foreach (var item in indivial)
-		//	{
-		//		Debug.Log(item.GameObjectAttribute);
-		//		Debug.Log(item.Position);
-		//	}
-		//	num++;
-		//}
 	}
 
 	#region InitialTestMap
@@ -1212,6 +1213,142 @@ public class TestFitnessFunction : MonoBehaviour {
 
 	#endregion
 
+	#region Test_GameObject_Mutation
+	int[] mutateGameObjectTypeArray;
 
+	void RandomMutateGameObjectType()
+	{
+		// The count of GameObjectType
+		int count_GameObjectType = (int)GeneGameObjectAttribute.NumberOfGeneSpaceAttribute - 1;
+
+		// Initial the array.
+		mutateGameObjectTypeArray = new int[count_GameObjectType];
+		for (int index = 0; index < count_GameObjectType; index++)
+		{
+			mutateGameObjectTypeArray[index] = index + 1;
+		}
+
+		// Random the index array.
+		for (int index = count_GameObjectType - 1; index > 0; index--)
+		{
+			int randomArrayIndex = Random.Range(0, index);
+			int tempValue = mutateGameObjectTypeArray[randomArrayIndex];
+			// Swap the value with the last one.
+			mutateGameObjectTypeArray[randomArrayIndex] = mutateGameObjectTypeArray[index];
+			mutateGameObjectTypeArray[index] = tempValue;
+		}
+	}
+
+	void MutationMethod(List<GameObjectInfo> originalGameObjectList)
+	{
+		RandomMutateGameObjectType();
+
+		int count_currentGameObject = 0;
+		int startIndexGameObject = 0;
+		for (int index = 0; index < mutateGameObjectTypeArray.Length; index++)
+		{
+			// To calculate the number of gameObject which be mutation
+			count_currentGameObject = 0;
+			// Find the start index of this game object.
+			startIndexGameObject = 0;
+			for (int indexGameObject = 0; indexGameObject < originalGameObjectList.Count; indexGameObject++)
+			{
+				if (originalGameObjectList[indexGameObject].GameObjectAttribute == (GeneGameObjectAttribute)mutateGameObjectTypeArray[index])
+				{
+					count_currentGameObject++;
+					startIndexGameObject = indexGameObject;
+				}				
+			}
+			if (count_currentGameObject != 0)
+			{
+				startIndexGameObject = startIndexGameObject - count_currentGameObject + 1;
+			}
+			else
+			{
+				startIndexGameObject = 0;
+			}
+			// Randomly determine Add or delete the same game object.
+			int randomDetermine = Random.Range(0, 2);
+			// Add the same game object
+			if (randomDetermine == 0)
+			{
+				// Add
+				if (count_currentGameObject < _numMaxGameObject[mutateGameObjectTypeArray[index] - 1])
+				{
+					Debug.Log("ADD => " + (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);
+					AddDeleteGameObject(originalGameObjectList, EmptyTiles, true, count_currentGameObject, startIndexGameObject, (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);
+					break;
+				}
+				else
+				{
+					// Turn to delete 
+					if (count_currentGameObject > _numMinGameObject[mutateGameObjectTypeArray[index] - 1])
+					{
+						Debug.Log("DELETE => " + (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);
+						AddDeleteGameObject(originalGameObjectList, EmptyTiles, false, count_currentGameObject, startIndexGameObject, (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);
+						break;
+					}
+				}
+			}
+			// Delete the same game object
+			else
+			{
+				// Delete
+				if (count_currentGameObject > _numMinGameObject[mutateGameObjectTypeArray[index] - 1])
+				{
+					Debug.Log("DELETE => " + (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);				
+					AddDeleteGameObject(originalGameObjectList, EmptyTiles, false, count_currentGameObject, startIndexGameObject, (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);
+					break;
+				}
+				else
+				{
+					// Turn to add
+					if (count_currentGameObject < _numMaxGameObject[mutateGameObjectTypeArray[index] - 1])
+					{
+						Debug.Log("ADD => " + (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);
+						AddDeleteGameObject(originalGameObjectList, EmptyTiles, true, count_currentGameObject, startIndexGameObject, (GeneGameObjectAttribute)mutateGameObjectTypeArray[index]);
+						break;
+					}
+				}
+			}
+		}
+
+	}
+
+	void AddDeleteGameObject(List<GameObjectInfo> originalGameObjectList, List<int> EmptyTiles, bool isAdd, int num_originalGameObject, int startIndexGameObject, GeneGameObjectAttribute gameObjectType)
+	{
+		if (isAdd == true)
+		{
+			// Find the position which will be add the game object 
+			int newPosition = 0;
+			bool isFindPosition = false;
+			while (isFindPosition != true)
+			{
+				newPosition = EmptyTiles[Random.Range(0, EmptyTiles.Count)];
+				isFindPosition = true;
+				// Check the position is empty!!
+				foreach (var originalGameObject in originalGameObjectList)
+				{
+					if (originalGameObject.Position == newPosition)
+					{
+						isFindPosition = false;
+					}
+				}
+			}
+
+			GameObjectInfo newGameObject = new GameObjectInfo();
+			newGameObject.Position = newPosition;
+			newGameObject.GameObjectAttribute = gameObjectType;
+			// Add!!
+			originalGameObjectList.Insert(( startIndexGameObject + num_originalGameObject), newGameObject);
+		}
+		else
+		{
+			// Find the position which will be delete the game object.
+			int index_deletePosition = Random.Range(0, num_originalGameObject);
+			originalGameObjectList.RemoveAt(startIndexGameObject + index_deletePosition);
+		}
+	}
+	#endregion
 
 }

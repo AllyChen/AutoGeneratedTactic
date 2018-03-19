@@ -165,7 +165,6 @@ public class TestFitnessFunction : MonoBehaviour {
 
 		if (chromosome.spaceList.Count != 0)
 		{
-			Debug.Log("HERE?");
 			fitnessScore = isConnected(chromosome, length, width);
 		}
 		else

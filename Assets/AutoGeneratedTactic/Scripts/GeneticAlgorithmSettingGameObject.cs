@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
+using System.IO;
 using System.Linq;
 
 using ChromosomeDefinition;
@@ -21,6 +23,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		private List<int> EmptyTiles = new List<int>();
 		private int[] _numMinGameObject;
 		private int[] _numMaxGameObject;
+		private Chromosome _spaceChromosome;
 
 		public void InitialPopulation(int length, int width, int numGene, int numChromosome, int numGeneration, Chromosome spaceChromosome)
 		{
@@ -37,10 +40,11 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			_numGenerations = numGeneration;
 			_numMinGameObject = new int[5] { 1, 1, 1, 1, 1 };
 			_numMaxGameObject = new int[5] { 1, 1, 3, 2 ,2 };
-			
+			_spaceChromosome = spaceChromosome;
+
 			// Save the data of the empty tiles around of the room.			
 			EmptyTilesAround = FindEmptyTiles(_mapLength, _mapWidth, spaceChromosome);
-			int leastNumEmptyTilesAround = _numMinGameObject[(int)GeneGameObjectAttribute.entrance - 1] + _numMinGameObject[(int)GeneGameObjectAttribute.exit - 1];
+			int leastNumEmptyTilesAround = _numMaxGameObject[(int)GeneGameObjectAttribute.entrance - 1] + _numMaxGameObject[(int)GeneGameObjectAttribute.exit - 1];
 
 			// Calculate the number of empty tiles
 			for (int indexGene = 0; indexGene < _numGenes; indexGene++)
@@ -51,7 +55,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				}
 			}
 			// The least number of tiles for game object
-			int leastNumEmptyTiles = leastNumEmptyTilesAround + _numMinGameObject[(int)GeneGameObjectAttribute.enemy - 1] + _numMinGameObject[(int)GeneGameObjectAttribute.trap - 1] + _numMinGameObject[(int)GeneGameObjectAttribute.treasure - 1];
+			int leastNumEmptyTiles = leastNumEmptyTilesAround + _numMaxGameObject[(int)GeneGameObjectAttribute.enemy - 1] + _numMaxGameObject[(int)GeneGameObjectAttribute.trap - 1] + _numMaxGameObject[(int)GeneGameObjectAttribute.treasure - 1];
 
 			// Create the chromosomes in population.
 			if (EmptyTilesAround.Count >= leastNumEmptyTilesAround && EmptyTiles.Count >= leastNumEmptyTiles)
@@ -110,6 +114,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 					Debug.Log("There are no enough tiles to put the game object!!");
 				}			
 			}
+			// InitialData
+			InitialData();
 		}
 
 		List<int> FindEmptyTiles(int mapLength, int mapWidth, Chromosome chromoseome)
@@ -196,15 +202,10 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		void CalculatePopulationFitnessScores(List<Chromosome> _specificPopulation)
 		{
 			// Calculate the fitness score of chromosomes in population.
-			for (int i = 0; i < _numChromosomes; i++)
+			for (int i = 0; i < _specificPopulation.Count; i++)
 			{
-				//inital
-				foreach (Gene gene in _specificPopulation[i].genesList)
-				{
-					gene.SpaceAttribute = GeneSpaceAttribute.None;
-				}
 				// Fitness function
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.ImpassableDensity] = FitnessFunction.Fitness_MainPathQuality(_specificPopulation[i], _mapLength, _mapWidth, EmptyTiles.Count);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_specificPopulation[i], _mapLength, _mapWidth, EmptyTiles.Count);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality;
 			}
 		}
@@ -292,6 +293,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 
 		public void Crossover(float rateCrossover)
 		{
+			_childsGameObjectListPopulation.Clear();
 			RandomChromosomesIndex();
 			// Get the parents
 			List<GameObjectInfo> parent_A;
@@ -611,7 +613,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 
 		public void Mutation(float rateMutation)
 		{
-			for (int index = 0; index < _numChromosomes; index++)
+			for (int index = 0; index < _childsGameObjectListPopulation.Count; index++)
 			{
 				if (rateMutation > Random.Range(0.0f, 1.0f))
 				{
@@ -623,7 +625,49 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		#endregion
 
 		#region Replace
+		List<Chromosome> _parentsChildsPopulation = new List<Chromosome>();
 
+		public void Replace()
+		{
+			_parentsChildsPopulation.Clear();
+
+			// Copy the chromosomes from childsPopulation to this population.
+			for (int index = 0; index < _childsGameObjectListPopulation.Count; index++)
+			{
+				_parentsChildsPopulation.Add(_spaceChromosome.CloneSpace());
+				_parentsChildsPopulation[_parentsChildsPopulation.Count - 1].settingGameObject(_childsGameObjectListPopulation[index]);
+			}
+			// Only calculate Childs, because only Childs are in this population.
+			CalculatePopulationFitnessScores(_parentsChildsPopulation);
+
+			// Copy the chromosomes from parentsPopulation to this population.
+			for (int index = 0; index < _population.Count; index++)
+			{
+				_parentsChildsPopulation.Add(_population[index].CloneSpaceGameObject());
+				_parentsChildsPopulation[_parentsChildsPopulation.Count - 1].copyFitnessScore(_population[index]);
+			}
+
+			// Sort the chromosomes
+			var chromosomesOrder = from allChromosome in _parentsChildsPopulation
+								   orderby allChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore]
+								   select allChromosome;
+
+			// Clean the population to store the new best chromosome.
+			_population.Clear();
+
+			// Select best chromosomes
+			int count = 0;
+			foreach (var orderChromosome in chromosomesOrder)
+			{
+				if (count >= ( _parentsChildsPopulation.Count - _numChromosomes ))
+				{
+					// Copy the chromosome
+					_population.Add(orderChromosome.CloneSpaceGameObject());
+					_population[_population.Count - 1].copyFitnessScore(orderChromosome);
+				}
+				count++;
+			}
+		}
 		#endregion
 
 		#region BestChromesome
@@ -631,12 +675,69 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 
 		public Chromosome BestChromesome()
 		{
+			// Search the best chromosome in population.
+			for (int i = 0; i < _numChromosomes; i++)
+			{
+				if (_population[index_BestChromesome].FitnessScore[FitnessFunctionName.SumOfFitnessScore] < _population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore])
+				{
+					index_BestChromesome = i;
+				}
+			}
+
 			return _population[index_BestChromesome];
 		}
 		#endregion
 
 		#region OutputData
+		private List<string[]> basicData = new List<string[]>();
+		string[] tileData = new string[4];
 
+		void InitialData()
+		{
+			basicData.Clear();
+
+			// Create the title of data
+			tileData[0] = "Generation";
+			tileData[1] = "ChromosomeIndex";
+			tileData[2] = "Fitness_MainPathQuality";
+			tileData[3] = "Fitness_SumOfFitnessScore";
+			basicData.Add(tileData);
+		}
+
+		public void SaveData(int indexGeneration)
+		{
+			for (int indexChromosome = 0; indexChromosome < _numChromosomes; indexChromosome++)
+			{
+				string[] contentData = new string[tileData.Length];
+				contentData[0] = indexGeneration.ToString(); // Generation
+				contentData[1] = indexChromosome.ToString(); // ChromosomeIndex
+				contentData[2] = _population[indexChromosome].FitnessScore[FitnessFunctionName.MainPathQuality].ToString(); // Fitness_MainPathQuality
+				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
+				basicData.Add(contentData);
+			}
+		}
+
+		public void OutputData(int runGenerate)
+		{
+			// Copy to output data.
+			string[][] outputData = new string[basicData.Count][];
+			for (int i = 0; i < outputData.Length; i++)
+			{
+				outputData[i] = basicData[i];
+			}
+
+			// Output
+			string filePath = Application.dataPath + "/AutoGeneratedTactic/Data/" + "GeneticAlgorithm_Data_GameObject" + _mapLength + "x" + _mapWidth + "_" + runGenerate + ".csv";
+			int length = outputData.GetLength(0);// 得到第0維的長度，也就是有幾列。（第1維為行）
+			StringBuilder sb = new StringBuilder();
+			for (int index = 0; index < length; index++)
+			{
+				sb.AppendLine(string.Join(",", outputData[index]));
+			}
+			StreamWriter outStream = System.IO.File.CreateText(filePath);
+			outStream.WriteLine(sb);
+			outStream.Close();
+		}
 		#endregion
 
 		#region DebugTest

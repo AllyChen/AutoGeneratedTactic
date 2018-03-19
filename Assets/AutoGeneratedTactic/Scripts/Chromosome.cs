@@ -62,6 +62,16 @@ namespace ChromosomeDefinition
 					{ FitnessFunctionName.SumOfFitnessScore   , 0.0f },
 				};
 
+		public void copyFitnessScore(Chromosome sourceChromosome)
+		{
+			this.FitnessScore[FitnessFunctionName.ImpassableDensity] = sourceChromosome.FitnessScore[FitnessFunctionName.ImpassableDensity];
+			this.FitnessScore[FitnessFunctionName.RectangleQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.RectangleQuality];
+			this.FitnessScore[FitnessFunctionName.CorridorQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.CorridorQuality];
+			this.FitnessScore[FitnessFunctionName.ConnectedQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.ConnectedQuality];
+			this.FitnessScore[FitnessFunctionName.MainPathQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.MainPathQuality];
+			this.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = sourceChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
+		}
+
 		public Chromosome Clone()
 		{
 			var ChromosomeClone = new Chromosome();
@@ -85,7 +95,7 @@ namespace ChromosomeDefinition
 
 			return ChromosomeClone;
 		}
-
+		
 		// Space
 		public List<SpaceInfo> spaceList = new List<SpaceInfo>();
 
@@ -141,8 +151,80 @@ namespace ChromosomeDefinition
 				genesList[gameObject.Position].GameObjectAttribute = gameObject.GameObjectAttribute;
 			}
 		}
+
+		public void settingGameObject(List<GameObjectInfo> sourceGameObject)
+		{
+			// Initial
+			this.gameObjectList.Clear();
+
+			foreach (var gene in this.genesList)
+			{
+				gene.GameObjectAttribute = GeneGameObjectAttribute.None;
+			}
+			// Setting the game object
+			foreach (var item in sourceGameObject)
+			{
+				this.gameObjectList.Add(new GameObjectInfo());
+				this.gameObjectList[this.gameObjectList.Count - 1].Position = item.Position;
+				this.gameObjectList[this.gameObjectList.Count - 1].GameObjectAttribute = item.GameObjectAttribute;
+				genesList[item.Position].GameObjectAttribute = item.GameObjectAttribute;
+			}
+		}
+
+		public Chromosome CloneSpaceGameObject()
+		{
+			var ChromosomeClone = new Chromosome();
+			// Genes
+			var genesListClone = new List<Gene>();
+			foreach (var originalGene in this.genesList)
+			{
+				Gene gene = new Gene();
+				gene.type = originalGene.type;
+				gene.SpaceAttribute = originalGene.SpaceAttribute;
+				gene.GameObjectAttribute = originalGene.GameObjectAttribute;
+				genesListClone.Add(gene);
+			}
+			ChromosomeClone.genesList = genesListClone;
+
+			// SpaceList
+			var spaceListClone = new List<SpaceInfo>();
+			foreach (var originalSpaceInfo in this.spaceList)
+			{
+				SpaceInfo spaceInfo = new SpaceInfo();
+				spaceInfo.startPos = originalSpaceInfo.startPos;
+				spaceInfo.length = originalSpaceInfo.length;
+				spaceInfo.width = originalSpaceInfo.width;
+				spaceInfo.SpaceAttribute = originalSpaceInfo.SpaceAttribute;
+				spaceListClone.Add(spaceInfo);
+			}
+			ChromosomeClone.spaceList = spaceListClone;
+
+			// gameObjectList
+			var gameObjectListClone = new List<GameObjectInfo>();
+			foreach (var originalGameObjectList in this.gameObjectList)
+			{
+				GameObjectInfo gameObjectInfo = new GameObjectInfo();
+				gameObjectInfo.Position = originalGameObjectList.Position;
+				gameObjectInfo.GameObjectAttribute = originalGameObjectList.GameObjectAttribute;
+				gameObjectListClone.Add(gameObjectInfo);
+			}
+			ChromosomeClone.gameObjectList = gameObjectListClone;
+
+			return ChromosomeClone;
+		}
 		// Main Path
 		public List<Gene> mainPath = new List<Gene>();
+
+		public void copyMainPath(List<Gene> sourceMainPath)
+		{
+			foreach (var gene in sourceMainPath)
+			{
+				this.mainPath.Add(new Gene());
+				this.mainPath[this.mainPath.Count - 1].type = gene.type;
+				this.mainPath[this.mainPath.Count - 1].SpaceAttribute = gene.SpaceAttribute;
+				this.mainPath[this.mainPath.Count - 1].GameObjectAttribute = gene.GameObjectAttribute;
+			}
+		}
 	}
 
 	public class Gene

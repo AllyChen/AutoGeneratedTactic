@@ -42,8 +42,8 @@ public class Generate : MonoBehaviour {
 	int numChromosome = 100;
 	float rato_crossover = 0.8f;
 	float rato_mutation = 1.0f;
-	int numGenerationGameObject = 2;
-	int numChromosomeGameObject = 10;
+	int numGenerationGameObject = 100;
+	int numChromosomeGameObject = 100;
 	float ratio_GameObjectCrossover = 0.8f;
 	float ratio_GameObjectMutation = 1.0f;
 
@@ -114,6 +114,11 @@ public class Generate : MonoBehaviour {
 			GeneticAlgorithmSettingGameObject.Replace();
 		}
 		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
+
+		//Time
+		var GAGOendTime = Time.realtimeSinceStartup - startTime;
+		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
+
 		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
 		GeneticAlgorithmSettingGameObject.OutputData(0);
 

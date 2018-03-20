@@ -38,8 +38,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			_numGenes = numGene;
 			_numChromosomes = numChromosome;
 			_numGenerations = numGeneration;
-			_numMinGameObject = new int[5] { 1, 1, 1, 1, 1 };
-			_numMaxGameObject = new int[5] { 1, 1, 3, 2 ,2 };
+			_numMinGameObject = new int[5] { 1, 1, 1, 1 ,0 };
+			_numMaxGameObject = new int[5] { 1, 1, 3, 2 ,0 };
 			_spaceChromosome = spaceChromosome;
 
 			// Save the data of the empty tiles around of the room.			
@@ -474,7 +474,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		/// <summary>
 		/// <method>
 		/// Step.1 決定要更動的GameObjectType順序
-		/// Step.2 隨機增加或減少GameObject。		
+		/// Step.2-1 隨機增加或減少GameObject。
+		/// Step.2-2 隨機改變 GameObject 位置。
 		/// Step.3 進行變異。
 		/// </method>
 		/// </summary>
@@ -503,7 +504,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			}
 		}
 
-		void MutationMethod(List<GameObjectInfo> originalGameObjectList)
+		void MutationMethod_AddDelete(List<GameObjectInfo> originalGameObjectList)
 		{
 			RandomMutateGameObjectType();
 
@@ -532,6 +533,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 					startIndexGameObject = 0;
 				}
 				// Step.2
+				#region Randomly Add or delete the same game object.
 				// Randomly determine Add or delete the same game object.
 				int randomDetermine = Random.Range(0, 2);
 				// Add the same game object
@@ -572,6 +574,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 						}
 					}
 				}
+				#endregion
 			}
 
 		}
@@ -611,14 +614,70 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			}
 		}
 
+		void MutationMethod_ChangePosition(List<GameObjectInfo> originalGameObjectList, List<int> EmptyTiles)
+		{
+			RandomMutateGameObjectType();
+
+			int count_currentGameObject = 0;
+			int startIndexGameObject = 0;
+			for (int index = 0; index < mutateGameObjectTypeArray.Length; index++)
+			{
+				// To calculate the number of gameObject which be mutation
+				count_currentGameObject = 0;
+				// Find the start index of this game object.
+				startIndexGameObject = 0;
+				for (int indexGameObject = 0; indexGameObject < originalGameObjectList.Count; indexGameObject++)
+				{
+					if (originalGameObjectList[indexGameObject].GameObjectAttribute == (GeneGameObjectAttribute)mutateGameObjectTypeArray[index])
+					{
+						count_currentGameObject++;
+						startIndexGameObject = indexGameObject;
+					}
+				}
+				// If the tactic have this game object
+				if (count_currentGameObject != 0)
+				{
+					startIndexGameObject = startIndexGameObject - count_currentGameObject + 1;
+					// Find the position which can be add this game object 
+					int newPosition = 0;
+					bool isFindPosition = false;
+					while (isFindPosition != true)
+					{
+						newPosition = EmptyTiles[Random.Range(0, EmptyTiles.Count)];
+						isFindPosition = true;
+						// Check the position is empty!!
+						foreach (var originalGameObject in originalGameObjectList)
+						{
+							if (originalGameObject.Position == newPosition)
+							{
+								isFindPosition = false;
+							}
+						}
+					}
+					// Change the position
+					originalGameObjectList[startIndexGameObject + Random.Range(0, count_currentGameObject)].Position = newPosition;
+					break;
+				}
+			}
+
+		}
+
 		public void Mutation(float rateMutation)
 		{
 			for (int index = 0; index < _childsGameObjectListPopulation.Count; index++)
 			{
 				if (rateMutation > Random.Range(0.0f, 1.0f))
 				{
-					// Step.3
-					MutationMethod(_childsGameObjectListPopulation[index]);
+					if (0.7f > Random.Range(0.0f, 1.0f))
+					{
+						// Step.3
+						MutationMethod_AddDelete(_childsGameObjectListPopulation[index]);
+					}
+					else
+					{
+						// Step.3
+						MutationMethod_ChangePosition(_childsGameObjectListPopulation[index], EmptyTiles);
+					}						
 				}
 			}
 		}

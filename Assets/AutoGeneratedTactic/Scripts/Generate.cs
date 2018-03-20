@@ -7,10 +7,9 @@ using GeneticAlgorithmSettingDefinition;
 using ChromosomeDefinition;
 using GeneticAlgorithmSettingGameObjectDefinition;
 using ParticleSwarmOptimizationSettingDefinition;
+using DataSerializationDefinition;
 
 public class Generate : MonoBehaviour {
-
-	//public GameObject Tile_Empty;
 
 	private GameObject ParameterSetting;
 	private GameObject AutoTacticRender;
@@ -19,6 +18,8 @@ public class Generate : MonoBehaviour {
 	private GeneticAlgorithmSetting GeneticAlgorithm;
 	private GeneticAlgorithmSettingGameObject GeneticAlgorithmSettingGameObject;
 	private ParticleSwarmOptimizationSetting ParticleSwarmOptimization;
+	private DataSerialization DataSerialization;
+
 	private int runGenerate = 0;
 	private Chromosome BestChromesome_Space = new Chromosome();
 	private Chromosome BestChromesome = new Chromosome();
@@ -31,6 +32,7 @@ public class Generate : MonoBehaviour {
 		GeneticAlgorithm = GameObject.Find("GeneticAlgorithmSetting").GetComponent<GeneticAlgorithmSetting>();
 		GeneticAlgorithmSettingGameObject = GameObject.Find("GeneticAlgorithmSettingGameObject").GetComponent<GeneticAlgorithmSettingGameObject>();
 		ParticleSwarmOptimization = GameObject.Find("ParticleSwarmOptimizationSetting").GetComponent<ParticleSwarmOptimizationSetting>();
+		DataSerialization = new DataSerialization();
 	}
 
 	int useMethod = 0;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
@@ -151,5 +153,10 @@ public class Generate : MonoBehaviour {
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
 		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromesome_Space);
+	}
+
+	public void OnClick_OutputAutoTacticData()
+	{
+		DataSerialization.OutputAutoTacticData(length, width, BestChromesome);
 	}
 }

@@ -11,7 +11,7 @@ namespace DataSerializationDefinition
 
 		public void OutputAutoTacticData(int tacticLength, int tacticWidth, Chromosome outputChromosome)
 		{
-			Debug.Log("TEST!!");
+			
 		}
 	}
 }

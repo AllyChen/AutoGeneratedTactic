@@ -614,7 +614,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			}
 		}
 
-		void MutationMethod_ChangePosition(List<GameObjectInfo> originalGameObjectList, List<int> EmptyTiles)
+		void MutationMethod_ChangePosition(List<GameObjectInfo> originalGameObjectList, List<int> EmptyTiles, List<int> EmptyTilesAround)
 		{
 			RandomMutateGameObjectType();
 
@@ -643,7 +643,17 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 					bool isFindPosition = false;
 					while (isFindPosition != true)
 					{
-						newPosition = EmptyTiles[Random.Range(0, EmptyTiles.Count)];
+						if ((GeneGameObjectAttribute)mutateGameObjectTypeArray[index] == GeneGameObjectAttribute.entrance ||
+							(GeneGameObjectAttribute)mutateGameObjectTypeArray[index] == GeneGameObjectAttribute.exit)
+						{
+							newPosition = EmptyTilesAround[Random.Range(0, EmptyTilesAround.Count)];
+						}
+						else
+						{
+							newPosition = EmptyTiles[Random.Range(0, EmptyTiles.Count)];
+						}
+
+						
 						isFindPosition = true;
 						// Check the position is empty!!
 						foreach (var originalGameObject in originalGameObjectList)
@@ -676,7 +686,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 					else
 					{
 						// Step.3
-						MutationMethod_ChangePosition(_childsGameObjectListPopulation[index], EmptyTiles);
+						MutationMethod_ChangePosition(_childsGameObjectListPopulation[index], EmptyTiles, EmptyTilesAround);
 					}						
 				}
 			}

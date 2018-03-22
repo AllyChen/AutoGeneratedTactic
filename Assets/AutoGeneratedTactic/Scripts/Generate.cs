@@ -103,24 +103,24 @@ public class Generate : MonoBehaviour {
 		}
 		#endregion
 
-		//GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromesome_Space);
-		//for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
-		//{
-		//	GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-		//	GeneticAlgorithmSettingGameObject.SaveData(num_generation);
-		//	GeneticAlgorithmSettingGameObject.Selection();
-		//	GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
-		//	GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
-		//	GeneticAlgorithmSettingGameObject.Replace();
-		//}
-		//BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromesome_Space);
+		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
+		{
+			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
+			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			GeneticAlgorithmSettingGameObject.Selection();
+			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
+			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
+			GeneticAlgorithmSettingGameObject.Replace();
+		}
+		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
 
-		////Time
-		//var GAGOendTime = Time.realtimeSinceStartup - startTime;
-		//Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
+		//Time
+		var GAGOendTime = Time.realtimeSinceStartup - startTime;
+		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
 
-		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		//GeneticAlgorithmSettingGameObject.OutputData(0);
+		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		GeneticAlgorithmSettingGameObject.OutputData(0);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);

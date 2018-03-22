@@ -89,7 +89,7 @@ namespace GeneticAlgorithmSettingDefinition
 		void CalculatePopulationFitnessScores(List<Chromosome> _specificPopulation)
 		{
 			// Calculate the fitness score of chromosomes in population.
-			for (int i = 0; i < _numChromosomes; i++)
+			for (int i = 0; i < _specificPopulation.Count; i++)
 			{
 				//inital
 				foreach (Gene gene in _specificPopulation[i].genesList)
@@ -375,10 +375,15 @@ namespace GeneticAlgorithmSettingDefinition
 
 			// Copy the chromosomes from parentsPopulation and childsPopulation to this population.
 			_parentsChildsPopulation.Clear();
-			for (int x = 0; x < _numChromosomes; x++)
+
+			foreach (var parent in _population)
 			{
-				_parentsChildsPopulation.Add(_population[x].Clone());
-				_parentsChildsPopulation.Add(_childsPopulation[x].Clone());
+				_parentsChildsPopulation.Add(parent.Clone());
+			}
+
+			foreach (var child in _childsPopulation)
+			{
+				_parentsChildsPopulation.Add(child.Clone());
 			}
 
 			// Sort the chromosomes
@@ -393,7 +398,7 @@ namespace GeneticAlgorithmSettingDefinition
 			int count = 0;
 			foreach (var e in chromosomesOrder)
 			{
-				if (count >= _numChromosomes)
+				if (count >= ( _parentsChildsPopulation.Count - _numChromosomes ))
 				{
 					// Copy the chromosome
 					_population.Add(e.Clone());

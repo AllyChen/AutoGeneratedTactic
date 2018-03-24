@@ -68,12 +68,21 @@ public class TestFitnessFunction : MonoBehaviour {
 		}
 		Fitness_MainPathQuality(TestMap, 8, 8, EmptyTiles.Count, spaceGrid);
 
-		foreach (var item in TestMap.mainPath)
+		List<int> temp = findprotectedObjectNeighbor(TestMap, 8, 8, 38);
+
+		Debug.Log("NUMBER = " + temp.Count);
+		foreach (var item in temp)
 		{
 			Debug.Log(item);
 		}
 
+		List<int> temp1 = findprotectedObjectNeighbor(TestMap, 8, 8, 0);
 
+		Debug.Log("NUMBER = " + temp1.Count);
+		foreach (var item in temp1)
+		{
+			Debug.Log(item);
+		}
 	}
 
 	#region InitialTestMap
@@ -1367,38 +1376,140 @@ public class TestFitnessFunction : MonoBehaviour {
 	public float Fitness_Defense(Chromosome chromosome, int length, int width)
 	{
 		float fitnessScore = 0.0f;
-		int numEnemy = 0;
-		int numTrap = 0;
-		int numExit = 0;
-		int numTreasure = 0;
-
-		// Fitness how will the space impact on Defense pattern!!
-
-		// Fitness how will the game object impact on Defense pattern!!
-
+		List<int> posEnemy = new List<int>();
+		List<int> posTrap = new List<int>();
+		List<int> posExit = new List<int>();
+		List<int> posTreasure = new List<int>();
 		// Calculate the number of game object
 		foreach (var item in chromosome.gameObjectList)
 		{
 			if (item.GameObjectAttribute == GeneGameObjectAttribute.enemy)
 			{
-				numEnemy++;
+				posEnemy.Add(item.Position);
 			}
 			if (item.GameObjectAttribute == GeneGameObjectAttribute.trap)
 			{
-				numTrap++;
+				posTrap.Add(item.Position);
 			}
 			if (item.GameObjectAttribute == GeneGameObjectAttribute.exit)
 			{
-				numExit++;
+				posExit.Add(item.Position);
 			}
 			if (item.GameObjectAttribute == GeneGameObjectAttribute.treasure)
 			{
-				numTreasure++;
+				posTreasure.Add(item.Position);
 			}
 		}
 
+		// Fitness how will the space impact on Defense pattern!!
+
+
+		// Fitness how will the game object impact on Defense pattern!!
+
+
 
 		return fitnessScore;
+	}
+
+	void findGuard(Chromosome chromosome, int length, int width, int posProtectedObject, List<int> posEnemy, List<int> posTrap)
+	{
+		List<int> protectedObjectNeighbor = findprotectedObjectNeighbor(chromosome, length, width, posProtectedObject); // Neighbor of protected object which can go to protected object
+
+		
+
+	}
+
+	List<int> findprotectedObjectNeighbor(Chromosome chromosome, int length, int width, int posProtectedObject)
+	{
+		int posTop = posProtectedObject - length;
+		int posBottom = posProtectedObject + length;
+		int posLeft = posProtectedObject - 1;
+		int posRight = posProtectedObject + 1;
+		int posTopLeft = posTop - 1;
+		int posTopRight = posTop + 1;
+		int posBottomLeft = posBottom - 1;
+		int posBottomRight = posBottom + 1;
+		int posCenter_x = posProtectedObject / length;
+		int posCenter_y = posProtectedObject % length;
+		List<int> _protectedObjectNeighbor = new List<int>();
+
+		if (posCenter_x - 1 >= 0)
+		{
+			if (posCenter_y - 1 >= 0)
+			{
+				// TopLeft
+				if (chromosome.genesList[posTopLeft].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posTop].type != GeneType.Forbidden || chromosome.genesList[posLeft].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posTopLeft);
+					}
+				}
+			}
+			// Top
+			if (chromosome.genesList[posTop].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posTop);
+			}
+			if (posCenter_y + 1 < length)
+			{
+				// TopRight
+				if (chromosome.genesList[posTopRight].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posTop].type != GeneType.Forbidden || chromosome.genesList[posRight].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posTopRight);
+					}
+				}
+			}
+		}
+		if (posCenter_y - 1 >= 0)
+		{
+			// Left
+			if (chromosome.genesList[posLeft].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posLeft);
+			}
+		}
+		if (posCenter_y + 1 < length)
+		{
+			// Right
+			if (chromosome.genesList[posRight].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posRight);
+			}
+		}
+		if (posCenter_x + 1 < width)
+		{
+			if (posCenter_y - 1 >= 0)
+			{
+				// BottomLeft
+				if (chromosome.genesList[posBottomLeft].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posBottom].type != GeneType.Forbidden || chromosome.genesList[posLeft].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posBottomLeft);
+					}
+				}
+			}
+			// Bottom
+			if (chromosome.genesList[posBottom].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posBottom);
+			}
+			if (posCenter_y + 1 < length)
+			{
+				// BottomRight
+				if (chromosome.genesList[posBottomRight].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posBottom].type != GeneType.Forbidden || chromosome.genesList[posRight].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posBottomRight);
+					}
+				}
+			}
+		}
+		return _protectedObjectNeighbor;
 	}
 	#endregion
 

@@ -30,12 +30,13 @@ public class TestFitnessFunction : MonoBehaviour {
 	int[] _numMaxGameObject = new int[5] { 1, 1, 3, 2 ,2 };
 
 	private List<int> EmptyTiles = new List<int>();
+	private Grid spaceGrid;
 
 	void Start()
 	{
 		EmptyTiles.Clear();
 		InitialTestMap(TestMapArray, TestMap);
-		InitialTestMap(TestMapArray, TestMap2);
+		//InitialTestMap(TestMapArray, TestMap2);
 		float test1 = Fitness_CorridorQuality(TestMap, 8, 8);
 		float test2 = Fitness_RectangleQuality(TestMap, 8, 8);
 
@@ -47,16 +48,16 @@ public class TestFitnessFunction : MonoBehaviour {
 		TestMap.AddGameObjectInList(24, GeneGameObjectAttribute.trap);
 		TestMap.AddGameObjectInList(40, GeneGameObjectAttribute.treasure);
 
-		TestMap2.AddGameObjectInList(40, GeneGameObjectAttribute.entrance);
-		TestMap2.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		TestMap2.AddGameObjectInList(9, GeneGameObjectAttribute.enemy);
-		TestMap2.AddGameObjectInList(10, GeneGameObjectAttribute.enemy);
-		TestMap2.AddGameObjectInList(35, GeneGameObjectAttribute.enemy);
-		TestMap2.AddGameObjectInList(24, GeneGameObjectAttribute.treasure);
-		TestMap2.AddGameObjectInList(45, GeneGameObjectAttribute.treasure);
+		//TestMap2.AddGameObjectInList(40, GeneGameObjectAttribute.entrance);
+		//TestMap2.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		//TestMap2.AddGameObjectInList(9, GeneGameObjectAttribute.enemy);
+		//TestMap2.AddGameObjectInList(10, GeneGameObjectAttribute.enemy);
+		//TestMap2.AddGameObjectInList(35, GeneGameObjectAttribute.enemy);
+		//TestMap2.AddGameObjectInList(24, GeneGameObjectAttribute.treasure);
+		//TestMap2.AddGameObjectInList(45, GeneGameObjectAttribute.treasure);
 
 		TestMap.settingGameObject();
-		TestMap2.settingGameObject();
+		//TestMap2.settingGameObject();
 
 		for (int index = 0; index < TestMap2.genesList.Count; index++)
 		{
@@ -65,6 +66,13 @@ public class TestFitnessFunction : MonoBehaviour {
 				EmptyTiles.Add(index);
 			}
 		}
+		Fitness_MainPathQuality(TestMap, 8, 8, EmptyTiles.Count, spaceGrid);
+
+		foreach (var item in TestMap.mainPath)
+		{
+			Debug.Log(item);
+		}
+
 
 	}
 
@@ -87,21 +95,43 @@ public class TestFitnessFunction : MonoBehaviour {
 				}
 			}
 		}
+		// Initial the grid of space
+		// create the tiles map
+		bool[,] tilesmap = new bool[8, 8];
+		// set values here....
+		// true = walkable, false = blocking
+		for (int x = 0; x < 8; x++)
+		{
+			for (int y = 0; y < 8; y++)
+			{
+				if (Map.genesList[x * 8 + y].type == GeneType.Empty)
+				{
+					tilesmap[x, y] = true;
+				}
+				if (Map.genesList[x * 8 + y].type == GeneType.Forbidden)
+				{
+					tilesmap[x, y] = false;
+				}
+			}
+		}
+
+		// create a grid
+		spaceGrid = new Grid(tilesmap);
 	}
 	#endregion
 
 	#region Fitness_MainPathQuality
-	public float Fitness_MainPathQuality(Chromosome chromosome, int length, int width, int numEmpty)
+	public float Fitness_MainPathQuality(Chromosome chromosome, int length, int width, int numEmpty, Grid spaceGrid)
 	{
 		float fitnessScore = 0.0f;
 
-		FindMainPath(chromosome, length, width);
+		FindMainPath(chromosome, length, width, spaceGrid);
 		fitnessScore = (float)chromosome.mainPath.Count / numEmpty;
 
 		return fitnessScore;
 	}
 
-	void FindMainPath(Chromosome chromosome, int length, int width)
+	void FindMainPath(Chromosome chromosome, int length, int width, Grid spaceGrid)
 	{
 		// Initial
 		int startPos_x = 0;
@@ -110,49 +140,32 @@ public class TestFitnessFunction : MonoBehaviour {
 		int endPos_y = 0;
 		chromosome.mainPath.Clear();
 
-		// create the tiles map
-		bool[,] tilesmap = new bool[width, length];
-		// set values here....
-		// true = walkable, false = blocking
-		for (int x = 0; x < width; x++)
+		foreach (var gameObject in chromosome.gameObjectList)
 		{
-			for (int y = 0; y < length; y++)
+			if (gameObject.GameObjectAttribute == GeneGameObjectAttribute.entrance)
 			{
-				if (chromosome.genesList[x * length + y].type == GeneType.Empty)
-				{
-					tilesmap[x, y] = true;
-				}
-				if (chromosome.genesList[x * length + y].type == GeneType.Forbidden)
-				{
-					tilesmap[x, y] = false;
-				}
-				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.entrance)
-				{
-					startPos_x = x;
-					startPos_y = y;
-				}
-				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.exit)
-				{
-					endPos_x = x;
-					endPos_y = y;
-				}
+				startPos_x = (int)gameObject.Position / length;
+				startPos_y = (int)gameObject.Position % length;
+			}
+			if (gameObject.GameObjectAttribute == GeneGameObjectAttribute.exit)
+			{
+				endPos_x = (int)gameObject.Position / length;
+				endPos_y = (int)gameObject.Position % length;
 			}
 		}
 
-		// create a grid
-		Grid grid = new Grid(tilesmap);
 		// create source and target points
 		Point _from = new Point(startPos_x, startPos_y);
 		Point _to = new Point(endPos_x, endPos_y);
 
 		// for Manhattan distance (4 directions)
-		List<Point> pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
-	
-		chromosome.mainPath.Add(chromosome.genesList[startPos_x * length + startPos_y]); // Add Start point
+		List<Point> pathSearch = Pathfinding.FindPath(spaceGrid, _from, _to, Pathfinding.DistanceType.Manhattan);
+
+		chromosome.mainPath.Add(startPos_x * length + startPos_y); // Add Start point
 		foreach (var item in pathSearch)
 		{
-			chromosome.mainPath.Add(chromosome.genesList[item.x * length + item.y]);
-		}	
+			chromosome.mainPath.Add(item.x * length + item.y);
+		}
 	}
 	#endregion
 
@@ -1347,6 +1360,45 @@ public class TestFitnessFunction : MonoBehaviour {
 			int index_deletePosition = Random.Range(0, num_originalGameObject);
 			originalGameObjectList.RemoveAt(startIndexGameObject + index_deletePosition);
 		}
+	}
+	#endregion
+
+	#region Fitness_Defense
+	public float Fitness_Defense(Chromosome chromosome, int length, int width)
+	{
+		float fitnessScore = 0.0f;
+		int numEnemy = 0;
+		int numTrap = 0;
+		int numExit = 0;
+		int numTreasure = 0;
+
+		// Fitness how will the space impact on Defense pattern!!
+
+		// Fitness how will the game object impact on Defense pattern!!
+
+		// Calculate the number of game object
+		foreach (var item in chromosome.gameObjectList)
+		{
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.enemy)
+			{
+				numEnemy++;
+			}
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.trap)
+			{
+				numTrap++;
+			}
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.exit)
+			{
+				numExit++;
+			}
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.treasure)
+			{
+				numTreasure++;
+			}
+		}
+
+
+		return fitnessScore;
 	}
 	#endregion
 

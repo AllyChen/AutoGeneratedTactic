@@ -213,16 +213,13 @@ namespace ChromosomeDefinition
 			return ChromosomeClone;
 		}
 		// Main Path
-		public List<Gene> mainPath = new List<Gene>();
+		public List<int> mainPath = new List<int>();
 
-		public void copyMainPath(List<Gene> sourceMainPath)
+		public void copyMainPath(List<int> sourceMainPath)
 		{
 			foreach (var gene in sourceMainPath)
 			{
-				this.mainPath.Add(new Gene());
-				this.mainPath[this.mainPath.Count - 1].type = gene.type;
-				this.mainPath[this.mainPath.Count - 1].SpaceAttribute = gene.SpaceAttribute;
-				this.mainPath[this.mainPath.Count - 1].GameObjectAttribute = gene.GameObjectAttribute;
+				this.mainPath.Add(gene);
 			}
 		}
 	}

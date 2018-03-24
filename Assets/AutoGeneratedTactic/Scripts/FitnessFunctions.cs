@@ -930,17 +930,17 @@ public class FitnessFunctions {
 	/// <param name="numEmpty"></param>
 	/// <returns></returns>
 	#region Fitness_MainPathQuality
-	public float Fitness_MainPathQuality(Chromosome chromosome, int length, int width, int numEmpty)
+	public float Fitness_MainPathQuality(Chromosome chromosome, int length, int width, int numEmpty, Grid spaceGrid)
 	{
 		float fitnessScore = 0.0f;
 
-		FindMainPath(chromosome, length, width);
+		FindMainPath(chromosome, length, width, spaceGrid);
 		fitnessScore = (float)chromosome.mainPath.Count / numEmpty;
 
 		return fitnessScore;
 	}
 
-	void FindMainPath(Chromosome chromosome, int length, int width)
+	void FindMainPath(Chromosome chromosome, int length, int width, Grid spaceGrid)
 	{
 		// Initial
 		int startPos_x = 0;
@@ -949,48 +949,31 @@ public class FitnessFunctions {
 		int endPos_y = 0;
 		chromosome.mainPath.Clear();
 
-		// create the tiles map
-		bool[,] tilesmap = new bool[width, length];
-		// set values here....
-		// true = walkable, false = blocking
-		for (int x = 0; x < width; x++)
+		foreach (var gameObject in chromosome.gameObjectList)
 		{
-			for (int y = 0; y < length; y++)
+			if(gameObject.GameObjectAttribute == GeneGameObjectAttribute.entrance)
 			{
-				if (chromosome.genesList[x * length + y].type == GeneType.Empty)
-				{
-					tilesmap[x, y] = true;
-				}
-				if (chromosome.genesList[x * length + y].type == GeneType.Forbidden)
-				{
-					tilesmap[x, y] = false;
-				}
-				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.entrance)
-				{
-					startPos_x = x;
-					startPos_y = y;
-				}
-				if (chromosome.genesList[x * length + y].GameObjectAttribute == GeneGameObjectAttribute.exit)
-				{
-					endPos_x = x;
-					endPos_y = y;
-				}
+				startPos_x = (int)gameObject.Position / length;
+				startPos_y = (int)gameObject.Position % length;
+			}
+			if (gameObject.GameObjectAttribute == GeneGameObjectAttribute.exit)
+			{
+				endPos_x = (int)gameObject.Position / length;
+				endPos_y = (int)gameObject.Position % length;
 			}
 		}
 
-		// create a grid
-		Grid grid = new Grid(tilesmap);
 		// create source and target points
 		Point _from = new Point(startPos_x, startPos_y);
 		Point _to = new Point(endPos_x, endPos_y);
 
 		// for Manhattan distance (4 directions)
-		List<Point> pathSearch = Pathfinding.FindPath(grid, _from, _to, Pathfinding.DistanceType.Manhattan);
+		List<Point> pathSearch = Pathfinding.FindPath(spaceGrid, _from, _to, Pathfinding.DistanceType.Manhattan);
 
-		chromosome.mainPath.Add(chromosome.genesList[startPos_x * length + startPos_y]); // Add Start point
+		chromosome.mainPath.Add(startPos_x * length + startPos_y); // Add Start point
 		foreach (var item in pathSearch)
 		{
-			chromosome.mainPath.Add(chromosome.genesList[item.x * length + item.y]);
+			chromosome.mainPath.Add(item.x * length + item.y);
 		}
 	}
 	#endregion

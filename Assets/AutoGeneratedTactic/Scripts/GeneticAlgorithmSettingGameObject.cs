@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 
 using ChromosomeDefinition;
+using NesScripts.Controls.PathFind;
 
 namespace GeneticAlgorithmSettingGameObjectDefinition
 {
@@ -24,6 +25,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		private int[] _numMinGameObject;
 		private int[] _numMaxGameObject;
 		private Chromosome _spaceChromosome;
+		private Grid spaceGrid; // grid of space for using the A* 
 
 		public void InitialPopulation(int length, int width, int numGene, int numChromosome, int numGeneration, Chromosome spaceChromosome)
 		{
@@ -116,6 +118,29 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			}
 			// InitialData
 			InitialData();
+
+			// Initial the grid of space
+			// create the tiles map
+			bool[,] tilesmap = new bool[width, length];
+			// set values here....
+			// true = walkable, false = blocking
+			for (int x = 0; x < width; x++)
+			{
+				for (int y = 0; y < length; y++)
+				{
+					if (spaceChromosome.genesList[x * length + y].type == GeneType.Empty)
+					{
+						tilesmap[x, y] = true;
+					}
+					if (spaceChromosome.genesList[x * length + y].type == GeneType.Forbidden)
+					{
+						tilesmap[x, y] = false;
+					}
+				}
+			}
+
+			// create a grid
+			spaceGrid = new Grid(tilesmap);
 		}
 
 		List<int> FindEmptyTiles(int mapLength, int mapWidth, Chromosome chromoseome)
@@ -194,7 +219,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			for (int i = 0; i < _numChromosomes; i++)
 			{
 				// Fitness function
-				_population[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_population[i], _mapLength, _mapWidth, EmptyTiles.Count);
+				_population[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_population[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
 				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _population[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality;
 			}
 		}
@@ -205,7 +230,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			for (int i = 0; i < _specificPopulation.Count; i++)
 			{
 				// Fitness function
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_specificPopulation[i], _mapLength, _mapWidth, EmptyTiles.Count);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_specificPopulation[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality;
 			}
 		}

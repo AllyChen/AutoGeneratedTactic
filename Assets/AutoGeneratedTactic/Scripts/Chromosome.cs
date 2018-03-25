@@ -44,6 +44,7 @@ namespace ChromosomeDefinition
 		CorridorQuality,
 		ConnectedQuality,
 		MainPathQuality,
+		Fitness_Defense,
 		NumberOfFitnessFunctionName,
 		SumOfFitnessScore
 	}
@@ -59,6 +60,7 @@ namespace ChromosomeDefinition
 					{ FitnessFunctionName.CorridorQuality   , 0.0f },
 					{ FitnessFunctionName.ConnectedQuality   , 0.0f },
 					{ FitnessFunctionName.MainPathQuality   , 0.0f },
+					{ FitnessFunctionName.Fitness_Defense   , 0.0f },
 					{ FitnessFunctionName.SumOfFitnessScore   , 0.0f },
 				};
 
@@ -69,6 +71,7 @@ namespace ChromosomeDefinition
 			this.FitnessScore[FitnessFunctionName.CorridorQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.CorridorQuality];
 			this.FitnessScore[FitnessFunctionName.ConnectedQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.ConnectedQuality];
 			this.FitnessScore[FitnessFunctionName.MainPathQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.MainPathQuality];
+			this.FitnessScore[FitnessFunctionName.Fitness_Defense] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense];
 			this.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = sourceChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 		}
 
@@ -91,6 +94,7 @@ namespace ChromosomeDefinition
 			ChromosomeClone.FitnessScore[FitnessFunctionName.CorridorQuality] = this.FitnessScore[FitnessFunctionName.CorridorQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.ConnectedQuality] = this.FitnessScore[FitnessFunctionName.ConnectedQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.MainPathQuality] = this.FitnessScore[FitnessFunctionName.MainPathQuality];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_Defense] = this.FitnessScore[FitnessFunctionName.Fitness_Defense];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = this.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 
 			return ChromosomeClone;

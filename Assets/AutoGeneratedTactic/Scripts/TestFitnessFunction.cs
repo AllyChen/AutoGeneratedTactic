@@ -34,55 +34,52 @@ public class TestFitnessFunction : MonoBehaviour {
 
 	void Start()
 	{
-		EmptyTiles.Clear();
-		InitialTestMap(TestMapArray, TestMap);
-		//InitialTestMap(TestMapArray, TestMap2);
-		float test1 = Fitness_CorridorQuality(TestMap, 8, 8);
-		float test2 = Fitness_RectangleQuality(TestMap, 8, 8);
+		//EmptyTiles.Clear();
+		//InitialTestMap(TestMapArray, TestMap);
+		////InitialTestMap(TestMapArray, TestMap2);
+		//float test1 = Fitness_CorridorQuality(TestMap, 8, 8);
+		//float test2 = Fitness_RectangleQuality(TestMap, 8, 8);
 
-		TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
-		TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
-		TestMap.AddGameObjectInList(45, GeneGameObjectAttribute.enemy);
-		TestMap.AddGameObjectInList(11, GeneGameObjectAttribute.trap);
-		TestMap.AddGameObjectInList(24, GeneGameObjectAttribute.trap);
-		TestMap.AddGameObjectInList(40, GeneGameObjectAttribute.treasure);
+		//TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
+		//TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		//TestMap.AddGameObjectInList(44, GeneGameObjectAttribute.enemy);
+		//TestMap.AddGameObjectInList(45, GeneGameObjectAttribute.enemy);
+		//TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.trap);
+		//TestMap.AddGameObjectInList(54, GeneGameObjectAttribute.trap);
+		//TestMap.AddGameObjectInList(46, GeneGameObjectAttribute.treasure);
 
-		//TestMap2.AddGameObjectInList(40, GeneGameObjectAttribute.entrance);
-		//TestMap2.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		//TestMap2.AddGameObjectInList(9, GeneGameObjectAttribute.enemy);
-		//TestMap2.AddGameObjectInList(10, GeneGameObjectAttribute.enemy);
-		//TestMap2.AddGameObjectInList(35, GeneGameObjectAttribute.enemy);
-		//TestMap2.AddGameObjectInList(24, GeneGameObjectAttribute.treasure);
-		//TestMap2.AddGameObjectInList(45, GeneGameObjectAttribute.treasure);
+		////TestMap2.AddGameObjectInList(40, GeneGameObjectAttribute.entrance);
+		////TestMap2.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		////TestMap2.AddGameObjectInList(9, GeneGameObjectAttribute.enemy);
+		////TestMap2.AddGameObjectInList(10, GeneGameObjectAttribute.enemy);
+		////TestMap2.AddGameObjectInList(35, GeneGameObjectAttribute.enemy);
+		////TestMap2.AddGameObjectInList(24, GeneGameObjectAttribute.treasure);
+		////TestMap2.AddGameObjectInList(45, GeneGameObjectAttribute.treasure);
 
-		TestMap.settingGameObject();
-		//TestMap2.settingGameObject();
+		//TestMap.settingGameObject();
+		////TestMap2.settingGameObject();
 
-		for (int index = 0; index < TestMap2.genesList.Count; index++)
-		{
-			if (TestMap2.genesList[index].type == GeneType.Empty)
-			{
-				EmptyTiles.Add(index);
-			}
-		}
-		Fitness_MainPathQuality(TestMap, 8, 8, EmptyTiles.Count, spaceGrid);
+		//for (int index = 0; index < TestMap2.genesList.Count; index++)
+		//{
+		//	if (TestMap2.genesList[index].type == GeneType.Empty)
+		//	{
+		//		EmptyTiles.Add(index);
+		//	}
+		//}
+		//Fitness_MainPathQuality(TestMap, 8, 8, EmptyTiles.Count, spaceGrid);
+		//Fitness_ConnectedQuality(TestMap, 8, 8);
 
-		List<int> temp = findprotectedObjectNeighbor(TestMap, 8, 8, 38);
+		////Debug.Log("SpaceCount = " + TestMap.spaceList.Count);
+		////for (int index = 0; index < TestMap.spaceList.Count; index++)
+		////{
+		////	Debug.Log("index = " + index);
+		////	Debug.Log("SpaceAttribute = " + TestMap.spaceList[index].SpaceAttribute);
+		////	Debug.Log("startPos = " + TestMap.spaceList[index].startPos);
+		////	Debug.Log("length = " + TestMap.spaceList[index].length);
+		////	Debug.Log("width = " + TestMap.spaceList[index].width);
+		////}
 
-		Debug.Log("NUMBER = " + temp.Count);
-		foreach (var item in temp)
-		{
-			Debug.Log(item);
-		}
-
-		List<int> temp1 = findprotectedObjectNeighbor(TestMap, 8, 8, 0);
-
-		Debug.Log("NUMBER = " + temp1.Count);
-		foreach (var item in temp1)
-		{
-			Debug.Log(item);
-		}
+		//Debug.Log(Fitness_Defense(TestMap, 8, 8));
 	}
 
 	#region InitialTestMap
@@ -1402,21 +1399,112 @@ public class TestFitnessFunction : MonoBehaviour {
 		}
 
 		// Fitness how will the space impact on Defense pattern!!
-
-
+		float fitness_space = 0.0f;
 		// Fitness how will the game object impact on Defense pattern!!
+		float fitness_GameObject = 0.0f;
+		List<int> enemySpaceIndex = findGuardSpaceIndex(chromosome, length, width, posEnemy);
+		List<int> trapSpaceIndex = findGuardSpaceIndex(chromosome, length, width, posTrap);
+		List<int> exitNeighborSpaceIndex;
+		List<int> treasureNeighborSpaceIndex;
+		foreach (var exit in posExit)
+		{
+			exitNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, exit);
+			fitness_space = fitness_space + valueSaveSpace(chromosome, exitNeighborSpaceIndex);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
+		}
+		foreach (var treasure in posTreasure)
+		{
+			treasureNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, treasure);
+			fitness_space = fitness_space + valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
+		}
 
+		fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( posExit.Count + posTreasure.Count ) );
+		fitness_space = fitness_space / ( posExit.Count + posTreasure.Count );
 
+		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
 
 		return fitnessScore;
 	}
 
-	void findGuard(Chromosome chromosome, int length, int width, int posProtectedObject, List<int> posEnemy, List<int> posTrap)
+	float valueSaveSpace(Chromosome chromosome, List<int> neighborSpaceIndex)
+	{
+		float value = 0.0f;
+		float num_Corridor = 0;
+
+		foreach (var neighbor in neighborSpaceIndex)
+		{
+			if (chromosome.spaceList[neighbor].SpaceAttribute == GeneSpaceAttribute.Corridor)
+			{
+				num_Corridor++;
+			}
+		}
+
+		value = num_Corridor / (float)neighborSpaceIndex.Count;
+		return value;
+	}
+
+	float valueBeProtected(Chromosome chromosome, List<int> neighborSpaceIndex, List<int> guardSpaceIndex, GeneGameObjectAttribute guardAttribute)
+	{
+		float value = 0.0f;
+		float num_GuardInNeightbor = 0.0f;
+		foreach (var neighbor in neighborSpaceIndex)
+		{
+			foreach (var guard in guardSpaceIndex)
+			{
+				if (neighbor == guard)
+				{
+					num_GuardInNeightbor++;
+				}
+			}
+		}
+		if (guardAttribute == GeneGameObjectAttribute.enemy)
+		{
+			value = num_GuardInNeightbor * 1.0f;
+		}
+		else if (guardAttribute == GeneGameObjectAttribute.trap)
+		{
+			value = num_GuardInNeightbor * 0.5f;
+		}
+		return value;
+	}
+
+	List<int> findGuardSpaceIndex(Chromosome chromosome, int length, int width, List<int> posGuard)
+	{
+		List<int> guardSpaceIndex = new List<int>(); // The neighbor in which index of space
+
+		foreach (var item in posGuard)
+		{
+			guardSpaceIndex.Add(checkNeighbor(chromosome, length, width, item / length, item % length));
+		}
+		return guardSpaceIndex;
+	}
+
+	List<int> findNeighborSpaceIndex(Chromosome chromosome, int length, int width, int posProtectedObject)
 	{
 		List<int> protectedObjectNeighbor = findprotectedObjectNeighbor(chromosome, length, width, posProtectedObject); // Neighbor of protected object which can go to protected object
+		List<int> protectedObjectNeighborSpaceIndex = new List<int>(); // The neighbor in which index of space
 
-		
-
+		int index;
+		foreach (var item in protectedObjectNeighbor)
+		{
+			index = checkNeighbor(chromosome, length, width, item / length, item % length);
+			int numSameIndex = 0;
+			foreach (var saveIndex in protectedObjectNeighborSpaceIndex)
+			{
+				if (saveIndex == index)
+				{
+					numSameIndex++;
+				}
+			}
+			if (numSameIndex == 0)
+			{
+				protectedObjectNeighborSpaceIndex.Add(index);
+			}
+		}
+		return protectedObjectNeighborSpaceIndex;
 	}
 
 	List<int> findprotectedObjectNeighbor(Chromosome chromosome, int length, int width, int posProtectedObject)

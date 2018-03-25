@@ -977,4 +977,243 @@ public class FitnessFunctions {
 		}
 	}
 	#endregion
+
+	/// <summary>
+	/// Fitness_Defense
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <returns></returns>
+	#region Fitness_Defense
+	public float Fitness_Defense(Chromosome chromosome, int length, int width)
+	{
+		float fitnessScore = 0.0f;
+		List<int> posEnemy = new List<int>();
+		List<int> posTrap = new List<int>();
+		List<int> posExit = new List<int>();
+		List<int> posTreasure = new List<int>();
+		// Calculate the number of game object
+		foreach (var item in chromosome.gameObjectList)
+		{
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.enemy)
+			{
+				posEnemy.Add(item.Position);
+			}
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.trap)
+			{
+				posTrap.Add(item.Position);
+			}
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.exit)
+			{
+				posExit.Add(item.Position);
+			}
+			if (item.GameObjectAttribute == GeneGameObjectAttribute.treasure)
+			{
+				posTreasure.Add(item.Position);
+			}
+		}
+
+		// Fitness how will the space impact on Defense pattern!!
+		float fitness_space = 0.0f;
+		// Fitness how will the game object impact on Defense pattern!!
+		float fitness_GameObject = 0.0f;
+		List<int> enemySpaceIndex = findGuardSpaceIndex(chromosome, length, width, posEnemy);
+		List<int> trapSpaceIndex = findGuardSpaceIndex(chromosome, length, width, posTrap);
+		List<int> exitNeighborSpaceIndex;
+		List<int> treasureNeighborSpaceIndex;
+		foreach (var exit in posExit)
+		{
+			exitNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, exit);
+			fitness_space = fitness_space + valueSaveSpace(chromosome, exitNeighborSpaceIndex);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
+		}
+		foreach (var treasure in posTreasure)
+		{
+			treasureNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, treasure);
+			fitness_space = fitness_space + valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
+			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
+		}
+
+		fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( posExit.Count + posTreasure.Count ) );
+		fitness_space = fitness_space / ( posExit.Count + posTreasure.Count );
+
+		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
+
+		return fitnessScore;
+	}
+
+	float valueSaveSpace(Chromosome chromosome, List<int> neighborSpaceIndex)
+	{
+		float value = 0.0f;
+		float num_Corridor = 0;
+
+		foreach (var neighbor in neighborSpaceIndex)
+		{
+			if (chromosome.spaceList[neighbor].SpaceAttribute == GeneSpaceAttribute.Corridor)
+			{
+				num_Corridor++;
+			}
+		}
+
+		value = num_Corridor / (float)neighborSpaceIndex.Count;
+		return value;
+	}
+
+	float valueBeProtected(Chromosome chromosome, List<int> neighborSpaceIndex, List<int> guardSpaceIndex, GeneGameObjectAttribute guardAttribute)
+	{
+		float value = 0.0f;
+		float num_GuardInNeightbor = 0.0f;
+		foreach (var neighbor in neighborSpaceIndex)
+		{
+			foreach (var guard in guardSpaceIndex)
+			{
+				if (neighbor == guard)
+				{
+					num_GuardInNeightbor++;
+				}
+			}
+		}
+		if (guardAttribute == GeneGameObjectAttribute.enemy)
+		{
+			value = num_GuardInNeightbor * 1.0f;
+		}
+		else if (guardAttribute == GeneGameObjectAttribute.trap)
+		{
+			value = num_GuardInNeightbor * 0.5f;
+		}
+		return value;
+	}
+
+	List<int> findGuardSpaceIndex(Chromosome chromosome, int length, int width, List<int> posGuard)
+	{
+		List<int> guardSpaceIndex = new List<int>(); // The neighbor in which index of space
+
+		foreach (var item in posGuard)
+		{
+			guardSpaceIndex.Add(checkNeighbor(chromosome, length, width, item / length, item % length));
+		}
+		return guardSpaceIndex;
+	}
+
+	List<int> findNeighborSpaceIndex(Chromosome chromosome, int length, int width, int posProtectedObject)
+	{
+		List<int> protectedObjectNeighbor = findprotectedObjectNeighbor(chromosome, length, width, posProtectedObject); // Neighbor of protected object which can go to protected object
+		List<int> protectedObjectNeighborSpaceIndex = new List<int>(); // The neighbor in which index of space
+
+		int index;
+		foreach (var item in protectedObjectNeighbor)
+		{
+			index = checkNeighbor(chromosome, length, width, item / length, item % length);
+			int numSameIndex = 0;
+			foreach (var saveIndex in protectedObjectNeighborSpaceIndex)
+			{
+				if (saveIndex == index)
+				{
+					numSameIndex++;
+				}
+			}
+			if (numSameIndex == 0)
+			{
+				protectedObjectNeighborSpaceIndex.Add(index);
+			}
+		}
+		return protectedObjectNeighborSpaceIndex;
+	}
+
+	List<int> findprotectedObjectNeighbor(Chromosome chromosome, int length, int width, int posProtectedObject)
+	{
+		int posTop = posProtectedObject - length;
+		int posBottom = posProtectedObject + length;
+		int posLeft = posProtectedObject - 1;
+		int posRight = posProtectedObject + 1;
+		int posTopLeft = posTop - 1;
+		int posTopRight = posTop + 1;
+		int posBottomLeft = posBottom - 1;
+		int posBottomRight = posBottom + 1;
+		int posCenter_x = posProtectedObject / length;
+		int posCenter_y = posProtectedObject % length;
+		List<int> _protectedObjectNeighbor = new List<int>();
+
+		if (posCenter_x - 1 >= 0)
+		{
+			if (posCenter_y - 1 >= 0)
+			{
+				// TopLeft
+				if (chromosome.genesList[posTopLeft].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posTop].type != GeneType.Forbidden || chromosome.genesList[posLeft].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posTopLeft);
+					}
+				}
+			}
+			// Top
+			if (chromosome.genesList[posTop].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posTop);
+			}
+			if (posCenter_y + 1 < length)
+			{
+				// TopRight
+				if (chromosome.genesList[posTopRight].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posTop].type != GeneType.Forbidden || chromosome.genesList[posRight].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posTopRight);
+					}
+				}
+			}
+		}
+		if (posCenter_y - 1 >= 0)
+		{
+			// Left
+			if (chromosome.genesList[posLeft].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posLeft);
+			}
+		}
+		if (posCenter_y + 1 < length)
+		{
+			// Right
+			if (chromosome.genesList[posRight].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posRight);
+			}
+		}
+		if (posCenter_x + 1 < width)
+		{
+			if (posCenter_y - 1 >= 0)
+			{
+				// BottomLeft
+				if (chromosome.genesList[posBottomLeft].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posBottom].type != GeneType.Forbidden || chromosome.genesList[posLeft].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posBottomLeft);
+					}
+				}
+			}
+			// Bottom
+			if (chromosome.genesList[posBottom].type == GeneType.Empty)
+			{
+				_protectedObjectNeighbor.Add(posBottom);
+			}
+			if (posCenter_y + 1 < length)
+			{
+				// BottomRight
+				if (chromosome.genesList[posBottomRight].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posBottom].type != GeneType.Forbidden || chromosome.genesList[posRight].type != GeneType.Forbidden)
+					{
+						_protectedObjectNeighbor.Add(posBottomRight);
+					}
+				}
+			}
+		}
+		return _protectedObjectNeighbor;
+	}
+	#endregion
 }

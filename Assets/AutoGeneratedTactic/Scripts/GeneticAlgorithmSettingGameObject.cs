@@ -40,8 +40,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			_numGenes = numGene;
 			_numChromosomes = numChromosome;
 			_numGenerations = numGeneration;
-			_numMinGameObject = new int[5] { 1, 1, 1, 1 ,0 };
-			_numMaxGameObject = new int[5] { 1, 1, 3, 2 ,0 };
+			_numMinGameObject = new int[5] { 1, 1, 1, 1 ,1 };
+			_numMaxGameObject = new int[5] { 1, 1, 3, 2 ,1 };
 			_spaceChromosome = spaceChromosome;
 
 			// Save the data of the empty tiles around of the room.			
@@ -212,6 +212,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		#region Fitness
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
 		float weight_MainPathQuality = 1.0f;
+		float weight_Fitness_Defense = 1.0f;
 
 		public void CalculateFitnessScores()
 		{
@@ -220,7 +221,9 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			{
 				// Fitness function
 				_population[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_population[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _population[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality;
+				_population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _population[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
+																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
 			}
 		}
 		// Calculate the fitness score of chromosomes in specific population.
@@ -231,7 +234,9 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			{
 				// Fitness function
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_specificPopulation[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = _specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality;
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
 			}
 		}
 		#endregion
@@ -784,7 +789,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 
 		#region OutputData
 		private List<string[]> basicData = new List<string[]>();
-		string[] tileData = new string[4];
+		string[] tileData = new string[5];
 
 		void InitialData()
 		{
@@ -794,7 +799,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			tileData[0] = "Generation";
 			tileData[1] = "ChromosomeIndex";
 			tileData[2] = "Fitness_MainPathQuality";
-			tileData[3] = "Fitness_SumOfFitnessScore";
+			tileData[3] = "Fitness_Defense";
+			tileData[4] = "Fitness_SumOfFitnessScore";
 			basicData.Add(tileData);
 		}
 
@@ -806,7 +812,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				contentData[0] = indexGeneration.ToString(); // Generation
 				contentData[1] = indexChromosome.ToString(); // ChromosomeIndex
 				contentData[2] = _population[indexChromosome].FitnessScore[FitnessFunctionName.MainPathQuality].ToString(); // Fitness_MainPathQuality
-				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
+				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_Defense].ToString(); // Fitness_Defense
+				contentData[4] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
 				basicData.Add(contentData);
 			}
 		}

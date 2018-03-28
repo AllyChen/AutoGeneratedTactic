@@ -394,8 +394,8 @@ namespace ParticleSwarmOptimizationSettingDefinition
 		}
 		#endregion
 
-		#region BestChromesome
-		public Chromosome BestChromesome()//Chromosome bestChromesome
+		#region BestChromosome
+		public Chromosome BestChromosome()//Chromosome bestChromosome
 		{
 			CalculateFitnessScores();
 			return _globalBestChromosome;
@@ -461,7 +461,7 @@ namespace ParticleSwarmOptimizationSettingDefinition
 			{
 				Debug.Log("Chromosome[" + x + "] Fitness =" + _particlePopulation[x].FitnessScore[FitnessFunctionName.SumOfFitnessScore]);
 			}
-			Debug.Log("BestChromesome_SumOfFitnessScore = " + _globalBestChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore]);
+			Debug.Log("BestChromosome_SumOfFitnessScore = " + _globalBestChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore]);
 		}
 		#endregion
 	}

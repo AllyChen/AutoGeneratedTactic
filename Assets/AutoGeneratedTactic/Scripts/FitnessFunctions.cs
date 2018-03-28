@@ -1022,13 +1022,13 @@ public class FitnessFunctions {
 		List<int> trapSpaceIndex = findGuardSpaceIndex(chromosome, length, width, posTrap);
 		List<int> exitNeighborSpaceIndex;
 		List<int> treasureNeighborSpaceIndex;
-		foreach (var exit in posExit)
-		{
-			exitNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, exit);
-			fitness_space = fitness_space + valueSaveSpace(chromosome, exitNeighborSpaceIndex);
-			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
-			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
-		}
+		//foreach (var exit in posExit)
+		//{
+		//	exitNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, exit);
+		//	fitness_space = fitness_space + valueSaveSpace(chromosome, exitNeighborSpaceIndex);
+		//	fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
+		//	fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, exitNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
+		//}
 		foreach (var treasure in posTreasure)
 		{
 			treasureNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, treasure);
@@ -1037,8 +1037,11 @@ public class FitnessFunctions {
 			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
 		}
 
-		fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( posExit.Count + posTreasure.Count ) );
-		fitness_space = fitness_space / ( posExit.Count + posTreasure.Count );
+		//fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( posExit.Count + posTreasure.Count ) );
+		//fitness_space = fitness_space / ( posExit.Count + posTreasure.Count );
+
+		fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( posTreasure.Count ) );
+		fitness_space = fitness_space / ( posTreasure.Count );
 
 		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
 

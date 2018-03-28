@@ -769,21 +769,21 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		}
 		#endregion
 
-		#region BestChromesome
-		int index_BestChromesome = 0;
+		#region BestChromosome
+		int index_BestChromosome = 0;
 
-		public Chromosome BestChromesome()
+		public Chromosome BestChromosome()
 		{
 			// Search the best chromosome in population.
 			for (int i = 0; i < _numChromosomes; i++)
 			{
-				if (_population[index_BestChromesome].FitnessScore[FitnessFunctionName.SumOfFitnessScore] < _population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore])
+				if (_population[index_BestChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore] < _population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore])
 				{
-					index_BestChromesome = i;
+					index_BestChromosome = i;
 				}
 			}
 
-			return _population[index_BestChromesome];
+			return _population[index_BestChromosome];
 		}
 		#endregion
 

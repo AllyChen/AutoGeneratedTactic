@@ -408,23 +408,23 @@ namespace GeneticAlgorithmSettingDefinition
 		}
 		#endregion
 
-		#region BestChromesome
-		int index_BestChromesome = 0;
+		#region BestChromosome
+		int index_BestChromosome = 0;
 
-		public Chromosome BestChromesome()
+		public Chromosome BestChromosome()
 		{
 			CalculateFitnessScores();
 
 			// Search the best chromosome in population.
 			for (int i = 0; i < _numChromosomes; i++)
 			{
-				if (_population[index_BestChromesome].FitnessScore[FitnessFunctionName.SumOfFitnessScore] < _population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore]
+				if (_population[index_BestChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore] < _population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore]
 					&& _population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] == 1)
 				{
-					index_BestChromesome = i;
+					index_BestChromosome = i;
 				}
 			}
-			return _population[index_BestChromesome];
+			return _population[index_BestChromosome];
 		}
 		#endregion
 
@@ -487,12 +487,12 @@ namespace GeneticAlgorithmSettingDefinition
 		#region DebugTest
 		public void DebugTest()
 		{
-			Debug.Log("==BestChromesome==");
-			Debug.Log("index = " + index_BestChromesome);
-			Debug.Log("Fitness_RectangleQuality =" + _population[index_BestChromesome].FitnessScore[FitnessFunctionName.RectangleQuality]);
-			Debug.Log("Fitness_CorridorQuality =" + _population[index_BestChromesome].FitnessScore[FitnessFunctionName.CorridorQuality]);
-			Debug.Log("Fitness_ConnectedQuality =" + _population[index_BestChromesome].FitnessScore[FitnessFunctionName.ConnectedQuality]);
-			Debug.Log("Fitness_SumOfFitnessScore =" + _population[index_BestChromesome].FitnessScore[FitnessFunctionName.SumOfFitnessScore]);		
+			Debug.Log("==BestChromosome==");
+			Debug.Log("index = " + index_BestChromosome);
+			Debug.Log("Fitness_RectangleQuality =" + _population[index_BestChromosome].FitnessScore[FitnessFunctionName.RectangleQuality]);
+			Debug.Log("Fitness_CorridorQuality =" + _population[index_BestChromosome].FitnessScore[FitnessFunctionName.CorridorQuality]);
+			Debug.Log("Fitness_ConnectedQuality =" + _population[index_BestChromosome].FitnessScore[FitnessFunctionName.ConnectedQuality]);
+			Debug.Log("Fitness_SumOfFitnessScore =" + _population[index_BestChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore]);		
 		}
 		#endregion
 	}

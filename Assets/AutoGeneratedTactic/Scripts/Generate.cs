@@ -21,8 +21,8 @@ public class Generate : MonoBehaviour {
 	private DataSerialization DataSerialization;
 
 	private int runGenerate = 0;
-	private Chromosome BestChromesome_Space = new Chromosome();
-	private Chromosome BestChromesome = new Chromosome();
+	private Chromosome BestChromosome_Space = new Chromosome();
+	private Chromosome BestChromosome = new Chromosome();
 
 	// Use this for initialization
 	void Start () {
@@ -70,7 +70,7 @@ public class Generate : MonoBehaviour {
 					GeneticAlgorithm.Replace();
 				}
 
-				BestChromesome_Space = GeneticAlgorithm.BestChromesome().CloneSpace();
+				BestChromosome_Space = GeneticAlgorithm.BestChromosome().CloneSpace();
 				//GeneticAlgorithm.SaveData(numGeneration);
 				//GeneticAlgorithm.OutputData(runGenerate);
 
@@ -91,7 +91,7 @@ public class Generate : MonoBehaviour {
 					ParticleSwarmOptimization.UpdatePosition();
 				}
 
-				BestChromesome = ParticleSwarmOptimization.BestChromesome();
+				BestChromosome = ParticleSwarmOptimization.BestChromosome();
 				ParticleSwarmOptimization.SaveData(numGeneration);
 				ParticleSwarmOptimization.OutputData(runGenerate);
 
@@ -103,7 +103,7 @@ public class Generate : MonoBehaviour {
 		}
 		#endregion
 
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromesome_Space);
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space);
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
@@ -113,7 +113,7 @@ public class Generate : MonoBehaviour {
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
 			GeneticAlgorithmSettingGameObject.Replace();
 		}
-		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
+		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
 
 		//Time
 		var GAGOendTime = Time.realtimeSinceStartup - startTime;
@@ -122,9 +122,11 @@ public class Generate : MonoBehaviour {
 		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
 		//GeneticAlgorithmSettingGameObject.OutputData(0);
 
+		//Debug.Log("FitnessScore = " + BestChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense]);
+
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
-		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromesome);
+		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);
 
 		runGenerate++;
 	}
@@ -132,23 +134,25 @@ public class Generate : MonoBehaviour {
 	int runGenerateGameObject = 1;
 	public void OnClick_GenerateGameObject()
 	{
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromesome_Space);
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space);
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			//GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
 			GeneticAlgorithmSettingGameObject.Replace();
 		}
-		BestChromesome = GeneticAlgorithmSettingGameObject.BestChromesome();
-		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		//GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
+		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
+		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
+
+		//Debug.Log("FitnessScore = " + BestChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense]);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
-		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromesome);
+		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);
 
 		runGenerateGameObject++;
 	}
@@ -157,11 +161,40 @@ public class Generate : MonoBehaviour {
 	{
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
-		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromesome_Space);
+		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome_Space);
 	}
 
 	public void OnClick_OutputAutoTacticData()
 	{
-		DataSerialization.OutputAutoTacticData(length, width, BestChromesome);
+		DataSerialization.OutputAutoTacticData(length + 2, width + 2, transformChromosome(BestChromosome, length, width));
 	}
+
+	Chromosome transformChromosome(Chromosome originalChromosome, int originalLength, int originalWidth)
+	{
+		int resultLength = originalLength + 2;
+		int resultWidth = originalWidth + 2;
+
+		Chromosome resultChromosome = new Chromosome();
+
+		for (int gene = 0; gene < ( resultLength * resultWidth ); gene++)
+		{
+			resultChromosome.genesList.Add(new Gene());
+			resultChromosome.genesList[gene].type = GeneType.Forbidden;
+		}
+
+		for (int originalGene = 0; originalGene < originalChromosome.genesList.Count; originalGene++)
+		{
+			int original_posX = originalGene / length;
+			int original_posY = originalGene % length;
+			int resul_posX = original_posX + 1;
+			int resul_posY = original_posY + 1;
+
+			resultChromosome.genesList[resul_posX * resultLength + resul_posY].type = originalChromosome.genesList[originalGene].type;
+			resultChromosome.genesList[resul_posX * resultLength + resul_posY].GameObjectAttribute = originalChromosome.genesList[originalGene].GameObjectAttribute;
+			resultChromosome.genesList[resul_posX * resultLength + resul_posY].SpaceAttribute = originalChromosome.genesList[originalGene].SpaceAttribute;
+		}
+
+		return resultChromosome;
+	}
+
 }

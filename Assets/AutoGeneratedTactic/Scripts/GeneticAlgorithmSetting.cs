@@ -62,7 +62,7 @@ namespace GeneticAlgorithmSettingDefinition
 
 		#region Fitness
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
-		float weight_RectangleQuality = 0.0f;
+		float weight_RectangleQuality = 1.0f;
 		float weight_CorridorQuality = 1.0f;
 		float weight_ConnectedQuality = 1.0f;
 

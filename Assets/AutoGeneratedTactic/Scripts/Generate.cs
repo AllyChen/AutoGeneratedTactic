@@ -107,7 +107,7 @@ public class Generate : MonoBehaviour {
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			//GeneticAlgorithmSettingGameObject.SaveData(num_generation);
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
@@ -119,8 +119,8 @@ public class Generate : MonoBehaviour {
 		var GAGOendTime = Time.realtimeSinceStartup - startTime;
 		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
 
-		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		GeneticAlgorithmSettingGameObject.OutputData(0);
+		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		//GeneticAlgorithmSettingGameObject.OutputData(0);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
@@ -136,15 +136,15 @@ public class Generate : MonoBehaviour {
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			//GeneticAlgorithmSettingGameObject.SaveData(num_generation);
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
 			GeneticAlgorithmSettingGameObject.Replace();
 		}
 		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
-		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
+		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		//GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
@@ -157,7 +157,8 @@ public class Generate : MonoBehaviour {
 	{
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
-		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome_Space);
+		//TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome_Space);
+		TacticRenderHandlar.RenderTileOfTactic(length + 2, width + 2, AutoTacticRender, transformChromosome(BestChromosome, length, width));
 	}
 
 	public void OnClick_OutputAutoTacticData()
@@ -186,11 +187,126 @@ public class Generate : MonoBehaviour {
 			int resul_posY = original_posY + 1;
 
 			resultChromosome.genesList[resul_posX * resultLength + resul_posY].type = originalChromosome.genesList[originalGene].type;
-			resultChromosome.genesList[resul_posX * resultLength + resul_posY].GameObjectAttribute = originalChromosome.genesList[originalGene].GameObjectAttribute;
+			if (originalChromosome.genesList[originalGene].GameObjectAttribute == GeneGameObjectAttribute.entrance 
+				|| originalChromosome.genesList[originalGene].GameObjectAttribute == GeneGameObjectAttribute.exit)
+			{
+				resultChromosome.genesList[transformPositionDoor(originalChromosome, originalLength, originalWidth, originalGene)].type = GeneType.Empty;
+				resultChromosome.genesList[transformPositionDoor(originalChromosome, originalLength, originalWidth, originalGene)].GameObjectAttribute = originalChromosome.genesList[originalGene].GameObjectAttribute;
+			}
+			else
+			{
+				resultChromosome.genesList[resul_posX * resultLength + resul_posY].GameObjectAttribute = originalChromosome.genesList[originalGene].GameObjectAttribute;
+			}			
 			resultChromosome.genesList[resul_posX * resultLength + resul_posY].SpaceAttribute = originalChromosome.genesList[originalGene].SpaceAttribute;
 		}
 
 		return resultChromosome;
 	}
 
+	int transformPositionDoor(Chromosome originalChromosome, int originalLength, int originalWidth, int oldPosition)
+	{
+		int oldPosition_x = oldPosition / originalLength;
+		int oldPosition_y = oldPosition % originalLength;
+		int newPosition_x = 0;
+		int newPosition_y = 0;
+		int newPosition;
+
+		#region Top
+		if (oldPosition_x == 0)
+		{
+			// TopLeft
+			if (oldPosition_y == 0)
+			{
+				if (originalChromosome.genesList[oldPosition + 1].isMainPath == true)
+				{
+					newPosition_x = 1;
+					newPosition_y = 0;
+				}
+				else
+				{
+					newPosition_x = 0;
+					newPosition_y = 1;
+				}
+			}
+			// TopRight
+			else if (oldPosition_y == ( originalLength - 1 ))
+			{
+				if (originalChromosome.genesList[oldPosition - 1].isMainPath == true)
+				{
+					newPosition_x = 1;
+					newPosition_y = oldPosition_y + 2;
+				}
+				else
+				{
+					newPosition_x = 0;
+					newPosition_y = oldPosition_y + 1;
+				}
+			}
+			else
+			{
+				newPosition_x = 0;
+				newPosition_y = oldPosition_y + 1;
+			}
+		}
+		#endregion
+
+		#region Bottom
+		if (oldPosition_x == originalWidth - 1)
+		{
+			// BottomLeft
+			if (oldPosition_y == 0)
+			{
+				if (originalChromosome.genesList[oldPosition + 1].isMainPath == true)
+				{
+					newPosition_x = oldPosition_x + 1;
+					newPosition_y = 0;
+				}
+				else
+				{
+					newPosition_x = oldPosition_x + 2;
+					newPosition_y = 1;
+				}
+			}
+			// BottomRight
+			else if (oldPosition_y == ( originalLength - 1 ))
+			{
+				if (originalChromosome.genesList[oldPosition - 1].isMainPath == true)
+				{
+					newPosition_x = oldPosition_x + 1;
+					newPosition_y = oldPosition_y + 2;
+				}
+				else
+				{
+					newPosition_x = oldPosition_x + 2;
+					newPosition_y = oldPosition_y + 1;
+				}
+			}
+			else
+			{
+				newPosition_x = oldPosition_x + 2;
+				newPosition_y = oldPosition_y + 1;
+			}
+		}
+		#endregion
+
+		#region Left
+		if (oldPosition_y == 0 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
+		{
+			newPosition_x = oldPosition_x + 1;
+			newPosition_y = 0;
+		}
+		#endregion
+
+		#region Right
+		if (oldPosition_y == originalWidth - 1 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
+		{
+			newPosition_x = oldPosition_x + 1;
+			newPosition_y = oldPosition_y + 2;
+		}
+		#endregion
+
+		newPosition = newPosition_x * ( originalLength + 2 ) + newPosition_y;
+
+		return newPosition;
+	}
 }

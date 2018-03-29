@@ -37,41 +37,43 @@ public class TestFitnessFunction : MonoBehaviour {
 
 	void Start()
 	{
-		//EmptyTiles.Clear();
-		//InitialTestMap(TestMapArray, TestMap);
-		//TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
-		//TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		//TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
-		//TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.enemy);
-		////TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.trap);
-		////TestMap.AddGameObjectInList(54, GeneGameObjectAttribute.trap);
-		//TestMap.AddGameObjectInList(46, GeneGameObjectAttribute.treasure);
-		//// Calculate the number of empty tiles
-		//for (int indexGene = 0; indexGene < TestMap.genesList.Count; indexGene++)
-		//{
-		//	if (TestMap.genesList[indexGene].type == GeneType.Empty)
-		//	{
-		//		EmptyTiles.Add(indexGene);
-		//	}
-		//}
+		EmptyTiles.Clear();
+		InitialTestMap(TestMapArray, TestMap);
+		TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
+		TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
+		TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.enemy);
+		//TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.trap);
+		//TestMap.AddGameObjectInList(54, GeneGameObjectAttribute.trap);
+		TestMap.AddGameObjectInList(46, GeneGameObjectAttribute.treasure);
+		// Calculate the number of empty tiles
+		for (int indexGene = 0; indexGene < TestMap.genesList.Count; indexGene++)
+		{
+			if (TestMap.genesList[indexGene].type == GeneType.Empty)
+			{
+				EmptyTiles.Add(indexGene);
+			}
+		}
 
-		//// Fitness function
-		//float weight_RectangleQuality = 0.0f;
-		//float weight_CorridorQuality = 1.0f;
-		//float weight_ConnectedQuality = 1.0f;
-		//TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(TestMap, _mapLength, _mapWidth);
-		//TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(TestMap, _mapLength, _mapWidth);
-		//TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(TestMap, _mapLength, _mapWidth);
-		//TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
-		//																	+ TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
-		//																	+ TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
-		//float weight_MainPathQuality = 1.0f;
-		//float weight_Fitness_Defense = 1.0f;
-		//TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(TestMap, _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-		//TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth);
-		//TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
-		//																	+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
-		////Debug.Log(Fitness_BesideMainPath(TestMap, _mapLength, _mapWidth, GeneGameObjectAttribute.enemy));
+		// Fitness function
+		float weight_RectangleQuality = 0.0f;
+		float weight_CorridorQuality = 1.0f;
+		float weight_ConnectedQuality = 1.0f;
+		TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(TestMap, _mapLength, _mapWidth);
+		TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(TestMap, _mapLength, _mapWidth);
+		TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(TestMap, _mapLength, _mapWidth);
+		TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+																			+ TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+																			+ TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+		float weight_MainPathQuality = 1.0f;
+		float weight_Fitness_Defense = 1.0f;
+		TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(TestMap, _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
+		TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth);
+		TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
+																			+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
+
+		Debug.Log(transformPositionDoor(TestMap, _mapLength, _mapWidth, 62));
+
 	}
 
 	#region InitialTestMap
@@ -117,5 +119,112 @@ public class TestFitnessFunction : MonoBehaviour {
 		spaceGrid = new Grid(tilesmap);
 	}
 	#endregion
+
+	int transformPositionDoor(Chromosome originalChromosome, int originalLength, int originalWidth, int oldPosition)
+	{
+		int oldPosition_x = oldPosition / originalLength;
+		int oldPosition_y = oldPosition % originalLength;
+		int newPosition_x = 0;
+		int newPosition_y = 0;
+		int newPosition;
+
+		#region Top
+		if (oldPosition_x == 0)
+		{
+			// TopLeft
+			if (oldPosition_y == 0)
+			{
+				if (originalChromosome.genesList[oldPosition + 1].isMainPath == true)
+				{
+					newPosition_x = 1;
+					newPosition_y = 0;
+				}
+				else
+				{
+					newPosition_x = 0;
+					newPosition_y = 1;
+				}
+			}
+			// TopRight
+			else if (oldPosition_y == ( originalLength - 1 ))
+			{
+				if (originalChromosome.genesList[oldPosition - 1].isMainPath == true)
+				{
+					newPosition_x = 1;
+					newPosition_y = oldPosition_y + 2;
+				}
+				else
+				{
+					newPosition_x = 0;
+					newPosition_y = oldPosition_y + 1;
+				}
+			}
+			else
+			{
+				newPosition_x = 0;
+				newPosition_y = oldPosition_y + 1;
+			}
+		}
+		#endregion
+
+		#region Bottom
+		if (oldPosition_x == originalWidth - 1)
+		{
+			// BottomLeft
+			if (oldPosition_y == 0)
+			{
+				if (originalChromosome.genesList[oldPosition + 1].isMainPath == true)
+				{
+					newPosition_x = oldPosition_x + 1;
+					newPosition_y = 0;
+				}
+				else
+				{
+					newPosition_x = oldPosition_x + 2;
+					newPosition_y = 1;
+				}
+			}
+			// BottomRight
+			else if (oldPosition_y == ( originalLength - 1 ))
+			{
+				if (originalChromosome.genesList[oldPosition - 1].isMainPath == true)
+				{
+					newPosition_x = oldPosition_x + 1;
+					newPosition_y = oldPosition_y + 2;
+				}
+				else
+				{
+					newPosition_x = oldPosition_x + 2;
+					newPosition_y = oldPosition_y + 1;
+				}
+			}
+			else
+			{
+				newPosition_x = oldPosition_x + 2;
+				newPosition_y = oldPosition_y + 1;
+			}
+		}
+		#endregion
+
+		#region Left
+		if (oldPosition_y == 0 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
+		{
+			newPosition_x = oldPosition_x + 1;
+			newPosition_y = 0;
+		}
+		#endregion
+
+		#region Right
+		if (oldPosition_y == originalWidth - 1 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
+		{
+			newPosition_x = oldPosition_x + 1;
+			newPosition_y = oldPosition_y + 2;
+		}
+		#endregion
+
+		newPosition = newPosition_x * ( originalLength + 2 ) + newPosition_y;
+
+		return newPosition;
+	}
 
 }

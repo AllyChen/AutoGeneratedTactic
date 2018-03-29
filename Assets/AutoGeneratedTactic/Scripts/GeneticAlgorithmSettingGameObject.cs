@@ -213,6 +213,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
 		float weight_MainPathQuality = 1.0f;
 		float weight_Fitness_Defense = 1.0f;
+		float weight_Fitness_OnMainPath = 1.0f;
+		float weight_Fitness_BesideMainPath = 0.0f;
 
 		public void CalculateFitnessScores()
 		{
@@ -222,8 +224,12 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				// Fitness function
 				_population[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_population[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
 				_population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = FitnessFunction.Fitness_OnMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure);
+				_population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy);
 				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _population[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
-																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
+																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense
+																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] * weight_Fitness_OnMainPath
+																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] * weight_Fitness_BesideMainPath ) / 4.0f;
 			}
 		}
 		// Calculate the fitness score of chromosomes in specific population.
@@ -235,8 +241,12 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				// Fitness function
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_specificPopulation[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = FitnessFunction.Fitness_OnMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
-																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] * weight_Fitness_OnMainPath
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] * weight_Fitness_BesideMainPath ) / 4.0f;
 			}
 		}
 		#endregion
@@ -782,14 +792,13 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 					index_BestChromosome = i;
 				}
 			}
-
 			return _population[index_BestChromosome];
 		}
 		#endregion
 
 		#region OutputData
 		private List<string[]> basicData = new List<string[]>();
-		string[] tileData = new string[5];
+		string[] tileData = new string[7];
 
 		void InitialData()
 		{
@@ -800,7 +809,9 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			tileData[1] = "ChromosomeIndex";
 			tileData[2] = "Fitness_MainPathQuality";
 			tileData[3] = "Fitness_Defense";
-			tileData[4] = "Fitness_SumOfFitnessScore";
+			tileData[4] = "Fitness_OnMainPath";
+			tileData[5] = "Fitness_BesideMainPath";
+			tileData[6] = "Fitness_SumOfFitnessScore";
 			basicData.Add(tileData);
 		}
 
@@ -813,7 +824,9 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				contentData[1] = indexChromosome.ToString(); // ChromosomeIndex
 				contentData[2] = _population[indexChromosome].FitnessScore[FitnessFunctionName.MainPathQuality].ToString(); // Fitness_MainPathQuality
 				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_Defense].ToString(); // Fitness_Defense
-				contentData[4] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
+				contentData[4] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_OnMainPath].ToString(); // Fitness_OnMainPath
+				contentData[5] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath].ToString(); // Fitness_BesideMainPath
+				contentData[6] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
 				basicData.Add(contentData);
 			}
 		}

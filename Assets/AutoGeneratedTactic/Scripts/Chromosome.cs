@@ -45,6 +45,8 @@ namespace ChromosomeDefinition
 		ConnectedQuality,
 		MainPathQuality,
 		Fitness_Defense,
+		Fitness_OnMainPath,
+		Fitness_BesideMainPath,
 		NumberOfFitnessFunctionName,
 		SumOfFitnessScore
 	}
@@ -55,13 +57,15 @@ namespace ChromosomeDefinition
 		public List<Gene> genesList = new List<Gene>();
 		// FitnessScore
 		public Dictionary<FitnessFunctionName, float> FitnessScore = new Dictionary<FitnessFunctionName, float>() {
-					{ FitnessFunctionName.ImpassableDensity   , 0.0f },
-					{ FitnessFunctionName.RectangleQuality   , 0.0f },
-					{ FitnessFunctionName.CorridorQuality   , 0.0f },
-					{ FitnessFunctionName.ConnectedQuality   , 0.0f },
-					{ FitnessFunctionName.MainPathQuality   , 0.0f },
-					{ FitnessFunctionName.Fitness_Defense   , 0.0f },
-					{ FitnessFunctionName.SumOfFitnessScore   , 0.0f },
+					{ FitnessFunctionName.ImpassableDensity			, 0.0f },
+					{ FitnessFunctionName.RectangleQuality			, 0.0f },
+					{ FitnessFunctionName.CorridorQuality			, 0.0f },
+					{ FitnessFunctionName.ConnectedQuality			, 0.0f },
+					{ FitnessFunctionName.MainPathQuality			, 0.0f },
+					{ FitnessFunctionName.Fitness_Defense			, 0.0f },
+					{ FitnessFunctionName.Fitness_OnMainPath		, 0.0f },
+					{ FitnessFunctionName.Fitness_BesideMainPath	, 0.0f },
+					{ FitnessFunctionName.SumOfFitnessScore			, 0.0f },
 				};
 
 		public void copyFitnessScore(Chromosome sourceChromosome)
@@ -72,6 +76,8 @@ namespace ChromosomeDefinition
 			this.FitnessScore[FitnessFunctionName.ConnectedQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.ConnectedQuality];
 			this.FitnessScore[FitnessFunctionName.MainPathQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.MainPathQuality];
 			this.FitnessScore[FitnessFunctionName.Fitness_Defense] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense];
+			this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_OnMainPath];
+			this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath];
 			this.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = sourceChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 		}
 
@@ -95,6 +101,8 @@ namespace ChromosomeDefinition
 			ChromosomeClone.FitnessScore[FitnessFunctionName.ConnectedQuality] = this.FitnessScore[FitnessFunctionName.ConnectedQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.MainPathQuality] = this.FitnessScore[FitnessFunctionName.MainPathQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_Defense] = this.FitnessScore[FitnessFunctionName.Fitness_Defense];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = this.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 
 			return ChromosomeClone;
@@ -113,6 +121,7 @@ namespace ChromosomeDefinition
 				Gene gene = new Gene();
 				gene.type = originalGene.type;
 				gene.SpaceAttribute = originalGene.SpaceAttribute;
+				gene.isMainPath = originalGene.isMainPath;
 				genesListClone.Add(gene);
 			}
 			ChromosomeClone.genesList = genesListClone;
@@ -186,6 +195,7 @@ namespace ChromosomeDefinition
 				gene.type = originalGene.type;
 				gene.SpaceAttribute = originalGene.SpaceAttribute;
 				gene.GameObjectAttribute = originalGene.GameObjectAttribute;
+				gene.isMainPath = originalGene.isMainPath;
 				genesListClone.Add(gene);
 			}
 			ChromosomeClone.genesList = genesListClone;
@@ -214,16 +224,28 @@ namespace ChromosomeDefinition
 			}
 			ChromosomeClone.gameObjectList = gameObjectListClone;
 
+			// Main Path
+			var mainPathListClone = new List<int>();
+			foreach (var originalmainPath in this.mainPath)
+			{
+				mainPathListClone.Add(originalmainPath);
+			}
+			ChromosomeClone.mainPath = mainPathListClone;
+
 			return ChromosomeClone;
 		}
 		// Main Path
 		public List<int> mainPath = new List<int>();
 
-		public void copyMainPath(List<int> sourceMainPath)
+		public void settingMainPath()
 		{
-			foreach (var gene in sourceMainPath)
+			foreach (var gene in this.genesList)
 			{
-				this.mainPath.Add(gene);
+				gene.isMainPath = false;
+			}
+			foreach (var index in this.mainPath)
+			{
+				this.genesList[index].isMainPath = true;
 			}
 		}
 	}
@@ -233,6 +255,7 @@ namespace ChromosomeDefinition
 		public GeneType type;
 		public GeneSpaceAttribute SpaceAttribute;
 		public GeneGameObjectAttribute GameObjectAttribute;
+		public bool isMainPath;
 	}
 
 	public class SpaceInfo

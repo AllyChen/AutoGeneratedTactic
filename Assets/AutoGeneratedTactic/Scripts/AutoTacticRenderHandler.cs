@@ -8,16 +8,19 @@ using ChromosomeDefinition;
 public class AutoTacticRenderHandler : MonoBehaviour {
 
 	private GameObject TileStyle;
-	private GameObject GameObjectStyle;
 	public GameObject Tile_Empty;
 	public GameObject Tile_Forbidden;
 	public GameObject Tile_Rectangle;
 	public GameObject Tile_Corridor;
+
+	private GameObject GameObjectStyle;
 	public GameObject Entrance;
 	public GameObject Exit;
 	public GameObject Enemy;
 	public GameObject Trap;
 	public GameObject Treasure;
+
+	public GameObject MainPath;
 
 	public void CleanBoard(GameObject board)
 	{
@@ -96,6 +99,15 @@ public class AutoTacticRenderHandler : MonoBehaviour {
 					gameObject.transform.parent = newTile.transform;
 					gameObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
 					gameObject.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
+				}
+
+				if (bestChromosome.genesList[indexGene].isMainPath == true)
+				{
+					var gameObject = Instantiate(MainPath);
+					gameObject.name = "MainPath";
+					gameObject.transform.parent = newTile.transform;
+					gameObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+					gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 				}
 
 				indexGene++;

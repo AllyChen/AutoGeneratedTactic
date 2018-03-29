@@ -38,11 +38,11 @@ public class Generate : MonoBehaviour {
 	int useMethod = 0;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
 	int length;
 	int width;
-	int numGeneration = 100;
+	int numGeneration = 50;
 	int numChromosome = 100;
 	float rato_crossover = 0.8f;
 	float rato_mutation = 1.0f;
-	int numGenerationGameObject = 100;
+	int numGenerationGameObject = 50;
 	int numChromosomeGameObject = 100;
 	float ratio_GameObjectCrossover = 0.8f;
 	float ratio_GameObjectMutation = 1.0f;
@@ -107,7 +107,7 @@ public class Generate : MonoBehaviour {
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			//GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
@@ -119,10 +119,8 @@ public class Generate : MonoBehaviour {
 		var GAGOendTime = Time.realtimeSinceStartup - startTime;
 		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
 
-		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		//GeneticAlgorithmSettingGameObject.OutputData(0);
-
-		//Debug.Log("FitnessScore = " + BestChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense]);
+		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		GeneticAlgorithmSettingGameObject.OutputData(0);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
@@ -147,8 +145,6 @@ public class Generate : MonoBehaviour {
 		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
 		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
 		GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
-
-		//Debug.Log("FitnessScore = " + BestChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense]);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);

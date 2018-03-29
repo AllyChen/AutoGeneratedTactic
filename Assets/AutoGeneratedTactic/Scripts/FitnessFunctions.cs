@@ -935,6 +935,7 @@ public class FitnessFunctions {
 		float fitnessScore = 0.0f;
 
 		FindMainPath(chromosome, length, width, spaceGrid);
+		chromosome.settingMainPath();
 		fitnessScore = (float)chromosome.mainPath.Count / numEmpty;
 
 		return fitnessScore;
@@ -1045,7 +1046,7 @@ public class FitnessFunctions {
 
 		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
 
-		return fitnessScore;
+		return fitness_GameObject;
 	}
 
 	float valueSaveSpace(Chromosome chromosome, List<int> neighborSpaceIndex)
@@ -1217,6 +1218,223 @@ public class FitnessFunctions {
 			}
 		}
 		return _protectedObjectNeighbor;
+	}
+	#endregion
+
+	/// <summary>
+	/// Fitness_OnMainPath
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <param name="gameObjectAttribute"></param>
+	/// <returns></returns>
+	#region Fitness_OnMainPath
+	public float Fitness_OnMainPath(Chromosome chromosome, int length, int width, GeneGameObjectAttribute gameObjectAttribute)
+	{
+		float fitnessScore = 0.0f;
+		List<int> posGameObject = new List<int>();
+		float numOnMainPath = 0.0f; // Number of game object on the main path.
+
+		foreach (var Object in chromosome.gameObjectList)
+		{
+			if (Object.GameObjectAttribute == gameObjectAttribute)
+			{
+				posGameObject.Add(Object.Position);
+				if (chromosome.genesList[Object.Position].isMainPath == true)
+				{
+					numOnMainPath++;
+				}
+			}
+		}
+		if (posGameObject.Count == 0)
+		{
+			fitnessScore = 0.0f;
+		}
+		else
+		{
+			fitnessScore = numOnMainPath / posGameObject.Count;
+		}
+		return fitnessScore;
+	}
+	#endregion
+
+	/// <summary>
+	/// Fitness_BesideMainPath
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <param name="gameObjectAttribute"></param>
+	/// <returns></returns>
+	#region Fitness_BesideMainPath
+	public float Fitness_BesideMainPath(Chromosome chromosome, int length, int width, GeneGameObjectAttribute gameObjectAttribute)
+	{
+		float fitnessScore = 0.0f;
+		List<int> posGameObject = new List<int>();
+
+		foreach (var Object in chromosome.gameObjectList)
+		{
+			if (Object.GameObjectAttribute == gameObjectAttribute)
+			{
+				posGameObject.Add(Object.Position);
+			}
+		}
+		if (posGameObject.Count == 0)
+		{
+			fitnessScore = 0.0f;
+		}
+		else
+		{
+			foreach (var position in posGameObject)
+			{
+				fitnessScore = fitnessScore + gameObjectBesideMainPath(chromosome, length, width, position);
+			}
+
+		}
+
+		fitnessScore = fitnessScore / posGameObject.Count;
+
+		return fitnessScore;
+	}
+
+	float gameObjectBesideMainPath(Chromosome chromosome, int length, int width, int posGameObject)
+	{
+		float value = 0.0f;
+		int numEmpty = 0;
+		int numNeighborMainPath = 0;
+		int posTop = posGameObject - length;
+		int posBottom = posGameObject + length;
+		int posLeft = posGameObject - 1;
+		int posRight = posGameObject + 1;
+		int posTopLeft = posTop - 1;
+		int posTopRight = posTop + 1;
+		int posBottomLeft = posBottom - 1;
+		int posBottomRight = posBottom + 1;
+		int posCenter_x = posGameObject / length;
+		int posCenter_y = posGameObject % length;
+		List<int> _emptyNeighbor = new List<int>();
+
+		if (chromosome.genesList[posGameObject].isMainPath == true)
+		{
+			value = 0.0f;
+		}
+		else
+		{
+			#region findNeighborWhichIsEmpty
+			if (posCenter_x - 1 >= 0)
+			{
+				if (posCenter_y - 1 >= 0)
+				{
+					// TopLeft
+					if (chromosome.genesList[posTopLeft].type == GeneType.Empty)
+					{
+						if (chromosome.genesList[posTop].type != GeneType.Forbidden || chromosome.genesList[posLeft].type != GeneType.Forbidden)
+						{
+							numEmpty++;
+							if (chromosome.genesList[posTopLeft].isMainPath == true)
+							{
+								numNeighborMainPath++;
+							}
+						}
+					}
+				}
+				// Top
+				if (chromosome.genesList[posTop].type == GeneType.Empty)
+				{
+					numEmpty++;
+					if (chromosome.genesList[posTop].isMainPath == true)
+					{
+						numNeighborMainPath++;
+					}
+				}
+				if (posCenter_y + 1 < length)
+				{
+					// TopRight
+					if (chromosome.genesList[posTopRight].type == GeneType.Empty)
+					{
+						if (chromosome.genesList[posTop].type != GeneType.Forbidden || chromosome.genesList[posRight].type != GeneType.Forbidden)
+						{
+							numEmpty++;
+							if (chromosome.genesList[posTopRight].isMainPath == true)
+							{
+								numNeighborMainPath++;
+							}
+						}
+					}
+				}
+			}
+			if (posCenter_y - 1 >= 0)
+			{
+				// Left
+				if (chromosome.genesList[posLeft].type == GeneType.Empty)
+				{
+					numEmpty++;
+					if (chromosome.genesList[posLeft].isMainPath == true)
+					{
+						numNeighborMainPath++;
+					}
+				}
+			}
+			if (posCenter_y + 1 < length)
+			{
+				// Right
+				if (chromosome.genesList[posRight].type == GeneType.Empty)
+				{
+					numEmpty++;
+					if (chromosome.genesList[posRight].isMainPath == true)
+					{
+						numNeighborMainPath++;
+					}
+				}
+			}
+			if (posCenter_x + 1 < width)
+			{
+				if (posCenter_y - 1 >= 0)
+				{
+					// BottomLeft
+					if (chromosome.genesList[posBottomLeft].type == GeneType.Empty)
+					{
+						if (chromosome.genesList[posBottom].type != GeneType.Forbidden || chromosome.genesList[posLeft].type != GeneType.Forbidden)
+						{
+							numEmpty++;
+							if (chromosome.genesList[posBottomLeft].isMainPath == true)
+							{
+								numNeighborMainPath++;
+							}
+						}
+					}
+				}
+				// Bottom
+				if (chromosome.genesList[posBottom].type == GeneType.Empty)
+				{
+					numEmpty++;
+					if (chromosome.genesList[posBottom].isMainPath == true)
+					{
+						numNeighborMainPath++;
+					}
+				}
+				if (posCenter_y + 1 < length)
+				{
+					// BottomRight
+					if (chromosome.genesList[posBottomRight].type == GeneType.Empty)
+					{
+						if (chromosome.genesList[posBottom].type != GeneType.Forbidden || chromosome.genesList[posRight].type != GeneType.Forbidden)
+						{
+							numEmpty++;
+							if (chromosome.genesList[posBottomRight].isMainPath == true)
+							{
+								numNeighborMainPath++;
+							}
+						}
+					}
+				}
+			}
+			#endregion
+
+			value = (float)numNeighborMainPath / (float)numEmpty;
+		}
+		return value;
 	}
 	#endregion
 }

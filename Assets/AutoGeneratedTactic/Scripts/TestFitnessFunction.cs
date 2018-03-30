@@ -37,42 +37,42 @@ public class TestFitnessFunction : MonoBehaviour {
 
 	void Start()
 	{
-		EmptyTiles.Clear();
-		InitialTestMap(TestMapArray, TestMap);
-		TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
-		TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
-		TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.enemy);
-		//TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.trap);
-		//TestMap.AddGameObjectInList(54, GeneGameObjectAttribute.trap);
-		TestMap.AddGameObjectInList(46, GeneGameObjectAttribute.treasure);
-		// Calculate the number of empty tiles
-		for (int indexGene = 0; indexGene < TestMap.genesList.Count; indexGene++)
-		{
-			if (TestMap.genesList[indexGene].type == GeneType.Empty)
-			{
-				EmptyTiles.Add(indexGene);
-			}
-		}
+		//EmptyTiles.Clear();
+		//InitialTestMap(TestMapArray, TestMap);
+		//TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
+		//TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
+		//TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
+		//TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.enemy);
+		////TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.trap);
+		////TestMap.AddGameObjectInList(54, GeneGameObjectAttribute.trap);
+		//TestMap.AddGameObjectInList(46, GeneGameObjectAttribute.treasure);
+		//// Calculate the number of empty tiles
+		//for (int indexGene = 0; indexGene < TestMap.genesList.Count; indexGene++)
+		//{
+		//	if (TestMap.genesList[indexGene].type == GeneType.Empty)
+		//	{
+		//		EmptyTiles.Add(indexGene);
+		//	}
+		//}
 
-		// Fitness function
-		float weight_RectangleQuality = 0.0f;
-		float weight_CorridorQuality = 1.0f;
-		float weight_ConnectedQuality = 1.0f;
-		TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(TestMap, _mapLength, _mapWidth);
-		TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(TestMap, _mapLength, _mapWidth);
-		TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(TestMap, _mapLength, _mapWidth);
-		TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
-																			+ TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
-																			+ TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
-		float weight_MainPathQuality = 1.0f;
-		float weight_Fitness_Defense = 1.0f;
-		TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(TestMap, _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-		TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth);
-		TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
-																			+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
+		//// Fitness function
+		//float weight_RectangleQuality = 0.0f;
+		//float weight_CorridorQuality = 1.0f;
+		//float weight_ConnectedQuality = 1.0f;
+		//TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(TestMap, _mapLength, _mapWidth);
+		//TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(TestMap, _mapLength, _mapWidth);
+		//TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(TestMap, _mapLength, _mapWidth);
+		//TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+		//																	+ TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+		//																	+ TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+		//float weight_MainPathQuality = 1.0f;
+		//float weight_Fitness_Defense = 1.0f;
+		//TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(TestMap, _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
+		//TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth);
+		//TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
+		//																	+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
 
-		Debug.Log(transformPositionDoor(TestMap, _mapLength, _mapWidth, 62));
+		//Debug.Log(transformPositionDoor(TestMap, _mapLength, _mapWidth, 62));
 
 	}
 

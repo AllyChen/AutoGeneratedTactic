@@ -36,8 +36,6 @@ public class Generate : MonoBehaviour {
 	}
 
 	int useMethod = 0;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
-	int length;
-	int width;
 	int numGeneration = 50;
 	int numChromosome = 100;
 	float rato_crossover = 0.8f;
@@ -47,11 +45,37 @@ public class Generate : MonoBehaviour {
 	float ratio_GameObjectCrossover = 0.8f;
 	float ratio_GameObjectMutation = 1.0f;
 
+	// Get the Parameters
+	int length;
+	int width;
+	int minEnemy;
+	int minTrap;
+	int minTreasure;
+	int maxEnemy;
+	int maxTrap;
+	int maxTreasure;
+	int[] numMinGameObject;
+	int[] numMaxGameObject;
+
+	bool fitness_Rectangle;
+	bool fitness_Corridor;
+	bool fitness_Defense;
+	bool fitness_OnMainPath;
+	bool fitness_BesideMainPath;
+
+	bool isTreasureOnMainPath;
+	bool isTreasureBesideMainPath;
+
+	float weight_RectangleQuality;
+	float weight_CorridorQuality;
+	float weight_Fitness_Defense;
+	float weight_Fitness_OnMainPath;
+	float weight_Fitness_BesideMainPath;
+
 	public void OnClick_Generate()
 	{
 		var startTime = Time.realtimeSinceStartup;
-		length = ParameterSetting.GetComponent<Parameters>().GetTheLenghOfTile();
-		width = ParameterSetting.GetComponent<Parameters>().GetTheWidthOfTile();
+		GetParameters();
 
 		#region GenerateSpace
 		switch (useMethod)
@@ -59,11 +83,12 @@ public class Generate : MonoBehaviour {
 			case 0:
 				// Start GeneticAlgorithm
 				GeneticAlgorithm.InitialPopulation(length, width, length * width, numChromosome, numGeneration);
+				GeneticAlgorithm.DetermineWeightFitness(fitness_Rectangle, fitness_Corridor, weight_RectangleQuality, weight_CorridorQuality);
 
 				for (int num_generation = 0; num_generation < numGeneration; num_generation++)
 				{
 					GeneticAlgorithm.CalculateFitnessScores();
-					//GeneticAlgorithm.SaveData(num_generation);
+					GeneticAlgorithm.SaveData(num_generation);
 					GeneticAlgorithm.Selection();
 					GeneticAlgorithm.Crossover(rato_crossover);
 					GeneticAlgorithm.Mutation(rato_mutation);
@@ -71,8 +96,8 @@ public class Generate : MonoBehaviour {
 				}
 
 				BestChromosome_Space = GeneticAlgorithm.BestChromosome().CloneSpace();
-				//GeneticAlgorithm.SaveData(numGeneration);
-				//GeneticAlgorithm.OutputData(runGenerate);
+				GeneticAlgorithm.SaveData(numGeneration);
+				GeneticAlgorithm.OutputData(runGenerate);
 
 				//GeneticAlgorithm.DebugTest();
 				//Time
@@ -103,11 +128,15 @@ public class Generate : MonoBehaviour {
 		}
 		#endregion
 
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space);
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
+		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, 
+																	weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath,
+																	isTreasureOnMainPath, isTreasureBesideMainPath);
+
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			//GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
@@ -119,8 +148,8 @@ public class Generate : MonoBehaviour {
 		var GAGOendTime = Time.realtimeSinceStartup - startTime;
 		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
 
-		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		//GeneticAlgorithmSettingGameObject.OutputData(0);
+		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		GeneticAlgorithmSettingGameObject.OutputData(0);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
@@ -132,19 +161,25 @@ public class Generate : MonoBehaviour {
 	int runGenerateGameObject = 1;
 	public void OnClick_GenerateGameObject()
 	{
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space);
+		GetParameters();
+
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
+		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath,
+																	weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath,
+																	isTreasureOnMainPath, isTreasureBesideMainPath);
+
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			//GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
 			GeneticAlgorithmSettingGameObject.Replace();
 		}
 		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
-		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		//GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
+		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
@@ -308,5 +343,35 @@ public class Generate : MonoBehaviour {
 		newPosition = newPosition_x * ( originalLength + 2 ) + newPosition_y;
 
 		return newPosition;
+	}
+
+	void GetParameters()
+	{
+		length = ParameterSetting.GetComponent<Parameters>().GetTheLenghOfTile();
+		width = ParameterSetting.GetComponent<Parameters>().GetTheWidthOfTile();
+		minEnemy = ParameterSetting.GetComponent<Parameters>().GetMinEnemy();
+		minTrap = ParameterSetting.GetComponent<Parameters>().GetMinTrap();
+		minTreasure = ParameterSetting.GetComponent<Parameters>().GetMinTreasure();
+		maxEnemy = ParameterSetting.GetComponent<Parameters>().GetMaxEnemy();
+		maxTrap = ParameterSetting.GetComponent<Parameters>().GetMaxTrap();
+		maxTreasure = ParameterSetting.GetComponent<Parameters>().GetMaxTreasure();
+
+		numMinGameObject = new int[5] { 1, 1, minEnemy, minTrap, minTreasure };
+		numMaxGameObject = new int[5] { 1, 1, maxEnemy, maxTrap, maxTreasure };
+
+		fitness_Rectangle = ParameterSetting.GetComponent<Parameters>().GetIsFitness_Rectangle();
+		fitness_Corridor = ParameterSetting.GetComponent<Parameters>().GetIsFitness_Corridor();
+		fitness_Defense = ParameterSetting.GetComponent<Parameters>().GetIsFitness_Defense();
+		fitness_OnMainPath = ParameterSetting.GetComponent<Parameters>().GetIsFitness_OnMainPath();
+		fitness_BesideMainPath = ParameterSetting.GetComponent<Parameters>().GetIsFitness_BesideMainPath();
+
+		isTreasureOnMainPath = ParameterSetting.GetComponent<Parameters>().GetIsTreasureOnMainPath();
+		isTreasureBesideMainPath = ParameterSetting.GetComponent<Parameters>().GetIsTreasureBesideMainPath();
+
+		weight_RectangleQuality = ParameterSetting.GetComponent<Parameters>().GetTheWeight_RectangleQuality();
+		weight_CorridorQuality = ParameterSetting.GetComponent<Parameters>().GetTheWeight_CorridorQuality();
+		weight_Fitness_Defense = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_Defense();
+		weight_Fitness_OnMainPath = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_OnMainPath();
+		weight_Fitness_BesideMainPath = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_BesideMainPath();
 	}
 }

@@ -14,7 +14,28 @@ public class Parameters : MonoBehaviour {
 	private int maxTrap;
 	private int maxTreasure;
 
-	private Toggle onlyRectangle;
+	private bool fitness_Rectangle;
+	private bool fitness_Corridor;
+	private bool fitness_ProtectTreasure;
+	private bool fitness_OnMainPath;
+	private bool fitness_BesideMainPath;
+
+	private bool isTreasureOnMainPath;
+	private bool isTreasureBesideMainPath;
+
+	private float weight_RectangleQuality;
+	private float weight_CorridorQuality;
+	private float weight_Fitness_Defense;
+	private float weight_Fitness_OnMainPath;
+	private float weight_Fitness_BesideMainPath;
+
+	private Toggle Toggle_Rectangle;
+	private Toggle Toggle_Corridor;
+	private Toggle Toggle_ProtectTreasure;
+	private Toggle Toggle_OnMainPath;
+	private Dropdown Dropdown_OnMainPath;
+	private Toggle Toggle_BesideMainPath;
+	private Dropdown Dropdown_BesideMainPath;
 
 	// Use this for initialization
 	void Start () {
@@ -26,8 +47,19 @@ public class Parameters : MonoBehaviour {
 		GameObject.Find("InputField_MAXEnemy").GetComponent<InputField>().text = "1";
 		GameObject.Find("InputField_MAXTrap").GetComponent<InputField>().text = "1";
 		GameObject.Find("InputField_MAXTreasure").GetComponent<InputField>().text = "1";
+		GameObject.Find("InputField_Rectangle").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_Corridor").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_Defense").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_OnMainPath").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_BesideMainPath").GetComponent<InputField>().text = "1.0";
 
-		onlyRectangle = GameObject.Find("Toggle_OnlyRectangle").GetComponent<Toggle>();
+		Toggle_Rectangle = GameObject.Find("Toggle_Rectangle").GetComponent<Toggle>();
+		Toggle_Corridor = GameObject.Find("Toggle_Corridor").GetComponent<Toggle>();
+		Toggle_ProtectTreasure = GameObject.Find("Toggle_ProtectTreasure").GetComponent<Toggle>();
+		Toggle_OnMainPath = GameObject.Find("Toggle_OnMainPath").GetComponent<Toggle>();
+		Dropdown_OnMainPath = GameObject.Find("Dropdown_OnMainPath").GetComponent<Dropdown>();
+		Toggle_BesideMainPath = GameObject.Find("Toggle_BesideMainPath").GetComponent<Toggle>();
+		Dropdown_BesideMainPath = GameObject.Find("Dropdown_BesideMainPath").GetComponent<Dropdown>();
 	}
 	
 	public int GetTheLenghOfTile()
@@ -80,19 +112,196 @@ public class Parameters : MonoBehaviour {
 		return maxTreasure;
 	}
 
-	public void OnClick_Toggle_onlyRectangle()
+	public void OnClick_Toggle_Rectangle()
 	{
-		bool isOnlyRectangle = false;
-
-		if (onlyRectangle.isOn)
+		if (Toggle_Rectangle.isOn)
 		{
-			isOnlyRectangle = true;
+			fitness_Rectangle = true;
 		}
 		else
 		{
-			isOnlyRectangle = false;
+			fitness_Rectangle = false;
 		}
-		Debug.Log(isOnlyRectangle);
+		Debug.Log("isRectangle = " + fitness_Rectangle + ", Weight = " + GetTheWeight_RectangleQuality());
 	}
 
+	public void OnClick_Toggle_Corridor()
+	{
+		if (Toggle_Corridor.isOn)
+		{
+			fitness_Corridor = true;
+		}
+		else
+		{
+			fitness_Corridor = false;
+		}
+		Debug.Log("isCorridor = " + fitness_Corridor + ", Weight = " + GetTheWeight_CorridorQuality());
+	}
+
+	public void OnClick_Toggle_ProtectTreasure()
+	{
+		if (Toggle_ProtectTreasure.isOn)
+		{
+			fitness_ProtectTreasure = true;
+		}
+		else
+		{
+			fitness_ProtectTreasure = false;
+		}
+		Debug.Log("isProtectTreasure = " + fitness_ProtectTreasure + ", Weight = " + GetTheWeight_Fitness_Defense());
+	}
+
+	public void OnClick_Toggle_OnMainPath()
+	{
+		if (Toggle_OnMainPath.isOn)
+		{
+			fitness_OnMainPath = true;
+			if (Dropdown_OnMainPath.value == 0)
+			{
+				isTreasureOnMainPath = false;
+			}
+			else
+			{
+				isTreasureOnMainPath = true;
+			}
+		}
+		else
+		{
+			fitness_OnMainPath = false;
+			if (Dropdown_OnMainPath.value == 0)
+			{
+				isTreasureOnMainPath = false;
+			}
+			else
+			{
+				isTreasureOnMainPath = true;
+			}
+		}
+		Debug.Log("isOnMainPath = " + fitness_OnMainPath + "// isTreasureOnMainPath = " + isTreasureOnMainPath + ", Weight = " + GetTheWeight_Fitness_OnMainPath());
+	}
+
+	public void OnClick_Toggle_BesideMainPath()
+	{
+		if (Toggle_BesideMainPath.isOn)
+		{
+			fitness_BesideMainPath = true;
+			if (Dropdown_BesideMainPath.value == 0)
+			{
+				isTreasureBesideMainPath = false;
+			}
+			else
+			{
+				isTreasureBesideMainPath = true;
+			}
+		}
+		else
+		{
+			fitness_BesideMainPath = false;
+			if (Dropdown_BesideMainPath.value == 0)
+			{
+				isTreasureBesideMainPath = false;
+			}
+			else
+			{
+				isTreasureBesideMainPath = true;
+			}
+		}
+		Debug.Log("isBesideMainPath = " + fitness_BesideMainPath + "// isTreasureBesideMainPath = " + isTreasureBesideMainPath + ", Weight = " + GetTheWeight_Fitness_BesideMainPath());
+	}
+
+	public void OnClick_Dropdown_OnMainPath()
+	{
+		if (Dropdown_OnMainPath.value == 0)
+		{
+			isTreasureOnMainPath = false;
+		}
+		else
+		{
+			isTreasureOnMainPath = true;
+		}
+		Debug.Log("isTreasureOnMainPath = " + isTreasureOnMainPath);
+	}
+
+	public void OnClick_Dropdown_BesideMainPath()
+	{
+		if (Dropdown_BesideMainPath.value == 0)
+		{
+			isTreasureBesideMainPath = false;
+		}
+		else
+		{
+			isTreasureBesideMainPath = true;
+		}
+		Debug.Log("isTreasureBesideMainPath = " + isTreasureBesideMainPath);
+	}
+
+	public bool GetIsFitness_Rectangle()
+	{
+		return fitness_Rectangle;
+	}
+
+	public bool GetIsFitness_Corridor()
+	{
+		return fitness_Corridor;
+	}
+
+	public bool GetIsFitness_Defense()
+	{
+		return fitness_ProtectTreasure;
+	}
+
+	public bool GetIsFitness_OnMainPath()
+	{
+		return fitness_OnMainPath;
+	}
+
+	public bool GetIsFitness_BesideMainPath()
+	{
+		return fitness_BesideMainPath;
+	}
+
+	public bool GetIsTreasureOnMainPath()
+	{
+		return isTreasureOnMainPath;
+	}
+
+	public bool GetIsTreasureBesideMainPath()
+	{
+		return isTreasureBesideMainPath;
+	}
+
+	public float GetTheWeight_RectangleQuality()
+	{
+		string getParamet = GameObject.Find("InputField_Rectangle").GetComponent<InputField>().text;
+		weight_RectangleQuality = float.Parse(getParamet);
+		return weight_RectangleQuality;
+	}
+
+	public float GetTheWeight_CorridorQuality()
+	{
+		string getParamet = GameObject.Find("InputField_Corridor").GetComponent<InputField>().text;
+		weight_CorridorQuality = float.Parse(getParamet);
+		return weight_CorridorQuality;
+	}
+
+	public float GetTheWeight_Fitness_Defense()
+	{
+		string getParamet = GameObject.Find("InputField_Defense").GetComponent<InputField>().text;
+		weight_Fitness_Defense = float.Parse(getParamet);
+		return weight_Fitness_Defense;
+	}
+
+	public float GetTheWeight_Fitness_OnMainPath()
+	{
+		string getParamet = GameObject.Find("InputField_OnMainPath").GetComponent<InputField>().text;
+		weight_Fitness_OnMainPath = float.Parse(getParamet);
+		return weight_Fitness_OnMainPath;
+	}
+
+	public float GetTheWeight_Fitness_BesideMainPath()
+	{
+		string getParamet = GameObject.Find("InputField_BesideMainPath").GetComponent<InputField>().text;
+		weight_Fitness_BesideMainPath = float.Parse(getParamet);
+		return weight_Fitness_BesideMainPath;
+	}
 }

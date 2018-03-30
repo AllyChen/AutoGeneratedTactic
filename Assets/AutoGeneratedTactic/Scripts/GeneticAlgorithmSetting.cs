@@ -62,9 +62,29 @@ namespace GeneticAlgorithmSettingDefinition
 
 		#region Fitness
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
-		float weight_RectangleQuality = 1.0f;
-		float weight_CorridorQuality = 1.0f;
+		float weight_RectangleQuality;
+		float weight_CorridorQuality;
 		float weight_ConnectedQuality = 1.0f;
+
+		public void DetermineWeightFitness(bool isRectangleQuality, bool isCorridorQuality, float weightRectangleQuality, float weightCorridorQuality)
+		{
+			if (isRectangleQuality == true)
+			{
+				weight_RectangleQuality = weightRectangleQuality;
+			}
+			else
+			{
+				weight_RectangleQuality = 0.0f;
+			}
+			if (isCorridorQuality == true)
+			{
+				weight_CorridorQuality = weightCorridorQuality;
+			}
+			else
+			{
+				weight_CorridorQuality = 0.0f;
+			}
+		}
 
 		public void CalculateFitnessScores()
 		{
@@ -432,9 +452,11 @@ namespace GeneticAlgorithmSettingDefinition
 		private List<string[]> basicData = new List<string[]>();
 		string[] tileData = new string[6];
 
+		bool isSaveWeight;
 		void InitialData()
 		{
 			basicData.Clear();
+			isSaveWeight = false;
 
 			// Create the title of data
 			tileData[0] = "Generation";
@@ -448,6 +470,20 @@ namespace GeneticAlgorithmSettingDefinition
 
 		public void SaveData(int indexGeneration)
 		{
+			if (isSaveWeight == false)
+			{
+				string[] weightData = new string[tileData.Length];
+				weightData[0] = "Weight"; // Generation
+				weightData[1] = "-->"; // ChromosomeIndex
+				weightData[2] = weight_RectangleQuality.ToString(); // weight_RectangleQuality
+				weightData[3] = weight_CorridorQuality.ToString(); // weight_CorridorQuality
+				weightData[4] = weight_ConnectedQuality.ToString(); // weight_ConnectedQuality
+				weightData[5] = ""; // Fitness_SumOfFitnessScore
+				basicData.Add(weightData);
+
+				isSaveWeight = true;
+			}
+
 			for (int indexChromosome = 0; indexChromosome < _numChromosomes; indexChromosome++)
 			{
 				string[] contentData = new string[tileData.Length];

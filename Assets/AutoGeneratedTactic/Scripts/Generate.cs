@@ -333,7 +333,7 @@ public class Generate : MonoBehaviour {
 		#endregion
 
 		#region Right
-		if (oldPosition_y == originalWidth - 1 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
+		if (oldPosition_y == originalLength - 1 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
 		{
 			newPosition_x = oldPosition_x + 1;
 			newPosition_y = oldPosition_y + 2;

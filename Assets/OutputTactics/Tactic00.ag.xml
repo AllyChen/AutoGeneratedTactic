@@ -1,13 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TacticPattern>
   <TileFloors>
-<<<<<<< HEAD
     <Width>8</Width>
     <Height>8</Height>
-=======
-    <Width>10</Width>
-    <Height>10</Height>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
     <Floor id="0">
       <Tile x="0" y="0">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -42,7 +37,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -76,8 +70,6 @@
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
           </Class>
         </Object>
-=======
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
       <Tile x="1" y="0">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -112,7 +104,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -146,8 +137,6 @@
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
           </Class>
         </Object>
-=======
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
       <Tile x="2" y="0">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -182,7 +171,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -216,8 +204,6 @@
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
           </Class>
         </Object>
-=======
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
       <Tile x="3" y="0">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -252,79 +238,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-=======
-      </Tile>
-      <Tile x="4" y="0">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.2</x>
-            <y>0</y>
-            <z>0</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="5" y="0">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.5</x>
-            <y>0</y>
-            <z>0</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <ObjPrefabName>Dungeon_BigDoor</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
             <objName type="System.Boolean">True</objName>
             <position type="System.Boolean">True</position>
@@ -332,16 +247,12 @@
             <scale type="System.Boolean">True</scale>
             <unique type="System.Boolean">False</unique>
             <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
+            <actTrigger type="System.Boolean">True</actTrigger>
           </Class>
           <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
+            <tName type="System.String">Dungeon_BigDoor</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>0.9</x>
-=======
-              <x>1.5</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>0</z>
             </tPosition>
@@ -357,15 +268,18 @@
             </tScale>
             <unique type="System.Boolean">False</unique>
             <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+            <tObjSprite type="UnityEngine.Sprite">Dungeon_BigDoor</tObjSprite>
+          </Class>
+          <Class id="2" name="Tool_Door">
+            <tSwitch type="System.Collections.Generic.List`1[ToolSwitch]" />
+            <door type="UnityEngine.GameObject">SM_Bld_Castle_Iron_Gate_02</door>
+            <tRotate type="UnityEngine.Vector3[]" />
+            <tTramsform type="UnityEngine.Vector3[]" />
+            <status type="System.Int32">1</status>
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="4" y="0">
-=======
-      <Tile x="6" y="0">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -380,11 +294,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.2</x>
-=======
-            <x>1.8</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>0</z>
           </tPosition>
@@ -416,11 +326,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>1.2</x>
-=======
-              <x>1.8</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>0</z>
             </tPosition>
@@ -440,11 +346,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="5" y="0">
-=======
-      <Tile x="7" y="0">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -459,11 +361,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.5</x>
-=======
-            <x>2.1</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>0</z>
           </tPosition>
@@ -495,11 +393,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>1.5</x>
-=======
-              <x>2.1</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>0</z>
             </tPosition>
@@ -519,11 +413,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="6" y="0">
-=======
-      <Tile x="8" y="0">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -538,11 +428,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.8</x>
-=======
-            <x>2.4</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>0</z>
           </tPosition>
@@ -574,11 +460,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>1.8</x>
-=======
-              <x>2.4</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>0</z>
             </tPosition>
@@ -598,11 +480,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="7" y="0">
-=======
-      <Tile x="9" y="0">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -617,11 +495,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>2.1</x>
-=======
-            <x>2.7</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>0</z>
           </tPosition>
@@ -653,11 +527,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>2.1</x>
-=======
-              <x>2.7</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>0</z>
             </tPosition>
@@ -844,43 +714,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-=======
-      </Tile>
-      <Tile x="3" y="1">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>0.9</x>
-            <y>0</y>
-            <z>-0.3</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -895,11 +728,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>0.6</x>
-=======
-              <x>0.9</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>-0.3</z>
             </tPosition>
@@ -919,11 +748,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="3" y="1">
-=======
-      <Tile x="4" y="1">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -938,11 +763,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>0.9</x>
-=======
-            <x>1.2</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.3</z>
           </tPosition>
@@ -960,63 +781,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-<<<<<<< HEAD
-          <ObjPrefabName>Treasure_Chest</ObjPrefabName>
-=======
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-<<<<<<< HEAD
-            <unique type="System.Boolean">True</unique>
-=======
-            <unique type="System.Boolean">False</unique>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-<<<<<<< HEAD
-            <tName type="System.String">Treasure_Chest</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.9</x>
-=======
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>1.2</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-              <y>0</y>
-              <z>-0.3</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-<<<<<<< HEAD
-            <tObjSprite type="UnityEngine.Sprite">Treasure_Chest</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
       <Tile x="4" y="1">
-=======
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="5" y="1">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -1031,11 +797,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.2</x>
-=======
-            <x>1.5</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.3</z>
           </tPosition>
@@ -1053,49 +815,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>1.2</x>
-=======
-              <x>1.5</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-              <y>0</y>
-              <z>-0.3</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="5" y="1">
-=======
-      <Tile x="6" y="1">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -1110,11 +831,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.5</x>
-=======
-            <x>1.8</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.3</z>
           </tPosition>
@@ -1133,11 +850,7 @@
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
       </Tile>
-<<<<<<< HEAD
       <Tile x="6" y="1">
-=======
-      <Tile x="7" y="1">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -1152,11 +865,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.8</x>
-=======
-            <x>2.1</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.3</z>
           </tPosition>
@@ -1174,46 +883,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>1.8</x>
-              <y>0</y>
-              <z>-0.3</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
       <Tile x="7" y="1">
-=======
-      </Tile>
-      <Tile x="8" y="1">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -1228,10 +899,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>2.1</x>
-=======
-            <x>2.4</x>
             <y>0</y>
             <z>-0.3</z>
           </tPosition>
@@ -1249,42 +917,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-      </Tile>
-      <Tile x="9" y="1">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.7</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            <y>0</y>
-            <z>-0.3</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -1318,8 +950,6 @@
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
           </Class>
         </Object>
-=======
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
       <Tile x="0" y="2">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -1421,39 +1051,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.3</x>
-              <y>0</y>
-              <z>-0.6</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
       <Tile x="2" y="2">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -1488,42 +1085,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.6</x>
-              <y>0</y>
-              <z>-0.6</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-=======
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
       <Tile x="3" y="2">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -1559,30 +1120,18 @@
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
         <Object>
-<<<<<<< HEAD
-          <ObjPrefabName>Monster</ObjPrefabName>
-=======
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           <Class id="0" name="ToolComponentList">
             <objName type="System.Boolean">True</objName>
             <position type="System.Boolean">True</position>
             <rotation type="System.Boolean">True</rotation>
             <scale type="System.Boolean">True</scale>
-<<<<<<< HEAD
-            <unique type="System.Boolean">True</unique>
-=======
             <unique type="System.Boolean">False</unique>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <anchor type="System.Boolean">True</anchor>
             <actTrigger type="System.Boolean">False</actTrigger>
           </Class>
           <Class id="1" name="TacticObjectData">
-<<<<<<< HEAD
-            <tName type="System.String">Monster</tName>
-=======
             <tName type="System.String">Dungeon_Wall</tName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <tPosition type="UnityEngine.Vector3">
               <x>0.9</x>
               <y>0</y>
@@ -1600,11 +1149,7 @@
             </tScale>
             <unique type="System.Boolean">False</unique>
             <tAnchor type="System.Int32">4</tAnchor>
-<<<<<<< HEAD
-            <tObjSprite type="UnityEngine.Sprite">Monster1</tObjSprite>
-=======
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </Class>
         </Object>
       </Tile>
@@ -1641,43 +1186,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-=======
-      </Tile>
-      <Tile x="5" y="2">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.5</x>
-            <y>0</y>
-            <z>-0.6</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -1692,11 +1200,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>1.2</x>
-=======
-              <x>1.5</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>-0.6</z>
             </tPosition>
@@ -1716,11 +1220,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="5" y="2">
-=======
-      <Tile x="6" y="2">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -1735,11 +1235,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.5</x>
-=======
-            <x>1.8</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.6</z>
           </tPosition>
@@ -1758,11 +1254,7 @@
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
       </Tile>
-<<<<<<< HEAD
       <Tile x="6" y="2">
-=======
-      <Tile x="7" y="2">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -1777,11 +1269,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.8</x>
-=======
-            <x>2.1</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.6</z>
           </tPosition>
@@ -1799,49 +1287,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>1.8</x>
-=======
-              <x>2.1</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-              <y>0</y>
-              <z>-0.6</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="7" y="2">
-=======
-      <Tile x="8" y="2">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -1856,11 +1303,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>2.1</x>
-=======
-            <x>2.4</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.6</z>
           </tPosition>
@@ -1892,11 +1335,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>2.1</x>
-=======
-              <x>2.4</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>-0.6</z>
             </tPosition>
@@ -1916,43 +1355,6 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
-=======
-      <Tile x="9" y="2">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.7</x>
-            <y>0</y>
-            <z>-0.6</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       <Tile x="0" y="3">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
@@ -2053,39 +1455,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.3</x>
-              <y>0</y>
-              <z>-0.9</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
       <Tile x="2" y="3">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -2120,42 +1489,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.6</x>
-              <y>0</y>
-              <z>-0.9</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-=======
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
       <Tile x="3" y="3">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -2190,55 +1523,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-<<<<<<< HEAD
-          <ObjPrefabName>Trap</ObjPrefabName>
-=======
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-<<<<<<< HEAD
-            <unique type="System.Boolean">True</unique>
-=======
-            <unique type="System.Boolean">False</unique>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-<<<<<<< HEAD
-            <tName type="System.String">Trap</tName>
-=======
-            <tName type="System.String">Dungeon_Wall</tName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.9</x>
-              <y>0</y>
-              <z>-0.9</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-<<<<<<< HEAD
-            <tObjSprite type="UnityEngine.Sprite">Trap</tObjSprite>
-=======
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </Class>
-        </Object>
       </Tile>
       <Tile x="4" y="3">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -2273,9 +1557,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-        <Object>
-=======
       </Tile>
       <Tile x="5" y="3">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -2310,50 +1591,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>1.2</x>
-=======
-              <x>1.5</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-              <y>0</y>
-              <z>-0.9</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
-<<<<<<< HEAD
-      <Tile x="5" y="3">
-=======
       <Tile x="6" y="3">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -2368,53 +1607,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>1.5</x>
-=======
             <x>1.8</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            <y>0</y>
-            <z>-0.9</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-<<<<<<< HEAD
-      <Tile x="6" y="3">
-=======
-      <Tile x="7" y="3">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>1.8</x>
-=======
-            <x>2.1</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.9</z>
           </tPosition>
@@ -2446,11 +1639,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>1.8</x>
-=======
-              <x>2.1</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>-0.9</z>
             </tPosition>
@@ -2470,11 +1659,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="7" y="3">
-=======
-      <Tile x="8" y="3">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -2489,11 +1674,7 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>2.1</x>
-=======
-            <x>2.4</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <y>0</y>
             <z>-0.9</z>
           </tPosition>
@@ -2525,11 +1706,7 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>2.1</x>
-=======
-              <x>2.4</x>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
               <y>0</y>
               <z>-0.9</z>
             </tPosition>
@@ -2549,43 +1726,6 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
-=======
-      <Tile x="9" y="3">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.7</x>
-            <y>0</y>
-            <z>-0.9</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       <Tile x="0" y="4">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
@@ -2686,8 +1826,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-=======
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -2721,7 +1859,6 @@
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
           </Class>
         </Object>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
       <Tile x="2" y="4">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -2756,6 +1893,39 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
+        <Object>
+          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <Class id="0" name="ToolComponentList">
+            <objName type="System.Boolean">True</objName>
+            <position type="System.Boolean">True</position>
+            <rotation type="System.Boolean">True</rotation>
+            <scale type="System.Boolean">True</scale>
+            <unique type="System.Boolean">False</unique>
+            <anchor type="System.Boolean">True</anchor>
+            <actTrigger type="System.Boolean">False</actTrigger>
+          </Class>
+          <Class id="1" name="TacticObjectData">
+            <tName type="System.String">Dungeon_Wall</tName>
+            <tPosition type="UnityEngine.Vector3">
+              <x>0.6</x>
+              <y>0</y>
+              <z>-1.2</z>
+            </tPosition>
+            <tRotation type="UnityEngine.Vector3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </tRotation>
+            <tScale type="UnityEngine.Vector3">
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+            </tScale>
+            <unique type="System.Boolean">False</unique>
+            <tAnchor type="System.Int32">4</tAnchor>
+            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+          </Class>
+        </Object>
       </Tile>
       <Tile x="3" y="4">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -2790,23 +1960,19 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-      </Tile>
-      <Tile x="4" y="4">
-=======
         <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <ObjPrefabName>Treasure_Chest</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
             <objName type="System.Boolean">True</objName>
             <position type="System.Boolean">True</position>
             <rotation type="System.Boolean">True</rotation>
             <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
+            <unique type="System.Boolean">True</unique>
             <anchor type="System.Boolean">True</anchor>
             <actTrigger type="System.Boolean">False</actTrigger>
           </Class>
           <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
+            <tName type="System.String">Treasure_Chest</tName>
             <tPosition type="UnityEngine.Vector3">
               <x>0.9</x>
               <y>0</y>
@@ -2824,7 +1990,7 @@
             </tScale>
             <unique type="System.Boolean">False</unique>
             <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+            <tObjSprite type="UnityEngine.Sprite">Treasure_Chest</tObjSprite>
           </Class>
         </Object>
       </Tile>
@@ -2895,39 +2061,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>1.5</x>
-              <y>0</y>
-              <z>-1.2</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
       <Tile x="6" y="4">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -3029,74 +2162,39 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-      </Tile>
-      <Tile x="8" y="4">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.4</x>
-            <y>0</y>
-            <z>-1.2</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="9" y="4">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.7</x>
-            <y>0</y>
-            <z>-1.2</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
+        <Object>
+          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <Class id="0" name="ToolComponentList">
+            <objName type="System.Boolean">True</objName>
+            <position type="System.Boolean">True</position>
+            <rotation type="System.Boolean">True</rotation>
+            <scale type="System.Boolean">True</scale>
+            <unique type="System.Boolean">False</unique>
+            <anchor type="System.Boolean">True</anchor>
+            <actTrigger type="System.Boolean">False</actTrigger>
+          </Class>
+          <Class id="1" name="TacticObjectData">
+            <tName type="System.String">Dungeon_Wall</tName>
+            <tPosition type="UnityEngine.Vector3">
+              <x>2.1</x>
+              <y>0</y>
+              <z>-1.2</z>
+            </tPosition>
+            <tRotation type="UnityEngine.Vector3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </tRotation>
+            <tScale type="UnityEngine.Vector3">
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+            </tScale>
+            <unique type="System.Boolean">False</unique>
+            <tAnchor type="System.Int32">4</tAnchor>
+            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+          </Class>
+        </Object>
       </Tile>
       <Tile x="0" y="5">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -3131,6 +2229,39 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
+        <Object>
+          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <Class id="0" name="ToolComponentList">
+            <objName type="System.Boolean">True</objName>
+            <position type="System.Boolean">True</position>
+            <rotation type="System.Boolean">True</rotation>
+            <scale type="System.Boolean">True</scale>
+            <unique type="System.Boolean">False</unique>
+            <anchor type="System.Boolean">True</anchor>
+            <actTrigger type="System.Boolean">False</actTrigger>
+          </Class>
+          <Class id="1" name="TacticObjectData">
+            <tName type="System.String">Dungeon_Wall</tName>
+            <tPosition type="UnityEngine.Vector3">
+              <x>0</x>
+              <y>0</y>
+              <z>-1.5</z>
+            </tPosition>
+            <tRotation type="UnityEngine.Vector3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </tRotation>
+            <tScale type="UnityEngine.Vector3">
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+            </tScale>
+            <unique type="System.Boolean">False</unique>
+            <tAnchor type="System.Int32">4</tAnchor>
+            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+          </Class>
+        </Object>
       </Tile>
       <Tile x="1" y="5">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -3165,6 +2296,39 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
+        <Object>
+          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <Class id="0" name="ToolComponentList">
+            <objName type="System.Boolean">True</objName>
+            <position type="System.Boolean">True</position>
+            <rotation type="System.Boolean">True</rotation>
+            <scale type="System.Boolean">True</scale>
+            <unique type="System.Boolean">False</unique>
+            <anchor type="System.Boolean">True</anchor>
+            <actTrigger type="System.Boolean">False</actTrigger>
+          </Class>
+          <Class id="1" name="TacticObjectData">
+            <tName type="System.String">Dungeon_Wall</tName>
+            <tPosition type="UnityEngine.Vector3">
+              <x>0.3</x>
+              <y>0</y>
+              <z>-1.5</z>
+            </tPosition>
+            <tRotation type="UnityEngine.Vector3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </tRotation>
+            <tScale type="UnityEngine.Vector3">
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+            </tScale>
+            <unique type="System.Boolean">False</unique>
+            <tAnchor type="System.Int32">4</tAnchor>
+            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+          </Class>
+        </Object>
       </Tile>
       <Tile x="2" y="5">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -3233,6 +2397,39 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
+        <Object>
+          <ObjPrefabName>Trap</ObjPrefabName>
+          <Class id="0" name="ToolComponentList">
+            <objName type="System.Boolean">True</objName>
+            <position type="System.Boolean">True</position>
+            <rotation type="System.Boolean">True</rotation>
+            <scale type="System.Boolean">True</scale>
+            <unique type="System.Boolean">True</unique>
+            <anchor type="System.Boolean">True</anchor>
+            <actTrigger type="System.Boolean">False</actTrigger>
+          </Class>
+          <Class id="1" name="TacticObjectData">
+            <tName type="System.String">Trap</tName>
+            <tPosition type="UnityEngine.Vector3">
+              <x>0.9</x>
+              <y>0</y>
+              <z>-1.5</z>
+            </tPosition>
+            <tRotation type="UnityEngine.Vector3">
+              <x>0</x>
+              <y>0</y>
+              <z>0</z>
+            </tRotation>
+            <tScale type="UnityEngine.Vector3">
+              <x>1</x>
+              <y>1</y>
+              <z>1</z>
+            </tScale>
+            <unique type="System.Boolean">False</unique>
+            <tAnchor type="System.Int32">4</tAnchor>
+            <tObjSprite type="UnityEngine.Sprite">Trap</tObjSprite>
+          </Class>
+        </Object>
       </Tile>
       <Tile x="4" y="5">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
@@ -3267,1288 +2464,23 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-      </Tile>
-      <Tile x="5" y="5">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.5</x>
-            <y>0</y>
-            <z>-1.5</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="6" y="5">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.8</x>
-            <y>0</y>
-            <z>-1.5</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
         <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>1.8</x>
-              <y>0</y>
-              <z>-1.5</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="7" y="5">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.1</x>
-            <y>0</y>
-            <z>-1.5</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="8" y="5">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.4</x>
-            <y>0</y>
-            <z>-1.5</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>2.4</x>
-              <y>0</y>
-              <z>-1.5</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="9" y="5">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.7</x>
-            <y>0</y>
-            <z>-1.5</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="0" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>-1.8</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="1" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>0.3</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.3</x>
-              <y>0</y>
-              <z>-1.8</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="2" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>0.6</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.6</x>
-              <y>0</y>
-              <z>-1.8</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="3" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>0.9</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="4" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.2</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>1.2</x>
-              <y>0</y>
-              <z>-1.8</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="5" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.5</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="6" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>1.8</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>1.8</x>
-              <y>0</y>
-              <z>-1.8</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="7" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.1</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="8" y="6">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.4</x>
-            <y>0</y>
-            <z>-1.8</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>2.4</x>
-              <y>0</y>
-              <z>-1.8</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="9" y="6">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>1.2</x>
-            <y>0</y>
-            <z>-1.2</z>
-=======
-            <x>2.7</x>
-            <y>0</y>
-            <z>-1.8</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-<<<<<<< HEAD
-      <Tile x="5" y="4">
-=======
-      <Tile x="0" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>1.5</x>
-            <y>0</y>
-            <z>-1.2</z>
-=======
-            <x>0</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-<<<<<<< HEAD
-      </Tile>
-      <Tile x="6" y="4">
-=======
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>-2.1</z>
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="1" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>1.8</x>
-            <y>0</y>
-            <z>-1.2</z>
-=======
-            <x>0.3</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>1.8</x>
-              <y>0</y>
-              <z>-1.2</z>
-=======
-              <x>0.3</x>
-              <y>0</y>
-              <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-<<<<<<< HEAD
-      <Tile x="7" y="4">
-=======
-      <Tile x="2" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>2.1</x>
-            <y>0</y>
-            <z>-1.2</z>
-=======
-            <x>0.6</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>2.1</x>
-              <y>0</y>
-              <z>-1.2</z>
-=======
-              <x>0.6</x>
-              <y>0</y>
-              <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-<<<<<<< HEAD
-      <Tile x="0" y="5">
-=======
-      <Tile x="3" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>0</x>
-            <y>0</y>
-            <z>-1.5</z>
-=======
-            <x>0.9</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-<<<<<<< HEAD
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-=======
-          <ObjPrefabName>Trap</ObjPrefabName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-<<<<<<< HEAD
-            <unique type="System.Boolean">False</unique>
-=======
-            <unique type="System.Boolean">True</unique>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-<<<<<<< HEAD
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>-1.5</z>
-=======
-            <tName type="System.String">Trap</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.9</x>
-              <y>0</y>
-              <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-<<<<<<< HEAD
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="1" y="5">
-=======
-            <tObjSprite type="UnityEngine.Sprite">Trap</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="4" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>0.3</x>
-            <y>0</y>
-            <z>-1.5</z>
-=======
-            <x>1.2</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>0.3</x>
-              <y>0</y>
-              <z>-1.5</z>
-=======
-              <x>1.2</x>
-              <y>0</y>
-              <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-<<<<<<< HEAD
-      <Tile x="2" y="5">
-=======
-      <Tile x="5" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>0.6</x>
-            <y>0</y>
-            <z>-1.5</z>
-=======
-            <x>1.5</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-<<<<<<< HEAD
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-=======
           <ObjPrefabName>Monster</ObjPrefabName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           <Class id="0" name="ToolComponentList">
             <objName type="System.Boolean">True</objName>
             <position type="System.Boolean">True</position>
             <rotation type="System.Boolean">True</rotation>
             <scale type="System.Boolean">True</scale>
-<<<<<<< HEAD
-            <unique type="System.Boolean">False</unique>
-=======
             <unique type="System.Boolean">True</unique>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <anchor type="System.Boolean">True</anchor>
             <actTrigger type="System.Boolean">False</actTrigger>
           </Class>
           <Class id="1" name="TacticObjectData">
-<<<<<<< HEAD
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>0.6</x>
-              <y>0</y>
-              <z>-1.5</z>
-=======
             <tName type="System.String">Monster</tName>
             <tPosition type="UnityEngine.Vector3">
-              <x>1.5</x>
+              <x>1.2</x>
               <y>0</y>
-              <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
+              <z>-1.5</z>
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -4562,146 +2494,11 @@
             </tScale>
             <unique type="System.Boolean">False</unique>
             <tAnchor type="System.Int32">4</tAnchor>
-<<<<<<< HEAD
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="3" y="5">
-=======
             <tObjSprite type="UnityEngine.Sprite">Monster1</tObjSprite>
           </Class>
         </Object>
       </Tile>
-      <Tile x="6" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>0.9</x>
-            <y>0</y>
-            <z>-1.5</z>
-=======
-            <x>1.8</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>0.9</x>
-              <y>0</y>
-              <z>-1.5</z>
-=======
-              <x>1.8</x>
-              <y>0</y>
-              <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-<<<<<<< HEAD
-      <Tile x="4" y="5">
-=======
-      <Tile x="7" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>1.2</x>
-            <y>0</y>
-            <z>-1.5</z>
-=======
-            <x>2.1</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-<<<<<<< HEAD
       <Tile x="5" y="5">
-=======
-      <Tile x="8" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -4716,15 +2513,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.5</x>
             <y>0</y>
             <z>-1.5</z>
-=======
-            <x>2.4</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -4754,15 +2545,9 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>1.5</x>
               <y>0</y>
               <z>-1.5</z>
-=======
-              <x>2.4</x>
-              <y>0</y>
-              <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -4780,11 +2565,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="6" y="5">
-=======
-      <Tile x="9" y="7">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -4799,15 +2580,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.8</x>
             <y>0</y>
             <z>-1.5</z>
-=======
-            <x>2.7</x>
-            <y>0</y>
-            <z>-2.1</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -4823,7 +2598,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -4859,10 +2633,6 @@
         </Object>
       </Tile>
       <Tile x="7" y="5">
-=======
-      </Tile>
-      <Tile x="0" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -4877,15 +2647,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>2.1</x>
             <y>0</y>
             <z>-1.5</z>
-=======
-            <x>0</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -4915,15 +2679,9 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>2.1</x>
               <y>0</y>
               <z>-1.5</z>
-=======
-              <x>0</x>
-              <y>0</y>
-              <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -4941,11 +2699,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="0" y="6">
-=======
-      <Tile x="1" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -4960,15 +2714,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>0</x>
             <y>0</y>
             <z>-1.8</z>
-=======
-            <x>0.3</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -4998,15 +2746,9 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>0</x>
               <y>0</y>
               <z>-1.8</z>
-=======
-              <x>0.3</x>
-              <y>0</y>
-              <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5024,11 +2766,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="1" y="6">
-=======
-      <Tile x="2" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5043,15 +2781,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>0.3</x>
             <y>0</y>
             <z>-1.8</z>
-=======
-            <x>0.6</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5067,10 +2799,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
-      </Tile>
-      <Tile x="2" y="6">
-=======
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -5085,9 +2813,9 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-              <x>0.6</x>
+              <x>0.3</x>
               <y>0</y>
-              <z>-2.4</z>
+              <z>-1.8</z>
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5105,8 +2833,7 @@
           </Class>
         </Object>
       </Tile>
-      <Tile x="3" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
+      <Tile x="2" y="6">
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5121,15 +2848,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>0.6</x>
             <y>0</y>
             <z>-1.8</z>
-=======
-            <x>0.9</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5146,11 +2867,7 @@
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
       </Tile>
-<<<<<<< HEAD
       <Tile x="3" y="6">
-=======
-      <Tile x="4" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5165,15 +2882,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>0.9</x>
             <y>0</y>
             <z>-1.8</z>
-=======
-            <x>1.2</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5189,27 +2900,57 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
       </Tile>
       <Tile x="4" y="6">
-=======
+        <TileSpriteName>Dungeon_Marble</TileSpriteName>
+        <TilePrefabName>Dungeon_Marble</TilePrefabName>
+        <Class id="0" name="ToolComponentList">
+          <objName type="System.Boolean">True</objName>
+          <position type="System.Boolean">True</position>
+          <rotation type="System.Boolean">False</rotation>
+          <scale type="System.Boolean">False</scale>
+          <unique type="System.Boolean">False</unique>
+          <anchor type="System.Boolean">False</anchor>
+          <actTrigger type="System.Boolean">False</actTrigger>
+        </Class>
+        <Class id="1" name="TacticObjectData">
+          <tName type="System.String">Dungeon_Marble</tName>
+          <tPosition type="UnityEngine.Vector3">
+            <x>1.2</x>
+            <y>0</y>
+            <z>-1.8</z>
+          </tPosition>
+          <tRotation type="UnityEngine.Vector3">
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </tRotation>
+          <tScale type="UnityEngine.Vector3">
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </tScale>
+          <unique type="System.Boolean">False</unique>
+          <tAnchor type="System.Int32">4</tAnchor>
+          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
+        </Class>
         <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <ObjPrefabName>Monster</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
             <objName type="System.Boolean">True</objName>
             <position type="System.Boolean">True</position>
             <rotation type="System.Boolean">True</rotation>
             <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
+            <unique type="System.Boolean">True</unique>
             <anchor type="System.Boolean">True</anchor>
             <actTrigger type="System.Boolean">False</actTrigger>
           </Class>
           <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
+            <tName type="System.String">Monster</tName>
             <tPosition type="UnityEngine.Vector3">
               <x>1.2</x>
               <y>0</y>
-              <z>-2.4</z>
+              <z>-1.8</z>
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5223,56 +2964,11 @@
             </tScale>
             <unique type="System.Boolean">False</unique>
             <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+            <tObjSprite type="UnityEngine.Sprite">Monster1</tObjSprite>
           </Class>
         </Object>
       </Tile>
-      <Tile x="5" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-            <x>1.2</x>
-            <y>0</y>
-            <z>-1.8</z>
-=======
-            <x>1.5</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-<<<<<<< HEAD
       <Tile x="5" y="6">
-=======
-      <Tile x="6" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5287,15 +2983,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.5</x>
             <y>0</y>
             <z>-1.8</z>
-=======
-            <x>1.8</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5311,51 +3001,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>1.5</x>
-              <y>0</y>
-              <z>-1.8</z>
-=======
-              <x>1.8</x>
-              <y>0</y>
-              <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="6" y="6">
-=======
-      <Tile x="7" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5370,15 +3017,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>1.8</x>
             <y>0</y>
             <z>-1.8</z>
-=======
-            <x>2.1</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5394,51 +3035,8 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-        <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-          <Class id="0" name="ToolComponentList">
-            <objName type="System.Boolean">True</objName>
-            <position type="System.Boolean">True</position>
-            <rotation type="System.Boolean">True</rotation>
-            <scale type="System.Boolean">True</scale>
-            <unique type="System.Boolean">False</unique>
-            <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
-          </Class>
-          <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
-            <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
-              <x>1.8</x>
-              <y>0</y>
-              <z>-1.8</z>
-=======
-              <x>2.1</x>
-              <y>0</y>
-              <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-            </tPosition>
-            <tRotation type="UnityEngine.Vector3">
-              <x>0</x>
-              <y>0</y>
-              <z>0</z>
-            </tRotation>
-            <tScale type="UnityEngine.Vector3">
-              <x>1</x>
-              <y>1</y>
-              <z>1</z>
-            </tScale>
-            <unique type="System.Boolean">False</unique>
-            <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
-          </Class>
-        </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="7" y="6">
-=======
-      <Tile x="8" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5453,15 +3051,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>2.1</x>
             <y>0</y>
             <z>-1.8</z>
-=======
-            <x>2.4</x>
-            <y>0</y>
-            <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5491,15 +3083,9 @@
           <Class id="1" name="TacticObjectData">
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
               <x>2.1</x>
               <y>0</y>
               <z>-1.8</z>
-=======
-              <x>2.4</x>
-              <y>0</y>
-              <z>-2.4</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5517,11 +3103,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="0" y="7">
-=======
-      <Tile x="9" y="8">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5536,49 +3118,9 @@
         <Class id="1" name="TacticObjectData">
           <tName type="System.String">Dungeon_Marble</tName>
           <tPosition type="UnityEngine.Vector3">
-<<<<<<< HEAD
             <x>0</x>
             <y>0</y>
             <z>-2.1</z>
-=======
-            <x>2.7</x>
-            <y>0</y>
-            <z>-2.4</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="0" y="9">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5610,11 +3152,7 @@
             <tPosition type="UnityEngine.Vector3">
               <x>0</x>
               <y>0</y>
-<<<<<<< HEAD
               <z>-2.1</z>
-=======
-              <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5632,11 +3170,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="1" y="7">
-=======
-      <Tile x="1" y="9">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5653,11 +3187,7 @@
           <tPosition type="UnityEngine.Vector3">
             <x>0.3</x>
             <y>0</y>
-<<<<<<< HEAD
             <z>-2.1</z>
-=======
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5689,11 +3219,7 @@
             <tPosition type="UnityEngine.Vector3">
               <x>0.3</x>
               <y>0</y>
-<<<<<<< HEAD
               <z>-2.1</z>
-=======
-              <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5711,11 +3237,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="2" y="7">
-=======
-      <Tile x="2" y="9">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5732,11 +3254,7 @@
           <tPosition type="UnityEngine.Vector3">
             <x>0.6</x>
             <y>0</y>
-<<<<<<< HEAD
             <z>-2.1</z>
-=======
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5753,7 +3271,7 @@
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
         <Object>
-          <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
+          <ObjPrefabName>Dungeon_BigDoor</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
             <objName type="System.Boolean">True</objName>
             <position type="System.Boolean">True</position>
@@ -5761,18 +3279,14 @@
             <scale type="System.Boolean">True</scale>
             <unique type="System.Boolean">False</unique>
             <anchor type="System.Boolean">True</anchor>
-            <actTrigger type="System.Boolean">False</actTrigger>
+            <actTrigger type="System.Boolean">True</actTrigger>
           </Class>
           <Class id="1" name="TacticObjectData">
-            <tName type="System.String">Dungeon_Wall</tName>
+            <tName type="System.String">Dungeon_BigDoor</tName>
             <tPosition type="UnityEngine.Vector3">
               <x>0.6</x>
               <y>0</y>
-<<<<<<< HEAD
               <z>-2.1</z>
-=======
-              <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5786,15 +3300,18 @@
             </tScale>
             <unique type="System.Boolean">False</unique>
             <tAnchor type="System.Int32">4</tAnchor>
-            <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
+            <tObjSprite type="UnityEngine.Sprite">Dungeon_BigDoor</tObjSprite>
+          </Class>
+          <Class id="2" name="Tool_Door">
+            <tSwitch type="System.Collections.Generic.List`1[ToolSwitch]" />
+            <door type="UnityEngine.GameObject">SM_Bld_Castle_Iron_Gate_02</door>
+            <tRotate type="UnityEngine.Vector3[]" />
+            <tTramsform type="UnityEngine.Vector3[]" />
+            <status type="System.Int32">1</status>
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="3" y="7">
-=======
-      <Tile x="3" y="9">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5811,11 +3328,7 @@
           <tPosition type="UnityEngine.Vector3">
             <x>0.9</x>
             <y>0</y>
-<<<<<<< HEAD
             <z>-2.1</z>
-=======
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5831,7 +3344,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -5867,10 +3379,6 @@
         </Object>
       </Tile>
       <Tile x="4" y="7">
-=======
-      </Tile>
-      <Tile x="4" y="9">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5887,11 +3395,7 @@
           <tPosition type="UnityEngine.Vector3">
             <x>1.2</x>
             <y>0</y>
-<<<<<<< HEAD
             <z>-2.1</z>
-=======
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5923,11 +3427,7 @@
             <tPosition type="UnityEngine.Vector3">
               <x>1.2</x>
               <y>0</y>
-<<<<<<< HEAD
               <z>-2.1</z>
-=======
-              <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -5945,11 +3445,7 @@
           </Class>
         </Object>
       </Tile>
-<<<<<<< HEAD
       <Tile x="5" y="7">
-=======
-      <Tile x="5" y="9">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -5966,11 +3462,7 @@
           <tPosition type="UnityEngine.Vector3">
             <x>1.5</x>
             <y>0</y>
-<<<<<<< HEAD
             <z>-2.1</z>
-=======
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -5987,38 +3479,22 @@
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
         <Object>
-<<<<<<< HEAD
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
-=======
-          <ObjPrefabName>Trap</ObjPrefabName>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           <Class id="0" name="ToolComponentList">
             <objName type="System.Boolean">True</objName>
             <position type="System.Boolean">True</position>
             <rotation type="System.Boolean">True</rotation>
             <scale type="System.Boolean">True</scale>
-<<<<<<< HEAD
             <unique type="System.Boolean">False</unique>
-=======
-            <unique type="System.Boolean">True</unique>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             <anchor type="System.Boolean">True</anchor>
             <actTrigger type="System.Boolean">False</actTrigger>
           </Class>
           <Class id="1" name="TacticObjectData">
-<<<<<<< HEAD
             <tName type="System.String">Dungeon_Wall</tName>
             <tPosition type="UnityEngine.Vector3">
               <x>1.5</x>
               <y>0</y>
               <z>-2.1</z>
-=======
-            <tName type="System.String">Trap</tName>
-            <tPosition type="UnityEngine.Vector3">
-              <x>1.5</x>
-              <y>0</y>
-              <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
             </tPosition>
             <tRotation type="UnityEngine.Vector3">
               <x>0</x>
@@ -6032,19 +3508,11 @@
             </tScale>
             <unique type="System.Boolean">False</unique>
             <tAnchor type="System.Int32">4</tAnchor>
-<<<<<<< HEAD
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
           </Class>
         </Object>
       </Tile>
       <Tile x="6" y="7">
-=======
-            <tObjSprite type="UnityEngine.Sprite">Trap</tObjSprite>
-          </Class>
-        </Object>
-      </Tile>
-      <Tile x="6" y="9">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -6061,11 +3529,7 @@
           <tPosition type="UnityEngine.Vector3">
             <x>1.8</x>
             <y>0</y>
-<<<<<<< HEAD
             <z>-2.1</z>
-=======
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -6081,7 +3545,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -6117,10 +3580,6 @@
         </Object>
       </Tile>
       <Tile x="7" y="7">
-=======
-      </Tile>
-      <Tile x="7" y="9">
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
         <TileSpriteName>Dungeon_Marble</TileSpriteName>
         <TilePrefabName>Dungeon_Marble</TilePrefabName>
         <Class id="0" name="ToolComponentList">
@@ -6137,10 +3596,7 @@
           <tPosition type="UnityEngine.Vector3">
             <x>2.1</x>
             <y>0</y>
-<<<<<<< HEAD
             <z>-2.1</z>
-=======
-            <z>-2.7</z>
           </tPosition>
           <tRotation type="UnityEngine.Vector3">
             <x>0</x>
@@ -6156,76 +3612,6 @@
           <tAnchor type="System.Int32">4</tAnchor>
           <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
         </Class>
-      </Tile>
-      <Tile x="8" y="9">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.4</x>
-            <y>0</y>
-            <z>-2.7</z>
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-      </Tile>
-      <Tile x="9" y="9">
-        <TileSpriteName>Dungeon_Marble</TileSpriteName>
-        <TilePrefabName>Dungeon_Marble</TilePrefabName>
-        <Class id="0" name="ToolComponentList">
-          <objName type="System.Boolean">True</objName>
-          <position type="System.Boolean">True</position>
-          <rotation type="System.Boolean">False</rotation>
-          <scale type="System.Boolean">False</scale>
-          <unique type="System.Boolean">False</unique>
-          <anchor type="System.Boolean">False</anchor>
-          <actTrigger type="System.Boolean">False</actTrigger>
-        </Class>
-        <Class id="1" name="TacticObjectData">
-          <tName type="System.String">Dungeon_Marble</tName>
-          <tPosition type="UnityEngine.Vector3">
-            <x>2.7</x>
-            <y>0</y>
-            <z>-2.7</z>
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
-          </tPosition>
-          <tRotation type="UnityEngine.Vector3">
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </tRotation>
-          <tScale type="UnityEngine.Vector3">
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </tScale>
-          <unique type="System.Boolean">False</unique>
-          <tAnchor type="System.Int32">4</tAnchor>
-          <tObjSprite type="UnityEngine.Sprite">Dungeon_Marble</tObjSprite>
-        </Class>
-<<<<<<< HEAD
         <Object>
           <ObjPrefabName>Dungeon_Wall</ObjPrefabName>
           <Class id="0" name="ToolComponentList">
@@ -6259,8 +3645,6 @@
             <tObjSprite type="UnityEngine.Sprite">Dungeon_Wall</tObjSprite>
           </Class>
         </Object>
-=======
->>>>>>> 0702d8a722a3cb45cad1073324bf5a50424fe79d
       </Tile>
     </Floor>
   </TileFloors>

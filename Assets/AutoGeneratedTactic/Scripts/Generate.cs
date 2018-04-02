@@ -32,7 +32,7 @@ public class Generate : MonoBehaviour {
 		GeneticAlgorithm = GameObject.Find("GeneticAlgorithmSetting").GetComponent<GeneticAlgorithmSetting>();
 		GeneticAlgorithmSettingGameObject = GameObject.Find("GeneticAlgorithmSettingGameObject").GetComponent<GeneticAlgorithmSettingGameObject>();
 		ParticleSwarmOptimization = GameObject.Find("ParticleSwarmOptimizationSetting").GetComponent<ParticleSwarmOptimizationSetting>();
-		DataSerialization = new DataSerialization();
+		DataSerialization = GameObject.Find("OutputData").GetComponent<DataSerialization>() ?? GameObject.Find("OutputData").AddComponent<DataSerialization>();
 	}
 
 	int useMethod = 0;// 0:GeneticAlgorithm, 1:ParticleSwarmOptimization
@@ -198,7 +198,7 @@ public class Generate : MonoBehaviour {
 
 	public void OnClick_OutputAutoTacticData()
 	{
-		DataSerialization.OutputAutoTacticData(length + 2, width + 2, transformChromosome(BestChromosome, length, width));
+		StartCoroutine(DataSerialization.OutputAutoTacticData(length + 2, width + 2, transformChromosome(BestChromosome, length, width)));
 	}
 
 	Chromosome transformChromosome(Chromosome originalChromosome, int originalLength, int originalWidth)

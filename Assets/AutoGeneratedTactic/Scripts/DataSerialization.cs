@@ -11,7 +11,7 @@ namespace DataSerializationDefinition
 {
 	public class DataSerialization : MonoBehaviour
 	{
-		private string path = Application.dataPath + @"/OutputTactics/";
+		private string path = String.Empty;
 		private const float MODEL_SIZE = 3f;
 		private const float MODEL_HEIGHT = 8f;
 		// Assume only ground floor was generated
@@ -19,7 +19,12 @@ namespace DataSerializationDefinition
 		private string tileSpriteName = "Dungeon_Marble";
 		private string tilePrefabName = "Dungeon_Marble";
 
-		public void OutputAutoTacticData(int tacticLength, int tacticWidth, Chromosome outputChromosome)
+		private void Awake()
+		{
+			path = Application.dataPath + @"/OutputTactics/";
+		}
+
+		public IEnumerator OutputAutoTacticData(int tacticLength, int tacticWidth, Chromosome outputChromosome)
 		{
 			Debug.Log("Output Folder: " + path);
 			var startTime = Time.realtimeSinceStartup;
@@ -29,7 +34,7 @@ namespace DataSerializationDefinition
 			var tod = go.AddComponent<TacticObjectData>();
 			tod.tScale = Vector3.one;
 			tod.SetUp();
-			Sprite sprite = Sprite.Create(new Texture2D(0,0), Rect.zero, Vector2.zero);
+			Sprite sprite = Sprite.Create(new Texture2D(0, 0), Rect.zero, Vector2.zero);
 			tod.tObjSprite = sprite;
 			// Create a new XML file
 			XDocument xdoc = new XDocument();
@@ -54,6 +59,7 @@ namespace DataSerializationDefinition
 				// Setup TacticObjectData
 				tod.tName = tileSpriteName;
 				tod.tPosition = new Vector3(pos.x * MODEL_SIZE / 10, pos.y * MODEL_HEIGHT / 10, -pos.z * MODEL_SIZE / 10);
+				tod.tRotation = Vector3.zero;
 				tod.tObjSprite.name = tileSpriteName;
 
 				OutputScripts(go, tile);
@@ -75,9 +81,26 @@ namespace DataSerializationDefinition
 					switch (genesList[i].GameObjectAttribute)
 					{
 						case GeneGameObjectAttribute.None:
+						case GeneGameObjectAttribute.NumberOfGeneSpaceAttribute:
+							break;
 						case GeneGameObjectAttribute.entrance:
 						case GeneGameObjectAttribute.exit:
-						case GeneGameObjectAttribute.NumberOfGeneSpaceAttribute:
+							@object.Add(new XElement("ObjPrefabName", "Dungeon_BigDoor"));
+							var toolDoor = go.GetComponent<Tool_Door>() ?? go.AddComponent<Tool_Door>();
+							tcl.rotation = true;
+							tcl.scale = true;
+							tcl.anchor = true;
+							tcl.actTrigger = true;
+							tod.tName = "Dungeon_BigDoor";
+							tod.tObjSprite.name = "Dungeon_BigDoor";
+							toolDoor.door = new GameObject("SM_Bld_Castle_Iron_Gate_02");
+							toolDoor.status = 1;
+							if (pos.x == 0 || pos.x == tacticLength - 1)
+							{
+								tod.tRotation = new Vector3(0f, 90f, 0f);
+							}
+							OutputScripts(go, @object);
+							tile.Add(@object);
 							break;
 						case GeneGameObjectAttribute.enemy:
 							@object.Add(new XElement("ObjPrefabName", "Monster"));
@@ -115,7 +138,13 @@ namespace DataSerializationDefinition
 					}
 				}
 				tileFloor.Add(tile);
-			}			
+				var td = go.GetComponent<Tool_Door>();
+				if (td != null)
+				{
+					Destroy(td);
+					yield return new WaitForEndOfFrame();
+				}
+			}
 			tileFloors.Add(tileFloor);
 			xdoc.Root.Add(tileFloors);
 
@@ -123,7 +152,7 @@ namespace DataSerializationDefinition
 			xdoc.Save(fileName);
 
 			Destroy(go);
-			Debug.Log("Output elapsed time: " + (Time.realtimeSinceStartup - startTime));
+			Debug.Log("Output elapsed time: " + ( Time.realtimeSinceStartup - startTime ));
 		}
 
 		private Vector3 GetGenePosition(int index, int width)
@@ -208,5 +237,3 @@ namespace DataSerializationDefinition
 		}
 	}
 }
-
-

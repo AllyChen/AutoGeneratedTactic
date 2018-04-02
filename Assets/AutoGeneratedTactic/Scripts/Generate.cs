@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 using GeneticAlgorithmSettingDefinition;
 using ChromosomeDefinition;
@@ -44,6 +45,8 @@ public class Generate : MonoBehaviour {
 	int numChromosomeGameObject = 100;
 	float ratio_GameObjectCrossover = 0.8f;
 	float ratio_GameObjectMutation = 1.0f;
+	string spaceID = "";
+	string gameObjectID = "";
 
 	// Get the Parameters
 	int length;
@@ -75,6 +78,8 @@ public class Generate : MonoBehaviour {
 	public void OnClick_Generate()
 	{
 		var startTime = Time.realtimeSinceStartup;
+		spaceID = DateTime.Now.ToString("MMddhhmmss");
+
 		GetParameters();
 
 		#region GenerateSpace
@@ -97,7 +102,7 @@ public class Generate : MonoBehaviour {
 
 				BestChromosome_Space = GeneticAlgorithm.BestChromosome().CloneSpace();
 				GeneticAlgorithm.SaveData(numGeneration);
-				GeneticAlgorithm.OutputData(runGenerate);
+				GeneticAlgorithm.OutputData(spaceID);
 
 				//GeneticAlgorithm.DebugTest();
 				//Time
@@ -128,19 +133,27 @@ public class Generate : MonoBehaviour {
 		}
 		#endregion
 
+		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
+		Debug.Log("GameObjectInitial");
 		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, 
 																	weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath,
 																	isTreasureOnMainPath, isTreasureBesideMainPath);
-
+		
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
+			Debug.Log("CalculateFitnessScores");
 			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			Debug.Log("SaveData");
 			GeneticAlgorithmSettingGameObject.Selection();
+			Debug.Log("Selection");
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
+			Debug.Log("Crossover");
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
+			Debug.Log("Mutation");
 			GeneticAlgorithmSettingGameObject.Replace();
+			Debug.Log("Replace");
 		}
 		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
 
@@ -149,18 +162,19 @@ public class Generate : MonoBehaviour {
 		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
 
 		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		GeneticAlgorithmSettingGameObject.OutputData(0);
+		GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
 		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);
-
+		isClickOnlySpace = false;
 		runGenerate++;
 	}
 
 	int runGenerateGameObject = 1;
 	public void OnClick_GenerateGameObject()
 	{
+		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
 		GetParameters();
 
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
@@ -179,26 +193,37 @@ public class Generate : MonoBehaviour {
 		}
 		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
 		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		GeneticAlgorithmSettingGameObject.OutputData(runGenerateGameObject);
+		GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
 		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);
-
+		isClickOnlySpace = false;
 		runGenerateGameObject++;
 	}
 
+	bool isClickOnlySpace = false;
 	public void OnClick_GenerateOnlySpace()
 	{
-		// Render the tiles.
-		TacticRenderHandlar.CleanBoard(AutoTacticRender);
-		//TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome_Space);
-		TacticRenderHandlar.RenderTileOfTactic(length + 2, width + 2, AutoTacticRender, transformChromosome(BestChromosome, length, width));
+		if (isClickOnlySpace == false)
+		{
+			// Render the tiles.
+			TacticRenderHandlar.CleanBoard(AutoTacticRender);
+			TacticRenderHandlar.RenderTileOfTactic(length + 2, width + 2, AutoTacticRender, transformChromosome(BestChromosome, length, width));
+			isClickOnlySpace = true;
+		}
+		else
+		{
+			// Render the tiles.
+			TacticRenderHandlar.CleanBoard(AutoTacticRender);
+			TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);
+			isClickOnlySpace = false;
+		}		
 	}
 
 	public void OnClick_OutputAutoTacticData()
 	{
-		StartCoroutine(DataSerialization.OutputAutoTacticData(length + 2, width + 2, transformChromosome(BestChromosome, length, width)));
+		StartCoroutine(DataSerialization.OutputAutoTacticData(length + 2, width + 2, transformChromosome(BestChromosome, length, width), gameObjectID));
 	}
 
 	Chromosome transformChromosome(Chromosome originalChromosome, int originalLength, int originalWidth)

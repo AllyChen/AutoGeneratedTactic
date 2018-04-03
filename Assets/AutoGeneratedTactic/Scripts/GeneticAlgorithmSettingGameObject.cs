@@ -258,24 +258,24 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			{
 				// Fitness function
 				_population[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_population[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-				_population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_population[i], _mapLength, _mapWidth);
+				_population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_population[i], _mapLength, _mapWidth, _numMaxGameObject);
 				if (isTreasureOnMainPath == true)
 				{
-					_population[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = FitnessFunction.Fitness_OnMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure);
+					_population[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = FitnessFunction.Fitness_OnMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure, _numMaxGameObject);
 				}
 				else
 				{
-					_population[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = ( FitnessFunction.Fitness_OnMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy)
-																						+ FitnessFunction.Fitness_OnMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap) * 0.5f ) / 2.0f;
+					_population[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = ( FitnessFunction.Fitness_OnMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy, _numMaxGameObject)
+																						+ FitnessFunction.Fitness_OnMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap, _numMaxGameObject) * 0.5f ) / 2.0f;
 				}
 				if (isTreasureBesideMainPath == true)
 				{
-					_population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure);
+					_population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure, _numMaxGameObject);
 				}
 				else
 				{
-					_population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = ( FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy)
-																							+ FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap) * 0.5f ) / 2.0f;
+					_population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = ( FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy, _numMaxGameObject)
+																							+ FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap, _numMaxGameObject) * 0.5f ) / 2.0f;
 				}
 				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _population[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
 																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense
@@ -291,24 +291,24 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			{
 				// Fitness function
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(_specificPopulation[i], _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_specificPopulation[i], _mapLength, _mapWidth);
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(_specificPopulation[i], _mapLength, _mapWidth, _numMaxGameObject);
 				if (isTreasureOnMainPath == true)
 				{
-					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = FitnessFunction.Fitness_OnMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure);
+					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = FitnessFunction.Fitness_OnMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure, _numMaxGameObject);
 				}
 				else
 				{
-					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = ( FitnessFunction.Fitness_OnMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy)
-																								+ FitnessFunction.Fitness_OnMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap) * 0.5f ) / 2.0f;
+					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = ( FitnessFunction.Fitness_OnMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy, _numMaxGameObject)
+																								+ FitnessFunction.Fitness_OnMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap, _numMaxGameObject) * 0.5f ) / 2.0f;
 				}
 				if (isTreasureBesideMainPath == true)
 				{
-					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure);
+					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.treasure, _numMaxGameObject);
 				}
 				else
 				{
-					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = ( FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy)
-																									+ FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap) * 0.5f ) / 2.0f;
+					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = ( FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy, _numMaxGameObject)
+																									+ FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap, _numMaxGameObject) * 0.5f ) / 2.0f;
 				}
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
 																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense

@@ -987,7 +987,7 @@ public class FitnessFunctions {
 	/// <param name="width"></param>
 	/// <returns></returns>
 	#region Fitness_Defense
-	public float Fitness_Defense(Chromosome chromosome, int length, int width)
+	public float Fitness_Defense(Chromosome chromosome, int length, int width, int[]MaxNumObject)
 	{
 		float fitnessScore = 0.0f;
 		List<int> posEnemy = new List<int>();
@@ -1040,11 +1040,26 @@ public class FitnessFunctions {
 
 		//fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( posExit.Count + posTreasure.Count ) );
 		//fitness_space = fitness_space / ( posExit.Count + posTreasure.Count );
-
-		fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( posTreasure.Count ) );
-		fitness_space = fitness_space / ( posTreasure.Count );
+		if (MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] == 0 || ( posEnemy.Count + posTrap.Count ) == 0)
+		{
+			fitness_GameObject = 0;
+		}
+		else
+		{
+			fitness_GameObject = fitness_GameObject / ( ( posEnemy.Count * 1.0f + posTrap.Count * 0.5f ) * ( MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] ) );
+		}
+		if (MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] == 0)
+		{
+			fitness_space = 0;
+		}
+		else
+		{
+			fitness_space = fitness_space / ( MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] );
+		}
 
 		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
+
+		fitnessScore = fitness_GameObject;
 
 		return fitness_GameObject;
 	}
@@ -1230,30 +1245,28 @@ public class FitnessFunctions {
 	/// <param name="gameObjectAttribute"></param>
 	/// <returns></returns>
 	#region Fitness_OnMainPath
-	public float Fitness_OnMainPath(Chromosome chromosome, int length, int width, GeneGameObjectAttribute gameObjectAttribute)
+	public float Fitness_OnMainPath(Chromosome chromosome, int length, int width, GeneGameObjectAttribute gameObjectAttribute, int[] MaxNumObject)
 	{
 		float fitnessScore = 0.0f;
-		List<int> posGameObject = new List<int>();
 		float numOnMainPath = 0.0f; // Number of game object on the main path.
 
 		foreach (var Object in chromosome.gameObjectList)
 		{
 			if (Object.GameObjectAttribute == gameObjectAttribute)
 			{
-				posGameObject.Add(Object.Position);
 				if (chromosome.genesList[Object.Position].isMainPath == true)
 				{
 					numOnMainPath++;
 				}
 			}
 		}
-		if (posGameObject.Count == 0)
+		if (MaxNumObject[(int)gameObjectAttribute - 1] == 0)
 		{
 			fitnessScore = 0.0f;
 		}
 		else
 		{
-			fitnessScore = numOnMainPath / posGameObject.Count;
+			fitnessScore = numOnMainPath / MaxNumObject[(int)gameObjectAttribute - 1];
 		}
 		return fitnessScore;
 	}
@@ -1268,7 +1281,7 @@ public class FitnessFunctions {
 	/// <param name="gameObjectAttribute"></param>
 	/// <returns></returns>
 	#region Fitness_BesideMainPath
-	public float Fitness_BesideMainPath(Chromosome chromosome, int length, int width, GeneGameObjectAttribute gameObjectAttribute)
+	public float Fitness_BesideMainPath(Chromosome chromosome, int length, int width, GeneGameObjectAttribute gameObjectAttribute, int[] MaxNumObject)
 	{
 		float fitnessScore = 0.0f;
 		List<int> posGameObject = new List<int>();
@@ -1280,7 +1293,7 @@ public class FitnessFunctions {
 				posGameObject.Add(Object.Position);
 			}
 		}
-		if (posGameObject.Count == 0)
+		if (MaxNumObject[(int)gameObjectAttribute - 1] == 0 || posGameObject.Count == 0)
 		{
 			fitnessScore = 0.0f;
 		}
@@ -1291,10 +1304,8 @@ public class FitnessFunctions {
 				fitnessScore = fitnessScore + gameObjectBesideMainPath(chromosome, length, width, position);
 			}
 
+			fitnessScore = fitnessScore / MaxNumObject[(int)gameObjectAttribute - 1];
 		}
-
-		fitnessScore = fitnessScore / posGameObject.Count;
-
 		return fitnessScore;
 	}
 

@@ -1033,7 +1033,7 @@ public class FitnessFunctions {
 		foreach (var treasure in posTreasure)
 		{
 			treasureNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, treasure);
-			fitness_space = fitness_space + valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
+			fitness_space = fitness_space + qualityNeighborForbidden(chromosome, length, width, treasure); //valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
 			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
 			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
 		}
@@ -1058,10 +1058,7 @@ public class FitnessFunctions {
 		}
 
 		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
-
-		fitnessScore = fitness_GameObject;
-
-		return fitness_GameObject;
+		return fitnessScore;
 	}
 
 	float valueSaveSpace(Chromosome chromosome, List<int> neighborSpaceIndex)
@@ -1078,6 +1075,59 @@ public class FitnessFunctions {
 		}
 
 		value = num_Corridor / (float)neighborSpaceIndex.Count;
+		return value;
+	}
+
+	// Calculate the quality of treasure 如果周遭為牆壁，代表很安全。
+	float qualityNeighborForbidden(Chromosome chromosome, int length, int width, int posTreasure)
+	{
+		float value = 0.0f;
+		int pos_x = posTreasure / length;
+		int pos_y = posTreasure % length;
+		int numForbidden = 0;
+
+		// Top
+		if (pos_x - 1 >= 0)
+		{
+			if (chromosome.genesList[( pos_x - 1 ) * length + pos_y].type == GeneType.Forbidden)
+			{
+				numForbidden++;
+			}
+		}
+		// Buttom
+		if (pos_x + 1 < width)
+		{
+			if (chromosome.genesList[( pos_x + 1 ) * length + pos_y].type == GeneType.Forbidden)
+			{
+				numForbidden++;
+			}
+		}
+		// Left
+		if (pos_y - 1 >= 0)
+		{
+			if (chromosome.genesList[pos_x * length + ( pos_y - 1 )].type == GeneType.Forbidden)
+			{
+				numForbidden++;
+			}
+		}
+		// Right
+		if (pos_y + 1 < length)
+		{
+			if (chromosome.genesList[pos_x * length + ( pos_y + 1 )].type == GeneType.Forbidden)
+			{
+				numForbidden++;
+			}
+		}
+
+		if (numForbidden == 4 || numForbidden == 0)
+		{
+			value = 0;
+		}
+		else
+		{
+			value = numForbidden / 4.0f;
+		}
+
 		return value;
 	}
 

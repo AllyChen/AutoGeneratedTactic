@@ -21,8 +21,8 @@ public class TestFitnessFunction : MonoBehaviour {
 	{0,1,1,0,1,1,1,1},//  24 25 26 27 28 29 30 31
 	{0,1,1,0,0,0,0,1},//  32 33 34 35 36 37 38 39
 	{0,0,0,0,0,0,0,1},//  40 41 42 43 44 45 46 47
-	{1,1,1,1,1,1,0,1},//  48 49 50 51 52 53 54 55
-	{1,1,1,1,1,1,0,1}};// 56 57 58 59 60 61 62 63
+	{1,1,1,0,1,0,0,1},//  48 49 50 51 52 53 54 55
+	{1,1,1,0,0,1,0,1}};// 56 57 58 59 60 61 62 63
 
 	private int _mapLength = 8;
 	private int _mapWidth = 8;
@@ -69,11 +69,11 @@ public class TestFitnessFunction : MonoBehaviour {
 		//float weight_MainPathQuality = 1.0f;
 		//float weight_Fitness_Defense = 1.0f;
 		//TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(TestMap, _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-		//TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth);
+		//TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth, _numMaxGameObject);
 		//TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
 		//																	+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
 
-		//Debug.Log(transformPositionDoor(TestMap, _mapLength, _mapWidth, 62));
+		//Debug.Log(qualityNeighborForbidden(TestMap, _mapLength, _mapWidth, 0) + qualityNeighborMainPath(TestMap, _mapLength, _mapWidth, 0));
 
 	}
 
@@ -120,112 +120,246 @@ public class TestFitnessFunction : MonoBehaviour {
 		spaceGrid = new Grid(tilesmap);
 	}
 	#endregion
+	bool[] emptyNeightbors = { true, true, true, true, true, true, true, true }; // 0:TopLeft 1:Top 2:TopRight 3:Left 4:Right 5:ButtomLeft 6:Buttom 7:ButtomRight
 
-	int transformPositionDoor(Chromosome originalChromosome, int originalLength, int originalWidth, int oldPosition)
+	float qualityNeighborForbidden(Chromosome chromosome, int length, int width, int posTreasure)
 	{
-		int oldPosition_x = oldPosition / originalLength;
-		int oldPosition_y = oldPosition % originalLength;
-		int newPosition_x = 0;
-		int newPosition_y = 0;
-		int newPosition;
+		float value = 0.0f;
+		int pos_x = posTreasure / length;
+		int pos_y = posTreasure % length;
+		int posTop = posTreasure - length;
+		int posBottom = posTreasure + length;
+		int posLeft = posTreasure - 1;
+		int posRight = posTreasure + 1;
+		int posTopLeft = posTop - 1;
+		int posTopRight = posTop + 1;
+		int posBottomLeft = posBottom - 1;
+		int posBottomRight = posBottom + 1;
+		int numForbidden = 0;
 
-		#region Top
-		if (oldPosition_x == 0)
+		if (pos_x - 1 >= 0)
 		{
-			// TopLeft
-			if (oldPosition_y == 0)
+			if (pos_y - 1 >= 0)
 			{
-				if (originalChromosome.genesList[oldPosition + 1].isMainPath == true)
+				// TopLeft
+				if (chromosome.genesList[posTop].type == GeneType.Empty || chromosome.genesList[posLeft].type == GeneType.Empty)
 				{
-					newPosition_x = 1;
-					newPosition_y = 0;
-				}
-				else
-				{
-					newPosition_x = 0;
-					newPosition_y = 1;
+					if (chromosome.genesList[posTopLeft].type == GeneType.Forbidden)
+					{
+						emptyNeightbors[0] = false;
+					}
 				}
 			}
-			// TopRight
-			else if (oldPosition_y == ( originalLength - 1 ))
+			// Top
+			if (chromosome.genesList[posTop].type == GeneType.Forbidden)
 			{
-				if (originalChromosome.genesList[oldPosition - 1].isMainPath == true)
-				{
-					newPosition_x = 1;
-					newPosition_y = oldPosition_y + 2;
-				}
-				else
-				{
-					newPosition_x = 0;
-					newPosition_y = oldPosition_y + 1;
-				}
+				emptyNeightbors[1] = false;
 			}
-			else
+			if (pos_y + 1 < length)
 			{
-				newPosition_x = 0;
-				newPosition_y = oldPosition_y + 1;
+				// TopRight
+				if (chromosome.genesList[posTop].type == GeneType.Empty || chromosome.genesList[posRight].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posTopRight].type == GeneType.Forbidden)
+					{
+						emptyNeightbors[2] = false;
+					}
+				}
 			}
 		}
-		#endregion
-
-		#region Bottom
-		if (oldPosition_x == originalWidth - 1)
+		else
 		{
-			// BottomLeft
-			if (oldPosition_y == 0)
+			emptyNeightbors[0] = false;
+			emptyNeightbors[1] = false;
+			emptyNeightbors[2] = false;
+		}
+		if (pos_y - 1 >= 0)
+		{
+			// Left
+			if (chromosome.genesList[posLeft].type == GeneType.Forbidden)
 			{
-				if (originalChromosome.genesList[oldPosition + 1].isMainPath == true)
-				{
-					newPosition_x = oldPosition_x + 1;
-					newPosition_y = 0;
-				}
-				else
-				{
-					newPosition_x = oldPosition_x + 2;
-					newPosition_y = 1;
-				}
-			}
-			// BottomRight
-			else if (oldPosition_y == ( originalLength - 1 ))
-			{
-				if (originalChromosome.genesList[oldPosition - 1].isMainPath == true)
-				{
-					newPosition_x = oldPosition_x + 1;
-					newPosition_y = oldPosition_y + 2;
-				}
-				else
-				{
-					newPosition_x = oldPosition_x + 2;
-					newPosition_y = oldPosition_y + 1;
-				}
-			}
-			else
-			{
-				newPosition_x = oldPosition_x + 2;
-				newPosition_y = oldPosition_y + 1;
+				emptyNeightbors[3] = false;
 			}
 		}
-		#endregion
-
-		#region Left
-		if (oldPosition_y == 0 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
+		else
 		{
-			newPosition_x = oldPosition_x + 1;
-			newPosition_y = 0;
+			emptyNeightbors[0] = false;
+			emptyNeightbors[3] = false;
+			emptyNeightbors[5] = false;
 		}
-		#endregion
-
-		#region Right
-		if (oldPosition_y == originalWidth - 1 && oldPosition_x != 0 && oldPosition_x != originalWidth - 1)
+		if (pos_y + 1 < length)
 		{
-			newPosition_x = oldPosition_x + 1;
-			newPosition_y = oldPosition_y + 2;
+			// Right
+			if (chromosome.genesList[posRight].type == GeneType.Forbidden)
+			{
+				emptyNeightbors[4] = false;
+			}
 		}
-		#endregion
+		else
+		{
+			emptyNeightbors[2] = false;
+			emptyNeightbors[4] = false;
+			emptyNeightbors[7] = false;
+		}
+		if (pos_x + 1 < width)
+		{
+			if (pos_y - 1 >= 0)
+			{
+				// BottomLeft
+				if (chromosome.genesList[posBottom].type == GeneType.Empty || chromosome.genesList[posLeft].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posBottomLeft].type == GeneType.Forbidden)
+					{
+						emptyNeightbors[5] = false;
+					}
+				}
+			}
+			// Bottom
+			if (chromosome.genesList[posBottom].type == GeneType.Forbidden)
+			{
+				emptyNeightbors[6] = false;
+			}
+			if (pos_y + 1 < length)
+			{
+				// BottomRight
+				if (chromosome.genesList[posBottom].type == GeneType.Empty || chromosome.genesList[posRight].type == GeneType.Empty)
+				{
+					if (chromosome.genesList[posBottomRight].type == GeneType.Forbidden)
+					{
+						emptyNeightbors[7] = false;
+					}
+				}
+			}
+		}
+		else
+		{
+			emptyNeightbors[5] = false;
+			emptyNeightbors[6] = false;
+			emptyNeightbors[7] = false;
+		}
 
-		newPosition = newPosition_x * ( originalLength + 2 ) + newPosition_y;
+		// Double Check Four corners
+		// TopLeft
+		if (emptyNeightbors[1] == false && emptyNeightbors[3] == false)
+		{
+			emptyNeightbors[0] = false;
+		}
+		// TopRight
+		if (emptyNeightbors[1] == false && emptyNeightbors[4] == false)
+		{
+			emptyNeightbors[2] = false;
+		}
+		// ButtomLeft
+		if (emptyNeightbors[3] == false && emptyNeightbors[6] == false)
+		{
+			emptyNeightbors[5] = false;
+		}
+		// ButtomRight
+		if (emptyNeightbors[4] == false && emptyNeightbors[6] == false)
+		{
+			emptyNeightbors[7] = false;
+		}
 
-		return newPosition;
+		for (int index = 0; index < 8; index++)
+		{
+			if (emptyNeightbors[index] == false)
+			{
+				Debug.Log(index);
+				numForbidden++;
+			}
+		}
+
+		if (numForbidden == 8 || numForbidden == 0)
+		{
+			value = 0;
+		}
+		else
+		{
+			value = numForbidden / 8.0f;
+		}
+
+		Debug.Log("numForbidden = " + numForbidden);
+
+		return value;
 	}
 
+	float qualityNeighborMainPath(Chromosome chromosome, int length, int width, int posTreasure)
+	{
+		float value = 0.0f;
+		int numEmpty = 0;
+		int numMainPath = 0; // The number of tiles which is on main path.
+
+		// The Neightbor which is empty.
+		for (int index = 0; index < 8; index++)
+		{
+			if (emptyNeightbors[index] == true)
+			{
+				numEmpty++;
+				Debug.Log("Empty "+index);
+				// Checking the tile which on the main path.
+				switch (index)
+				{
+					case 0:
+						if (chromosome.genesList[posTreasure - length - 1].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+					case 1:
+						if (chromosome.genesList[posTreasure - length].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+					case 2:
+						if (chromosome.genesList[posTreasure - length + 1].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+					case 3:
+						if (chromosome.genesList[posTreasure - 1].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+					case 4:
+						if (chromosome.genesList[posTreasure + 1].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+					case 5:
+						if (chromosome.genesList[posTreasure + length - 1].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+					case 6:
+						if (chromosome.genesList[posTreasure + length].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+					case 7:
+						if (chromosome.genesList[posTreasure + length + 1].isMainPath == true)
+						{
+							numMainPath++;
+						}
+						break;
+				}
+			}
+		}
+		// The position of Treasure is on empty tile.
+		numEmpty++;
+		// Checking the position of treasure
+		if (chromosome.genesList[posTreasure].isMainPath == true)
+		{
+			numMainPath++;
+		}
+		Debug.Log("numEmpty = " + numEmpty);
+		Debug.Log("numMainPath = " + numMainPath);
+		value = (float)( numEmpty - numMainPath ) / numEmpty;
+		return value;
+	}
 }

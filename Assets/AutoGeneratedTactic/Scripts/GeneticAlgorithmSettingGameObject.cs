@@ -785,7 +785,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			{
 				if (rateMutation > Random.Range(0.0f, 1.0f))
 				{
-					if (0.7f > Random.Range(0.0f, 1.0f))
+					if (0.5f > Random.Range(0.0f, 1.0f))
 					{
 						// Step.3
 						MutationMethod_AddDelete(_childsGameObjectListPopulation[index]);

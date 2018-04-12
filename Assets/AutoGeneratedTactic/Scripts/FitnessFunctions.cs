@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using System;
 
 using ChromosomeDefinition;
 using GeneticAlgorithmSettingDefinition;
@@ -1685,6 +1685,171 @@ public class FitnessFunctions {
 			value = (float)numNeighborMainPath / (float)numEmpty;
 		}
 		return value;
+	}
+	#endregion
+
+	/// <summary>
+	/// Fitness_TwoPronged
+	/// </summary>
+	/// <param name="chromosome"></param>
+	/// <param name="length"></param>
+	/// <param name="width"></param>
+	/// <returns></returns>
+	#region Fitness_TwoPronged
+	public float Fitness_TwoPronged(Chromosome chromosome, int length, int width, int[] MaxNumObject)
+	{
+		float fitnessScore = 0.0f;
+		List<List<float>> qualityDistance = qualityDistanceEnemy(chromosome, length, width);
+		List<List<bool>> checkDistance = checkEnemyDistance(chromosome, length, width, qualityDistance);
+
+		for (int indexMain = 0; indexMain < qualityDistance.Count - 1; indexMain++)
+		{
+			for (int indexPartner = 1; indexPartner < qualityDistance[indexMain].Count; indexPartner++)
+			{
+				if (checkDistance[indexMain][indexPartner] == true)
+				{
+					fitnessScore = fitnessScore + qualityDistance[indexMain][indexPartner] * 1.0f;
+				}
+				else
+				{
+					fitnessScore = fitnessScore + qualityDistance[indexMain][indexPartner] * 0.0f;
+				}
+			}
+		}
+
+		int numEnemy = qualityDistance.Count;
+		int numDistance = 0;
+		for (int i = 0; i < numEnemy; i++)
+		{
+			numDistance = numDistance + ( numEnemy - 1 - i );
+		}
+
+		// Normalize
+		fitnessScore = fitnessScore / numDistance;
+
+		return fitnessScore;
+	}
+	// Calculate the distance of two enemy is in the range or not.
+	List<List<float>> qualityDistanceEnemy(Chromosome chromosome, int length, int width)
+	{
+		float enemy_sensitiveRange = 3.5f;
+		float fitnessDistance = enemy_sensitiveRange * 2;
+		List<List<float>> EnemyPartnerList = new List<List<float>>(); // The distance between the partner is in the range.
+
+		// The first element of EnemyPartner is the position of EnemyMain.(List->position(element1))
+		foreach (var gameObject in chromosome.gameObjectList)
+		{
+			if (gameObject.GameObjectAttribute == GeneGameObjectAttribute.enemy)
+			{
+				EnemyPartnerList.Add(new List<float>());
+				EnemyPartnerList[EnemyPartnerList.Count - 1].Add(gameObject.Position);
+			}
+		}
+		// Calculate the score of EnemyPartner and store in list.(List->position(element1)->score(element2)->score(element3)->...)
+		for (int indexMainEnemy = 0; indexMainEnemy < EnemyPartnerList.Count - 1; indexMainEnemy++)
+		{
+			int main_x = (int)EnemyPartnerList[indexMainEnemy][0] / length;
+			int main_y = (int)EnemyPartnerList[indexMainEnemy][0] % length;
+
+			for (int indexPartnerEnemy = indexMainEnemy + 1; indexPartnerEnemy < EnemyPartnerList.Count; indexPartnerEnemy++)
+			{
+				int partner_x = (int)EnemyPartnerList[indexPartnerEnemy][0] / length;
+				int partner_y = (int)EnemyPartnerList[indexPartnerEnemy][0] % length;
+
+				float distance = (float)Math.Sqrt(Math.Pow(( main_x - partner_x ), 2) + Math.Pow(( main_y - partner_y ), 2));
+				float score = ( fitnessDistance - Math.Abs(distance - fitnessDistance) ) / fitnessDistance;
+
+				EnemyPartnerList[indexMainEnemy].Add(score);
+			}
+		}
+		return EnemyPartnerList;
+	}
+	// Checking that there isn't any forbidden between main enemy and it's partner.
+	// Checking that there exist main path between main enemy and it's partner.
+	List<List<bool>> checkEnemyDistance(Chromosome chromosome, int length, int width, List<List<float>> EnemyPartnerList)
+	{
+		List<List<bool>> EnemyLegalDistanceList = new List<List<bool>>(); // The distance between the enemys is legal or not.
+		for (int indexMainEnemy = 0; indexMainEnemy < EnemyPartnerList.Count - 1; indexMainEnemy++)
+		{
+			EnemyLegalDistanceList.Add(new List<bool>());
+
+			EnemyLegalDistanceList[indexMainEnemy].Add(false); // The first element is itself.
+			int main_x = (int)EnemyPartnerList[indexMainEnemy][0] / length;
+			int main_y = (int)EnemyPartnerList[indexMainEnemy][0] % length;
+			for (int indexPartnerEnemy = indexMainEnemy + 1; indexPartnerEnemy < EnemyPartnerList.Count; indexPartnerEnemy++)
+			{
+				int partner_x = (int)EnemyPartnerList[indexPartnerEnemy][0] / length;
+				int partner_y = (int)EnemyPartnerList[indexPartnerEnemy][0] % length;
+
+				EnemyLegalDistanceList[indexMainEnemy].Add(isDistanceLegal(chromosome, length, main_x, main_y, partner_x, partner_y));
+			}
+		}
+		return EnemyLegalDistanceList;
+	}
+	bool isDistanceLegal(Chromosome chromosome, int length, int main_x, int main_y, int partner_x, int partner_y)
+	{
+		bool isLegal = true;
+		int numMainPath = 0;
+		int min_x = 0;
+		int min_y = 0;
+		int max_x = 0;
+		int max_y = 0;
+
+		if (main_x < partner_x)
+		{
+			min_x = main_x;
+			max_x = partner_x;
+		}
+		else if (main_x > partner_x)
+		{
+			min_x = partner_x;
+			max_x = main_x;
+		}
+		else if (main_x == partner_x)
+		{
+			min_x = max_x = main_x;
+		}
+		if (main_y < partner_y)
+		{
+			min_y = main_y;
+			max_y = partner_y;
+		}
+		else if (main_y > partner_y)
+		{
+			min_y = partner_y;
+			max_y = main_y;
+		}
+		else if (main_y == partner_y)
+		{
+			min_y = max_y = main_y;
+		}
+		// Checking forbidden and main path.
+		for (int x = min_x; x <= max_x; x++)
+		{
+			for (int y = min_y; y <= max_y; y++)
+			{
+				if (chromosome.genesList[x * length + y].isMainPath == true)
+				{
+					numMainPath++;
+				}
+				if (chromosome.genesList[x * length + y].type == GeneType.Forbidden)
+				{
+					isLegal = false;
+					break;
+				}
+			}
+			if (isLegal == false)
+			{
+				break;
+			}
+		}
+
+		if (isLegal == true && numMainPath == 0)
+		{
+			isLegal = false;
+		}
+
+		return isLegal;
 	}
 	#endregion
 }

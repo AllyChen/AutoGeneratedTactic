@@ -217,6 +217,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		float weight_Fitness_BesideMainPath;
 		bool isTreasureOnMainPath;
 		bool isTreasureBesideMainPath;
+		float weight_Fitness_TwoPronged = 0.0f;
 
 		public void DetermineWeightFitness(bool isFitness_Defense, bool isFitness_OnMainPath, bool isFitness_BesideMainPath, 
 											float weightFitness_Defense, float weightFitness_OnMainPath, float weightFitness_BesideMainPath,
@@ -277,10 +278,12 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 					_population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = ( FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy, _numMaxGameObject)
 																							+ FitnessFunction.Fitness_BesideMainPath(_population[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap, _numMaxGameObject) * 0.5f ) / 2.0f;
 				}
+				_population[i].FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = FitnessFunction.Fitness_TwoPronged(_population[i], _mapLength, _mapWidth, _numMaxGameObject);
 				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _population[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
 																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense
 																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] * weight_Fitness_OnMainPath
-																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] * weight_Fitness_BesideMainPath ) / 4.0f;
+																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_TwoPronged] * weight_Fitness_TwoPronged
+																					+ _population[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] * weight_Fitness_BesideMainPath ) / 5.0f;
 			}
 		}
 		// Calculate the fitness score of chromosomes in specific population.
@@ -310,9 +313,11 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 					_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = ( FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.enemy, _numMaxGameObject)
 																									+ FitnessFunction.Fitness_BesideMainPath(_specificPopulation[i], _mapLength, _mapWidth, GeneGameObjectAttribute.trap, _numMaxGameObject) * 0.5f ) / 2.0f;
 				}
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = FitnessFunction.Fitness_TwoPronged(_specificPopulation[i], _mapLength, _mapWidth, _numMaxGameObject);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _specificPopulation[i].FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
 																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense
 																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_OnMainPath] * weight_Fitness_OnMainPath
+																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_TwoPronged] * weight_Fitness_TwoPronged
 																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] * weight_Fitness_BesideMainPath ) / 4.0f;
 			}
 		}

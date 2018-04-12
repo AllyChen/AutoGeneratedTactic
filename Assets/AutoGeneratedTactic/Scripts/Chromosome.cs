@@ -47,6 +47,7 @@ namespace ChromosomeDefinition
 		Fitness_Defense,
 		Fitness_OnMainPath,
 		Fitness_BesideMainPath,
+		Fitness_TwoPronged,
 		NumberOfFitnessFunctionName,
 		SumOfFitnessScore
 	}
@@ -65,6 +66,7 @@ namespace ChromosomeDefinition
 					{ FitnessFunctionName.Fitness_Defense			, 0.0f },
 					{ FitnessFunctionName.Fitness_OnMainPath		, 0.0f },
 					{ FitnessFunctionName.Fitness_BesideMainPath	, 0.0f },
+					{ FitnessFunctionName.Fitness_TwoPronged		, 0.0f },
 					{ FitnessFunctionName.SumOfFitnessScore			, 0.0f },
 				};
 
@@ -78,6 +80,7 @@ namespace ChromosomeDefinition
 			this.FitnessScore[FitnessFunctionName.Fitness_Defense] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense];
 			this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_OnMainPath];
 			this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath];
+			this.FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_TwoPronged];
 			this.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = sourceChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 		}
 
@@ -103,6 +106,7 @@ namespace ChromosomeDefinition
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_Defense] = this.FitnessScore[FitnessFunctionName.Fitness_Defense];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = this.FitnessScore[FitnessFunctionName.Fitness_TwoPronged];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = this.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 
 			return ChromosomeClone;

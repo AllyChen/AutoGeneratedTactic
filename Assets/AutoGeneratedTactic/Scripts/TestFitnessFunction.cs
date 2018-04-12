@@ -15,14 +15,14 @@ public class TestFitnessFunction : MonoBehaviour {
 	//345 //[1,0][1,1][1,2]
 	//678 //[2,0][2,1][2,2]
 	private int[,] TestMapArray = {
-	{0,1,1,1,1,1,1,1},//  00 01 02 03 04 05 06 07
-	{0,0,0,0,1,1,1,1},//  08 09 10 11 12 13 14 15
-	{0,1,1,0,1,1,1,1},//  16 17 18 19 20 21 22 23
-	{0,1,1,0,1,1,1,1},//  24 25 26 27 28 29 30 31
-	{0,1,1,0,0,0,0,1},//  32 33 34 35 36 37 38 39
+	{1,1,1,0,0,0,0,0},//  00 01 02 03 04 05 06 07
+	{1,1,1,0,0,0,0,1},//  08 09 10 11 12 13 14 15
+	{1,1,1,0,0,0,0,1},//  16 17 18 19 20 21 22 23
+	{1,1,1,0,0,0,0,1},//  24 25 26 27 28 29 30 31
+	{0,0,0,0,0,0,0,0},//  32 33 34 35 36 37 38 39
 	{0,0,0,0,0,0,0,1},//  40 41 42 43 44 45 46 47
-	{1,1,1,0,1,0,0,1},//  48 49 50 51 52 53 54 55
-	{1,1,1,0,0,1,0,1}};// 56 57 58 59 60 61 62 63
+	{1,1,1,0,0,0,0,1},//  48 49 50 51 52 53 54 55
+	{1,1,1,0,0,0,0,1}};// 56 57 58 59 60 61 62 63
 
 	private int _mapLength = 8;
 	private int _mapWidth = 8;
@@ -38,43 +38,51 @@ public class TestFitnessFunction : MonoBehaviour {
 
 	void Start()
 	{
-		//EmptyTiles.Clear();
-		//InitialTestMap(TestMapArray, TestMap);
-		//TestMap.AddGameObjectInList(0, GeneGameObjectAttribute.entrance);
-		//TestMap.AddGameObjectInList(62, GeneGameObjectAttribute.exit);
-		//TestMap.AddGameObjectInList(36, GeneGameObjectAttribute.enemy);
-		//TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.enemy);
-		////TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.trap);
-		////TestMap.AddGameObjectInList(54, GeneGameObjectAttribute.trap);
+		EmptyTiles.Clear();
+		InitialTestMap(TestMapArray, TestMap);
+		TestMap.AddGameObjectInList(32, GeneGameObjectAttribute.entrance);
+		TestMap.AddGameObjectInList(39, GeneGameObjectAttribute.exit);
+		TestMap.AddGameObjectInList(4, GeneGameObjectAttribute.enemy);
+		TestMap.AddGameObjectInList(5, GeneGameObjectAttribute.enemy);
+		TestMap.AddGameObjectInList(60, GeneGameObjectAttribute.enemy);
+		TestMap.AddGameObjectInList(61, GeneGameObjectAttribute.enemy);
+		//TestMap.AddGameObjectInList(38, GeneGameObjectAttribute.trap);
+		//TestMap.AddGameObjectInList(54, GeneGameObjectAttribute.trap);
 		//TestMap.AddGameObjectInList(46, GeneGameObjectAttribute.treasure);
-		//// Calculate the number of empty tiles
-		//for (int indexGene = 0; indexGene < TestMap.genesList.Count; indexGene++)
+		// Calculate the number of empty tiles
+		for (int indexGene = 0; indexGene < TestMap.genesList.Count; indexGene++)
+		{
+			if (TestMap.genesList[indexGene].type == GeneType.Empty)
+			{
+				EmptyTiles.Add(indexGene);
+			}
+		}
+
+		// Fitness function
+		float weight_RectangleQuality = 0.0f;
+		float weight_CorridorQuality = 1.0f;
+		float weight_ConnectedQuality = 1.0f;
+		TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(TestMap, _mapLength, _mapWidth);
+		TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(TestMap, _mapLength, _mapWidth);
+		TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(TestMap, _mapLength, _mapWidth);
+		TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+																			+ TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+																			+ TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+		float weight_MainPathQuality = 1.0f;
+		float weight_Fitness_Defense = 1.0f;
+		TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(TestMap, _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
+		TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth, _numMaxGameObject);
+		TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
+																			+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
+
+		//Debug.Log("====Main Path====");
+		//foreach (var path in TestMap.mainPath)
 		//{
-		//	if (TestMap.genesList[indexGene].type == GeneType.Empty)
-		//	{
-		//		EmptyTiles.Add(indexGene);
-		//	}
+		//	Debug.Log(path);
 		//}
 
-		//// Fitness function
-		//float weight_RectangleQuality = 0.0f;
-		//float weight_CorridorQuality = 1.0f;
-		//float weight_ConnectedQuality = 1.0f;
-		//TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(TestMap, _mapLength, _mapWidth);
-		//TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(TestMap, _mapLength, _mapWidth);
-		//TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(TestMap, _mapLength, _mapWidth);
-		//TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
-		//																	+ TestMap.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
-		//																	+ TestMap.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
-		//float weight_MainPathQuality = 1.0f;
-		//float weight_Fitness_Defense = 1.0f;
-		//TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] = FitnessFunction.Fitness_MainPathQuality(TestMap, _mapLength, _mapWidth, EmptyTiles.Count, spaceGrid);
-		//TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] = FitnessFunction.Fitness_Defense(TestMap, _mapLength, _mapWidth, _numMaxGameObject);
-		//TestMap.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( TestMap.FitnessScore[FitnessFunctionName.MainPathQuality] * weight_MainPathQuality
-		//																	+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
-
-		//Debug.Log(qualityNeighborForbidden(TestMap, _mapLength, _mapWidth, 0) + qualityNeighborMainPath(TestMap, _mapLength, _mapWidth, 0));
-
+		//Debug.Log("FitnessScore = "+Fitness_TwoPronged(TestMap, _mapLength, _mapWidth));
+		
 	}
 
 	#region InitialTestMap
@@ -120,246 +128,162 @@ public class TestFitnessFunction : MonoBehaviour {
 		spaceGrid = new Grid(tilesmap);
 	}
 	#endregion
-	bool[] emptyNeightbors = { true, true, true, true, true, true, true, true }; // 0:TopLeft 1:Top 2:TopRight 3:Left 4:Right 5:ButtomLeft 6:Buttom 7:ButtomRight
 
-	float qualityNeighborForbidden(Chromosome chromosome, int length, int width, int posTreasure)
+	#region Fitness_TwoPronged
+	public float Fitness_TwoPronged(Chromosome chromosome, int length, int width, int[] MaxNumObject)
 	{
-		float value = 0.0f;
-		int pos_x = posTreasure / length;
-		int pos_y = posTreasure % length;
-		int posTop = posTreasure - length;
-		int posBottom = posTreasure + length;
-		int posLeft = posTreasure - 1;
-		int posRight = posTreasure + 1;
-		int posTopLeft = posTop - 1;
-		int posTopRight = posTop + 1;
-		int posBottomLeft = posBottom - 1;
-		int posBottomRight = posBottom + 1;
-		int numForbidden = 0;
+		float fitnessScore = 0.0f;
+		List<List<float>> qualityDistance = qualityDistanceEnemy(chromosome, length, width);
+		List<List<bool>> checkDistance = checkEnemyDistance(chromosome, length, width, qualityDistance);
 
-		if (pos_x - 1 >= 0)
+		for (int indexMain = 0; indexMain < qualityDistance.Count - 1; indexMain++)
 		{
-			if (pos_y - 1 >= 0)
+			for (int indexPartner = 1; indexPartner < qualityDistance[indexMain].Count; indexPartner++)
 			{
-				// TopLeft
-				if (chromosome.genesList[posTop].type == GeneType.Empty || chromosome.genesList[posLeft].type == GeneType.Empty)
+				if (checkDistance[indexMain][indexPartner] == true)
 				{
-					if (chromosome.genesList[posTopLeft].type == GeneType.Forbidden)
-					{
-						emptyNeightbors[0] = false;
-					}
+					fitnessScore = fitnessScore + qualityDistance[indexMain][indexPartner] * 1.0f;
 				}
-			}
-			// Top
-			if (chromosome.genesList[posTop].type == GeneType.Forbidden)
-			{
-				emptyNeightbors[1] = false;
-			}
-			if (pos_y + 1 < length)
-			{
-				// TopRight
-				if (chromosome.genesList[posTop].type == GeneType.Empty || chromosome.genesList[posRight].type == GeneType.Empty)
+				else
 				{
-					if (chromosome.genesList[posTopRight].type == GeneType.Forbidden)
-					{
-						emptyNeightbors[2] = false;
-					}
+					fitnessScore = fitnessScore + qualityDistance[indexMain][indexPartner] * 0.0f;
 				}
 			}
 		}
-		else
+
+		int numEnemy = qualityDistance.Count;
+		int numDistance = 0;
+		for (int i = 0; i < numEnemy; i++)
 		{
-			emptyNeightbors[0] = false;
-			emptyNeightbors[1] = false;
-			emptyNeightbors[2] = false;
-		}
-		if (pos_y - 1 >= 0)
-		{
-			// Left
-			if (chromosome.genesList[posLeft].type == GeneType.Forbidden)
-			{
-				emptyNeightbors[3] = false;
-			}
-		}
-		else
-		{
-			emptyNeightbors[0] = false;
-			emptyNeightbors[3] = false;
-			emptyNeightbors[5] = false;
-		}
-		if (pos_y + 1 < length)
-		{
-			// Right
-			if (chromosome.genesList[posRight].type == GeneType.Forbidden)
-			{
-				emptyNeightbors[4] = false;
-			}
-		}
-		else
-		{
-			emptyNeightbors[2] = false;
-			emptyNeightbors[4] = false;
-			emptyNeightbors[7] = false;
-		}
-		if (pos_x + 1 < width)
-		{
-			if (pos_y - 1 >= 0)
-			{
-				// BottomLeft
-				if (chromosome.genesList[posBottom].type == GeneType.Empty || chromosome.genesList[posLeft].type == GeneType.Empty)
-				{
-					if (chromosome.genesList[posBottomLeft].type == GeneType.Forbidden)
-					{
-						emptyNeightbors[5] = false;
-					}
-				}
-			}
-			// Bottom
-			if (chromosome.genesList[posBottom].type == GeneType.Forbidden)
-			{
-				emptyNeightbors[6] = false;
-			}
-			if (pos_y + 1 < length)
-			{
-				// BottomRight
-				if (chromosome.genesList[posBottom].type == GeneType.Empty || chromosome.genesList[posRight].type == GeneType.Empty)
-				{
-					if (chromosome.genesList[posBottomRight].type == GeneType.Forbidden)
-					{
-						emptyNeightbors[7] = false;
-					}
-				}
-			}
-		}
-		else
-		{
-			emptyNeightbors[5] = false;
-			emptyNeightbors[6] = false;
-			emptyNeightbors[7] = false;
+			numDistance = numDistance + ( numEnemy - 1 - i );
 		}
 
-		// Double Check Four corners
-		// TopLeft
-		if (emptyNeightbors[1] == false && emptyNeightbors[3] == false)
-		{
-			emptyNeightbors[0] = false;
-		}
-		// TopRight
-		if (emptyNeightbors[1] == false && emptyNeightbors[4] == false)
-		{
-			emptyNeightbors[2] = false;
-		}
-		// ButtomLeft
-		if (emptyNeightbors[3] == false && emptyNeightbors[6] == false)
-		{
-			emptyNeightbors[5] = false;
-		}
-		// ButtomRight
-		if (emptyNeightbors[4] == false && emptyNeightbors[6] == false)
-		{
-			emptyNeightbors[7] = false;
-		}
+		// Normalize
+		fitnessScore = fitnessScore / numDistance;
 
-		for (int index = 0; index < 8; index++)
-		{
-			if (emptyNeightbors[index] == false)
-			{
-				Debug.Log(index);
-				numForbidden++;
-			}
-		}
-
-		if (numForbidden == 8 || numForbidden == 0)
-		{
-			value = 0;
-		}
-		else
-		{
-			value = numForbidden / 8.0f;
-		}
-
-		Debug.Log("numForbidden = " + numForbidden);
-
-		return value;
+		return fitnessScore;
 	}
-
-	float qualityNeighborMainPath(Chromosome chromosome, int length, int width, int posTreasure)
+	// Calculate the distance of two enemy is in the range or not.
+	List<List<float>> qualityDistanceEnemy(Chromosome chromosome, int length, int width)
 	{
-		float value = 0.0f;
-		int numEmpty = 0;
-		int numMainPath = 0; // The number of tiles which is on main path.
+		float enemy_sensitiveRange = 3.5f;
+		float fitnessDistance = enemy_sensitiveRange * 2;
+		List<List<float>> EnemyPartnerList = new List<List<float>>(); // The distance between the partner is in the range.
 
-		// The Neightbor which is empty.
-		for (int index = 0; index < 8; index++)
+		// The first element of EnemyPartner is the position of EnemyMain.(List->position(element1))
+		foreach (var gameObject in chromosome.gameObjectList)
 		{
-			if (emptyNeightbors[index] == true)
+			if (gameObject.GameObjectAttribute == GeneGameObjectAttribute.enemy)
 			{
-				numEmpty++;
-				Debug.Log("Empty "+index);
-				// Checking the tile which on the main path.
-				switch (index)
-				{
-					case 0:
-						if (chromosome.genesList[posTreasure - length - 1].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-					case 1:
-						if (chromosome.genesList[posTreasure - length].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-					case 2:
-						if (chromosome.genesList[posTreasure - length + 1].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-					case 3:
-						if (chromosome.genesList[posTreasure - 1].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-					case 4:
-						if (chromosome.genesList[posTreasure + 1].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-					case 5:
-						if (chromosome.genesList[posTreasure + length - 1].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-					case 6:
-						if (chromosome.genesList[posTreasure + length].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-					case 7:
-						if (chromosome.genesList[posTreasure + length + 1].isMainPath == true)
-						{
-							numMainPath++;
-						}
-						break;
-				}
+				EnemyPartnerList.Add(new List<float>());
+				EnemyPartnerList[EnemyPartnerList.Count - 1].Add(gameObject.Position);
 			}
 		}
-		// The position of Treasure is on empty tile.
-		numEmpty++;
-		// Checking the position of treasure
-		if (chromosome.genesList[posTreasure].isMainPath == true)
+		// Calculate the score of EnemyPartner and store in list.(List->position(element1)->score(element2)->score(element3)->...)
+		for (int indexMainEnemy = 0; indexMainEnemy < EnemyPartnerList.Count - 1; indexMainEnemy++)
 		{
-			numMainPath++;
+			int main_x = (int)EnemyPartnerList[indexMainEnemy][0] / length;
+			int main_y = (int)EnemyPartnerList[indexMainEnemy][0] % length;
+
+			for (int indexPartnerEnemy = indexMainEnemy + 1; indexPartnerEnemy < EnemyPartnerList.Count; indexPartnerEnemy++)
+			{
+				int partner_x = (int)EnemyPartnerList[indexPartnerEnemy][0] / length;
+				int partner_y = (int)EnemyPartnerList[indexPartnerEnemy][0] % length;
+
+				float distance = (float)Math.Sqrt(Math.Pow(( main_x - partner_x ), 2) + Math.Pow(( main_y - partner_y ), 2));
+				float score = ( fitnessDistance - Math.Abs(distance - fitnessDistance) ) / fitnessDistance;
+
+				EnemyPartnerList[indexMainEnemy].Add(score);
+			}
 		}
-		Debug.Log("numEmpty = " + numEmpty);
-		Debug.Log("numMainPath = " + numMainPath);
-		value = (float)( numEmpty - numMainPath ) / numEmpty;
-		return value;
+		return EnemyPartnerList;
 	}
+	// Checking that there isn't any forbidden between main enemy and it's partner.
+	// Checking that there exist main path between main enemy and it's partner.
+	List<List<bool>> checkEnemyDistance(Chromosome chromosome, int length, int width, List<List<float>> EnemyPartnerList)
+	{
+		List<List<bool>> EnemyLegalDistanceList = new List<List<bool>>(); // The distance between the enemys is legal or not.
+		for (int indexMainEnemy = 0; indexMainEnemy < EnemyPartnerList.Count - 1; indexMainEnemy++)
+		{
+			EnemyLegalDistanceList.Add(new List<bool>());
+
+			EnemyLegalDistanceList[indexMainEnemy].Add(false); // The first element is itself.
+			int main_x = (int)EnemyPartnerList[indexMainEnemy][0] / length;
+			int main_y = (int)EnemyPartnerList[indexMainEnemy][0] % length;
+			for (int indexPartnerEnemy = indexMainEnemy + 1; indexPartnerEnemy < EnemyPartnerList.Count; indexPartnerEnemy++)
+			{
+				int partner_x = (int)EnemyPartnerList[indexPartnerEnemy][0] / length;
+				int partner_y = (int)EnemyPartnerList[indexPartnerEnemy][0] % length;
+
+				EnemyLegalDistanceList[indexMainEnemy].Add(isDistanceLegal(chromosome, length, main_x, main_y, partner_x, partner_y));
+			}
+		}
+		return EnemyLegalDistanceList;
+	}
+	bool isDistanceLegal(Chromosome chromosome, int length, int main_x, int main_y, int partner_x, int partner_y)
+	{
+		bool isLegal = true;
+		int numMainPath = 0;
+		int min_x = 0;
+		int min_y = 0;
+		int max_x = 0;
+		int max_y = 0;
+
+		if (main_x < partner_x)
+		{
+			min_x = main_x;
+			max_x = partner_x;
+		}
+		else if (main_x > partner_x)
+		{
+			min_x = partner_x;
+			max_x = main_x;
+		}
+		else if (main_x == partner_x)
+		{
+			min_x = max_x = main_x;
+		}
+		if (main_y < partner_y)
+		{
+			min_y = main_y;
+			max_y = partner_y;
+		}
+		else if (main_y > partner_y)
+		{
+			min_y = partner_y;
+			max_y = main_y;
+		}
+		else if (main_y == partner_y)
+		{
+			min_y = max_y = main_y;
+		}
+		// Checking forbidden and main path.
+		for (int x = min_x; x <= max_x; x++)
+		{
+			for (int y = min_y; y <= max_y; y++)
+			{
+				if (chromosome.genesList[x * length + y].isMainPath == true)
+				{
+					numMainPath++;
+				}
+				if (chromosome.genesList[x * length + y].type == GeneType.Forbidden)
+				{
+					isLegal = false;
+					break;
+				}
+			}
+			if (isLegal == false)
+			{
+				break;
+			}
+		}
+
+		if (isLegal == true && numMainPath == 0)
+		{
+			isLegal = false;
+		}
+
+		return isLegal;
+	}
+	#endregion
 }

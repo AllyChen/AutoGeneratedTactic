@@ -19,6 +19,7 @@ public class Parameters : MonoBehaviour {
 	private bool fitness_ProtectTreasure;
 	private bool fitness_OnMainPath;
 	private bool fitness_BesideMainPath;
+	private bool fitness_TwoPronged;
 
 	private bool isTreasureOnMainPath;
 	private bool isTreasureBesideMainPath;
@@ -28,6 +29,7 @@ public class Parameters : MonoBehaviour {
 	private float weight_Fitness_Defense;
 	private float weight_Fitness_OnMainPath;
 	private float weight_Fitness_BesideMainPath;
+	private float weight_Fitness_TwoPronged;
 
 	private Toggle Toggle_Rectangle;
 	private Toggle Toggle_Corridor;
@@ -36,6 +38,7 @@ public class Parameters : MonoBehaviour {
 	private Dropdown Dropdown_OnMainPath;
 	private Toggle Toggle_BesideMainPath;
 	private Dropdown Dropdown_BesideMainPath;
+	private Toggle Toggle_TwoPronged;
 
 	// Use this for initialization
 	void Start () {
@@ -52,6 +55,7 @@ public class Parameters : MonoBehaviour {
 		GameObject.Find("InputField_Defense").GetComponent<InputField>().text = "1.0";
 		GameObject.Find("InputField_OnMainPath").GetComponent<InputField>().text = "1.0";
 		GameObject.Find("InputField_BesideMainPath").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_TwoPronged").GetComponent<InputField>().text = "1.0";
 
 		Toggle_Rectangle = GameObject.Find("Toggle_Rectangle").GetComponent<Toggle>();
 		Toggle_Corridor = GameObject.Find("Toggle_Corridor").GetComponent<Toggle>();
@@ -60,6 +64,7 @@ public class Parameters : MonoBehaviour {
 		Dropdown_OnMainPath = GameObject.Find("Dropdown_OnMainPath").GetComponent<Dropdown>();
 		Toggle_BesideMainPath = GameObject.Find("Toggle_BesideMainPath").GetComponent<Toggle>();
 		Dropdown_BesideMainPath = GameObject.Find("Dropdown_BesideMainPath").GetComponent<Dropdown>();
+		Toggle_TwoPronged = GameObject.Find("Toggle_TwoPronged").GetComponent<Toggle>();
 	}
 	
 	public int GetTheLenghOfTile()
@@ -149,6 +154,19 @@ public class Parameters : MonoBehaviour {
 			fitness_ProtectTreasure = false;
 		}
 		Debug.Log("isProtectTreasure = " + fitness_ProtectTreasure + ", Weight = " + GetTheWeight_Fitness_Defense());
+	}
+
+	public void OnClick_Toggle_TwoPronged()
+	{
+		if (Toggle_TwoPronged.isOn)
+		{
+			fitness_TwoPronged = true;
+		}
+		else
+		{
+			fitness_TwoPronged = false;
+		}
+		Debug.Log("isTwoPronged = " + fitness_TwoPronged + ", Weight = " + GetTheWeight_Fitness_TwoPronged());
 	}
 
 	public void OnClick_Toggle_OnMainPath()
@@ -250,6 +268,11 @@ public class Parameters : MonoBehaviour {
 		return fitness_ProtectTreasure;
 	}
 
+	public bool GetIsFitness_TwoPronged()
+	{
+		return fitness_TwoPronged;
+	}
+
 	public bool GetIsFitness_OnMainPath()
 	{
 		return fitness_OnMainPath;
@@ -289,6 +312,13 @@ public class Parameters : MonoBehaviour {
 		string getParamet = GameObject.Find("InputField_Defense").GetComponent<InputField>().text;
 		weight_Fitness_Defense = float.Parse(getParamet);
 		return weight_Fitness_Defense;
+	}
+
+	public float GetTheWeight_Fitness_TwoPronged()
+	{
+		string getParamet = GameObject.Find("InputField_TwoPronged").GetComponent<InputField>().text;
+		weight_Fitness_TwoPronged = float.Parse(getParamet);
+		return weight_Fitness_TwoPronged;
 	}
 
 	public float GetTheWeight_Fitness_OnMainPath()

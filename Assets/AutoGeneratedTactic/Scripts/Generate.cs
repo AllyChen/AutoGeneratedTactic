@@ -65,6 +65,7 @@ public class Generate : MonoBehaviour {
 	bool fitness_Defense;
 	bool fitness_OnMainPath;
 	bool fitness_BesideMainPath;
+	bool fitness_TwoPronged;
 
 	bool isTreasureOnMainPath;
 	bool isTreasureBesideMainPath;
@@ -74,6 +75,7 @@ public class Generate : MonoBehaviour {
 	float weight_Fitness_Defense;
 	float weight_Fitness_OnMainPath;
 	float weight_Fitness_BesideMainPath;
+	float weight_Fitness_TwoPronged;
 
 	public void OnClick_Generate()
 	{
@@ -136,9 +138,9 @@ public class Generate : MonoBehaviour {
 		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
 		//Debug.Log("GameObjectInitial");
-		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, 
+		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged,
 																	weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath,
-																	isTreasureOnMainPath, isTreasureBesideMainPath);
+																	isTreasureOnMainPath, isTreasureBesideMainPath, weight_Fitness_TwoPronged);
 		
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
@@ -178,9 +180,9 @@ public class Generate : MonoBehaviour {
 		GetParameters();
 
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
-		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath,
+		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged,
 																	weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath,
-																	isTreasureOnMainPath, isTreasureBesideMainPath);
+																	isTreasureOnMainPath, isTreasureBesideMainPath, weight_Fitness_TwoPronged);
 
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
@@ -389,6 +391,7 @@ public class Generate : MonoBehaviour {
 		fitness_Defense = ParameterSetting.GetComponent<Parameters>().GetIsFitness_Defense();
 		fitness_OnMainPath = ParameterSetting.GetComponent<Parameters>().GetIsFitness_OnMainPath();
 		fitness_BesideMainPath = ParameterSetting.GetComponent<Parameters>().GetIsFitness_BesideMainPath();
+		fitness_TwoPronged = ParameterSetting.GetComponent<Parameters>().GetIsFitness_TwoPronged();
 
 		isTreasureOnMainPath = ParameterSetting.GetComponent<Parameters>().GetIsTreasureOnMainPath();
 		isTreasureBesideMainPath = ParameterSetting.GetComponent<Parameters>().GetIsTreasureBesideMainPath();
@@ -398,5 +401,6 @@ public class Generate : MonoBehaviour {
 		weight_Fitness_Defense = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_Defense();
 		weight_Fitness_OnMainPath = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_OnMainPath();
 		weight_Fitness_BesideMainPath = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_BesideMainPath();
+		weight_Fitness_TwoPronged = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_TwoPronged();
 	}
 }

@@ -217,11 +217,11 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		float weight_Fitness_BesideMainPath;
 		bool isTreasureOnMainPath;
 		bool isTreasureBesideMainPath;
-		float weight_Fitness_TwoPronged = 0.0f;
+		float weight_Fitness_TwoPronged;
 
-		public void DetermineWeightFitness(bool isFitness_Defense, bool isFitness_OnMainPath, bool isFitness_BesideMainPath, 
+		public void DetermineWeightFitness(bool isFitness_Defense, bool isFitness_OnMainPath, bool isFitness_BesideMainPath, bool isFitness_TwoPronged,
 											float weightFitness_Defense, float weightFitness_OnMainPath, float weightFitness_BesideMainPath,
-											bool _isTreasureOnMainPath, bool _isTreasureBesideMainPath)
+											bool _isTreasureOnMainPath, bool _isTreasureBesideMainPath, float weightFitness_TwoPronged)
 		{
 			if (isFitness_Defense == true)
 			{
@@ -230,6 +230,14 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			else
 			{
 				weight_Fitness_Defense = 0.0f;
+			}
+			if (isFitness_TwoPronged == true)
+			{
+				weight_Fitness_TwoPronged = weightFitness_TwoPronged;
+			}
+			else
+			{
+				weight_Fitness_TwoPronged = 0.0f;
 			}
 			if (isFitness_OnMainPath == true)
 			{
@@ -870,7 +878,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 
 		#region OutputData
 		private List<string[]> basicData = new List<string[]>();
-		string[] tileData = new string[7];
+		string[] tileData = new string[8];
 
 		bool isSaveWeight;
 		void InitialData()
@@ -885,7 +893,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			tileData[3] = "Fitness_Defense";
 			tileData[4] = "Fitness_OnMainPath";
 			tileData[5] = "Fitness_BesideMainPath";
-			tileData[6] = "Fitness_SumOfFitnessScore";
+			tileData[6] = "Fitness_TwoPronged";
+			tileData[7] = "Fitness_SumOfFitnessScore";
 			basicData.Add(tileData);
 		}
 
@@ -900,7 +909,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				weightData[3] = weight_Fitness_Defense.ToString(); // weight_Fitness_Defense
 				weightData[4] = weight_Fitness_OnMainPath.ToString(); // weight_Fitness_OnMainPath
 				weightData[5] = weight_Fitness_BesideMainPath.ToString(); // weight_Fitness_BesideMainPath
-				weightData[6] = ""; // Fitness_SumOfFitnessScore
+				weightData[6] = weight_Fitness_TwoPronged.ToString(); // weight_Fitness_TwoPronged
+				weightData[7] = ""; // Fitness_SumOfFitnessScore
 				basicData.Add(weightData);
 
 				string[] gameObjectData = new string[tileData.Length];
@@ -924,7 +934,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				{
 					gameObjectData[5] = "Enemy/Trap"; // weight_Fitness_BesideMainPath
 				}
-				gameObjectData[6] = ""; // Fitness_SumOfFitnessScore
+				gameObjectData[6] = ""; // Fitness_TwoPronged
+				gameObjectData[7] = ""; // Fitness_SumOfFitnessScore
 				basicData.Add(gameObjectData);
 
 				isSaveWeight = true;
@@ -939,7 +950,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				contentData[3] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_Defense].ToString(); // Fitness_Defense
 				contentData[4] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_OnMainPath].ToString(); // Fitness_OnMainPath
 				contentData[5] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_BesideMainPath].ToString(); // Fitness_BesideMainPath
-				contentData[6] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
+				contentData[6] = _population[indexChromosome].FitnessScore[FitnessFunctionName.Fitness_TwoPronged].ToString(); // Fitness_TwoPronged
+				contentData[7] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
 				basicData.Add(contentData);
 			}
 		}

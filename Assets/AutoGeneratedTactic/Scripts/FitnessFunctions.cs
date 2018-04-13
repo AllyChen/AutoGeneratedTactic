@@ -1723,10 +1723,16 @@ public class FitnessFunctions {
 		{
 			numDistance = numDistance + ( numEnemy - 1 - i );
 		}
-
 		// Normalize
-		fitnessScore = fitnessScore / numDistance;
-
+		if (numEnemy < 2)
+		{
+			fitnessScore = 0;
+		}
+		else
+		{
+			fitnessScore = fitnessScore / numDistance;
+		}
+		
 		return fitnessScore;
 	}
 	// Calculate the distance of two enemy is in the range or not.

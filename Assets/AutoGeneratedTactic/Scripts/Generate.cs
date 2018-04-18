@@ -70,12 +70,23 @@ public class Generate : MonoBehaviour {
 	bool isTreasureOnMainPath;
 	bool isTreasureBesideMainPath;
 
+	bool Tactic_Bait;
+	bool Tactic_Ambush;
+	bool Tactic_TwoProngedAttack;
+	bool Tactic_Defense;
+	bool Tactic_Clash;
+
 	float weight_RectangleQuality;
 	float weight_CorridorQuality;
 	float weight_Fitness_Defense;
 	float weight_Fitness_OnMainPath;
 	float weight_Fitness_BesideMainPath;
 	float weight_Fitness_TwoPronged;
+	float weight_Tactic_Bait;
+	float weight_Tactic_Ambush;
+	float weight_Tactic_TwoProngedAttack;
+	float weight_Tactic_Defense;
+	float weight_Tactic_Clash;
 
 	public void OnClick_Generate()
 	{
@@ -383,9 +394,6 @@ public class Generate : MonoBehaviour {
 		maxTrap = ParameterSetting.GetComponent<Parameters>().GetMaxTrap();
 		maxTreasure = ParameterSetting.GetComponent<Parameters>().GetMaxTreasure();
 
-		numMinGameObject = new int[5] { 1, 1, minEnemy, minTrap, minTreasure };
-		numMaxGameObject = new int[5] { 1, 1, maxEnemy, maxTrap, maxTreasure };
-
 		fitness_Rectangle = ParameterSetting.GetComponent<Parameters>().GetIsFitness_Rectangle();
 		fitness_Corridor = ParameterSetting.GetComponent<Parameters>().GetIsFitness_Corridor();
 		fitness_Defense = ParameterSetting.GetComponent<Parameters>().GetIsFitness_Defense();
@@ -402,5 +410,51 @@ public class Generate : MonoBehaviour {
 		weight_Fitness_OnMainPath = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_OnMainPath();
 		weight_Fitness_BesideMainPath = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_BesideMainPath();
 		weight_Fitness_TwoPronged = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Fitness_TwoPronged();
+
+		Tactic_Bait = ParameterSetting.GetComponent<Parameters>().GetIsTactic_Bait();
+		Tactic_Ambush = ParameterSetting.GetComponent<Parameters>().GetIsTactic_Ambush();
+		Tactic_TwoProngedAttack = ParameterSetting.GetComponent<Parameters>().GetIsTactic_TwoProngedAttack();
+		Tactic_Defense = ParameterSetting.GetComponent<Parameters>().GetIsTactic_Defense();
+		Tactic_Clash = ParameterSetting.GetComponent<Parameters>().GetIsTactic_Clash();
+
+		weight_Tactic_Bait = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Bait();
+		weight_Tactic_Ambush = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Ambush();
+		weight_Tactic_TwoProngedAttack = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_TwoProngedAttack();
+		weight_Tactic_Defense = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Defense();
+		weight_Tactic_Clash = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Clash();
+		
+		numMinGameObject = new int[5] { 1, 1, minEnemy, minTrap, minTreasure };
+		numMaxGameObject = new int[5] { 1, 1, maxEnemy, maxTrap, maxTreasure };
 	}
+
+	void getTacticParameters(bool isTactic_Bait, bool isTactic_Ambush, bool isTactic_TwoProngedAttack, bool isTactic_Defense, bool isTactic_Clash)
+	{
+		if (isTactic_Bait == true)
+		{
+			minEnemy = 1;
+			minTrap = 0;
+			minTreasure = 1;
+			maxEnemy = 4;
+			maxTrap = 1;
+			maxTreasure = 1;
+			fitness_Rectangle = true;
+			fitness_Corridor = ( UnityEngine.Random.Range(0, 2) == 1 ) ? true : false;
+			fitness_Defense = true;
+			fitness_OnMainPath = true;
+			fitness_BesideMainPath = false;
+			fitness_TwoPronged = false;
+
+			isTreasureOnMainPath = true;
+			isTreasureBesideMainPath = true;
+
+			weight_RectangleQuality
+				= weight_CorridorQuality
+				= weight_Fitness_Defense
+				= weight_Fitness_OnMainPath
+				= weight_Fitness_BesideMainPath
+				= weight_Fitness_TwoPronged
+				= weight_Tactic_Bait * 1.0f;
+		}
+	}
+
 }

@@ -24,12 +24,23 @@ public class Parameters : MonoBehaviour {
 	private bool isTreasureOnMainPath;
 	private bool isTreasureBesideMainPath;
 
+	private bool Tactic_Bait;
+	private bool Tactic_Ambush;
+	private bool Tactic_TwoProngedAttack;
+	private bool Tactic_Defense;
+	private bool Tactic_Clash;
+
 	private float weight_RectangleQuality;
 	private float weight_CorridorQuality;
 	private float weight_Fitness_Defense;
 	private float weight_Fitness_OnMainPath;
 	private float weight_Fitness_BesideMainPath;
 	private float weight_Fitness_TwoPronged;
+	private float weight_Tactic_Bait;
+	private float weight_Tactic_Ambush;
+	private float weight_Tactic_TwoProngedAttack;
+	private float weight_Tactic_Defense;
+	private float weight_Tactic_Clash;
 
 	private Toggle Toggle_Rectangle;
 	private Toggle Toggle_Corridor;
@@ -39,6 +50,11 @@ public class Parameters : MonoBehaviour {
 	private Toggle Toggle_BesideMainPath;
 	private Dropdown Dropdown_BesideMainPath;
 	private Toggle Toggle_TwoPronged;
+	private Toggle Toggle_Tactic_Bait;
+	private Toggle Toggle_Tactic_Ambush;
+	private Toggle Toggle_Tactic_TwoProngedAttack;
+	private Toggle Toggle_Tactic_Defense;
+	private Toggle Toggle_Tactic_Clash;
 
 	// Use this for initialization
 	void Start () {
@@ -56,6 +72,11 @@ public class Parameters : MonoBehaviour {
 		GameObject.Find("InputField_OnMainPath").GetComponent<InputField>().text = "1.0";
 		GameObject.Find("InputField_BesideMainPath").GetComponent<InputField>().text = "1.0";
 		GameObject.Find("InputField_TwoPronged").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_Tactic_Bait").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_Tactic_Ambush").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_Tactic_TwoProngedAttack").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_Tactic_Defense").GetComponent<InputField>().text = "1.0";
+		GameObject.Find("InputField_Tactic_Clash").GetComponent<InputField>().text = "1.0";
 
 		Toggle_Rectangle = GameObject.Find("Toggle_Rectangle").GetComponent<Toggle>();
 		Toggle_Corridor = GameObject.Find("Toggle_Corridor").GetComponent<Toggle>();
@@ -65,6 +86,11 @@ public class Parameters : MonoBehaviour {
 		Toggle_BesideMainPath = GameObject.Find("Toggle_BesideMainPath").GetComponent<Toggle>();
 		Dropdown_BesideMainPath = GameObject.Find("Dropdown_BesideMainPath").GetComponent<Dropdown>();
 		Toggle_TwoPronged = GameObject.Find("Toggle_TwoPronged").GetComponent<Toggle>();
+		Toggle_Tactic_Bait = GameObject.Find("Toggle_Tactic_Bait").GetComponent<Toggle>();
+		Toggle_Tactic_Ambush = GameObject.Find("Toggle_Tactic_Ambush").GetComponent<Toggle>();
+		Toggle_Tactic_TwoProngedAttack = GameObject.Find("Toggle_Tactic_TwoProngedAttack").GetComponent<Toggle>();
+		Toggle_Tactic_Defense = GameObject.Find("Toggle_Tactic_Defense").GetComponent<Toggle>();
+		Toggle_Tactic_Clash = GameObject.Find("Toggle_Tactic_Clash").GetComponent<Toggle>();
 	}
 	
 	public int GetTheLenghOfTile()
@@ -253,6 +279,71 @@ public class Parameters : MonoBehaviour {
 		Debug.Log("isTreasureBesideMainPath = " + isTreasureBesideMainPath);
 	}
 
+	public void OnClick_Toggle_Tactic_Bait()
+	{
+		if (Toggle_Tactic_Bait.isOn)
+		{
+			Tactic_Bait = true;
+		}
+		else
+		{
+			Tactic_Bait = false;
+		}
+		Debug.Log("isTactic_Bait = " + Tactic_Bait + ", Weight = " + GetTheWeight_Tactic_Bait());
+	}
+
+	public void OnClick_Toggle_Tactic_Ambush()
+	{
+		if (Toggle_Tactic_Ambush.isOn)
+		{
+			Tactic_Ambush = true;
+		}
+		else
+		{
+			Tactic_Ambush = false;
+		}
+		Debug.Log("isTactic_Ambush = " + Tactic_Ambush + ", Weight = " + GetTheWeight_Tactic_Ambush());
+	}
+
+	public void OnClick_Toggle_Tactic_TwoProngedAttack()
+	{
+		if (Toggle_Tactic_TwoProngedAttack.isOn)
+		{
+			Tactic_TwoProngedAttack = true;
+		}
+		else
+		{
+			Tactic_TwoProngedAttack = false;
+		}
+		Debug.Log("isTactic_TwoProngedAttack = " + Tactic_TwoProngedAttack + ", Weight = " + GetTheWeight_Tactic_TwoProngedAttack());
+	}
+
+	public void OnClick_Toggle_Tactic_Defense()
+	{
+		if (Toggle_Tactic_Defense.isOn)
+		{
+			Tactic_Defense = true;
+		}
+		else
+		{
+			Tactic_Defense = false;
+		}
+		Debug.Log("isTactic_Defense = " + Tactic_Defense + ", Weight = " + GetTheWeight_Tactic_Defense());
+	}
+
+	public void OnClick_Toggle_Tactic_Clash()
+	{
+		if (Toggle_Tactic_Clash.isOn)
+		{
+			Tactic_Clash = true;
+		}
+		else
+		{
+			Tactic_Clash = false;
+		}
+		Debug.Log("isTactic_Clash = " + Tactic_Clash + ", Weight = " + GetTheWeight_Tactic_Clash());
+	}
+
 	public bool GetIsFitness_Rectangle()
 	{
 		return fitness_Rectangle;
@@ -291,6 +382,31 @@ public class Parameters : MonoBehaviour {
 	public bool GetIsTreasureBesideMainPath()
 	{
 		return isTreasureBesideMainPath;
+	}
+
+	public bool GetIsTactic_Bait()
+	{
+		return Tactic_Bait;
+	}
+
+	public bool GetIsTactic_Ambush()
+	{
+		return Tactic_Ambush;
+	}
+
+	public bool GetIsTactic_TwoProngedAttack()
+	{
+		return Tactic_TwoProngedAttack;
+	}
+
+	public bool GetIsTactic_Defense()
+	{
+		return Tactic_Defense;
+	}
+
+	public bool GetIsTactic_Clash()
+	{
+		return Tactic_Clash;
 	}
 
 	public float GetTheWeight_RectangleQuality()
@@ -333,5 +449,40 @@ public class Parameters : MonoBehaviour {
 		string getParamet = GameObject.Find("InputField_BesideMainPath").GetComponent<InputField>().text;
 		weight_Fitness_BesideMainPath = float.Parse(getParamet);
 		return weight_Fitness_BesideMainPath;
+	}
+
+	public float GetTheWeight_Tactic_Bait()
+	{
+		string getParamet = GameObject.Find("InputField_Tactic_Bait").GetComponent<InputField>().text;
+		weight_Tactic_Bait = float.Parse(getParamet);
+		return weight_Tactic_Bait;
+	}
+
+	public float GetTheWeight_Tactic_Ambush()
+	{
+		string getParamet = GameObject.Find("InputField_Tactic_Ambush").GetComponent<InputField>().text;
+		weight_Tactic_Ambush = float.Parse(getParamet);
+		return weight_Tactic_Ambush;
+	}
+
+	public float GetTheWeight_Tactic_TwoProngedAttack()
+	{
+		string getParamet = GameObject.Find("InputField_Tactic_TwoProngedAttack").GetComponent<InputField>().text;
+		weight_Tactic_TwoProngedAttack = float.Parse(getParamet);
+		return weight_Tactic_TwoProngedAttack;
+	}
+
+	public float GetTheWeight_Tactic_Defense()
+	{
+		string getParamet = GameObject.Find("InputField_Tactic_Defense").GetComponent<InputField>().text;
+		weight_Tactic_Defense = float.Parse(getParamet);
+		return weight_Tactic_Defense;
+	}
+
+	public float GetTheWeight_Tactic_Clash()
+	{
+		string getParamet = GameObject.Find("InputField_Tactic_Clash").GetComponent<InputField>().text;
+		weight_Tactic_Clash = float.Parse(getParamet);
+		return weight_Tactic_Clash;
 	}
 }

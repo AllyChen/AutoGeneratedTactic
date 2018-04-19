@@ -109,7 +109,7 @@ public class Generate : MonoBehaviour {
 				for (int num_generation = 0; num_generation < numGeneration; num_generation++)
 				{
 					GeneticAlgorithm.CalculateFitnessScores();
-					GeneticAlgorithm.SaveData(num_generation);
+					//GeneticAlgorithm.SaveData(num_generation);
 					GeneticAlgorithm.Selection();
 					GeneticAlgorithm.Crossover(rato_crossover);
 					GeneticAlgorithm.Mutation(rato_mutation);
@@ -117,50 +117,52 @@ public class Generate : MonoBehaviour {
 				}
 
 				BestChromosome_Space = GeneticAlgorithm.BestChromosome().CloneSpace();
-				GeneticAlgorithm.SaveData(numGeneration);
-				GeneticAlgorithm.OutputData(spaceID);
+				//GeneticAlgorithm.SaveData(numGeneration);
+				//GeneticAlgorithm.OutputData(spaceID);
 
 				//GeneticAlgorithm.DebugTest();
 				//Time
 				var GAendTime = Time.realtimeSinceStartup - startTime;
 				Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
 				break;
-			case 1:
-				// Start ParticleSwarmOptimization
-				ParticleSwarmOptimization.InitialPopulation(length, width, length * width, numChromosome, numGeneration);
+			//case 1:
+			//	// Start ParticleSwarmOptimization
+			//	ParticleSwarmOptimization.InitialPopulation(length, width, length * width, numChromosome, numGeneration);
 
-				for (int num_generation = 0; num_generation < numGeneration; num_generation++)
-				{
-					ParticleSwarmOptimization.CalculateFitnessScores();
-					ParticleSwarmOptimization.SaveData(num_generation);
-					ParticleSwarmOptimization.UpdateVelocities();
-					ParticleSwarmOptimization.UpdatePosition();
-				}
+			//	for (int num_generation = 0; num_generation < numGeneration; num_generation++)
+			//	{
+			//		ParticleSwarmOptimization.CalculateFitnessScores();
+			//		ParticleSwarmOptimization.SaveData(num_generation);
+			//		ParticleSwarmOptimization.UpdateVelocities();
+			//		ParticleSwarmOptimization.UpdatePosition();
+			//	}
 
-				BestChromosome = ParticleSwarmOptimization.BestChromosome();
-				ParticleSwarmOptimization.SaveData(numGeneration);
-				ParticleSwarmOptimization.OutputData(runGenerate);
+			//	BestChromosome = ParticleSwarmOptimization.BestChromosome();
+			//	ParticleSwarmOptimization.SaveData(numGeneration);
+			//	ParticleSwarmOptimization.OutputData(runGenerate);
 
-				//ParticleSwarmOptimization.DebugTest();
-				//Time
-				//var PSOendTime = Time.realtimeSinceStartup - startTime;
-				//Debug.Log(length + " x " + width + "ParticleSwarmOptimization_Time = " + PSOendTime);
-				break;
+			//	//ParticleSwarmOptimization.DebugTest();
+			//	//Time
+			//	//var PSOendTime = Time.realtimeSinceStartup - startTime;
+			//	//Debug.Log(length + " x " + width + "ParticleSwarmOptimization_Time = " + PSOendTime);
+			//	break;
 		}
 		#endregion
 
 		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
 		//Debug.Log("GameObjectInitial");
-		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged,
-																	weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath,
-																	isTreasureOnMainPath, isTreasureBesideMainPath, weight_Fitness_TwoPronged);
+		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged, isTreasureOnMainPath, isTreasureBesideMainPath
+																, weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath, weight_Fitness_TwoPronged
+																, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash
+																, weight_Tactic_Bait, weight_Tactic_Ambush, weight_Tactic_TwoProngedAttack, weight_Tactic_Defense, weight_Tactic_Clash
+																, Tactic_Clash_fitness_OnMainPath, Tactic_Clash_fitness_BesideMainPath);
 		
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
 			//Debug.Log("CalculateFitnessScores");
-			//GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
 			//Debug.Log("SaveData");
 			GeneticAlgorithmSettingGameObject.Selection();
 			//Debug.Log("Selection");
@@ -177,8 +179,8 @@ public class Generate : MonoBehaviour {
 		var GAGOendTime = Time.realtimeSinceStartup - startTime;
 		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
 
-		//GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		//GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
+		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+		GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
 
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
@@ -194,9 +196,11 @@ public class Generate : MonoBehaviour {
 		GetParameters();
 
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
-		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged,
-																	weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath,
-																	isTreasureOnMainPath, isTreasureBesideMainPath, weight_Fitness_TwoPronged);
+		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged, isTreasureOnMainPath, isTreasureBesideMainPath
+																, weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath, weight_Fitness_TwoPronged
+																, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash
+																, weight_Tactic_Bait, weight_Tactic_Ambush, weight_Tactic_TwoProngedAttack, weight_Tactic_Defense, weight_Tactic_Clash
+																, Tactic_Clash_fitness_OnMainPath, Tactic_Clash_fitness_BesideMainPath);
 
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{

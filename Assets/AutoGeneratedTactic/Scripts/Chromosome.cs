@@ -45,8 +45,10 @@ namespace ChromosomeDefinition
 		ConnectedQuality,
 		MainPathQuality,
 		Fitness_Defense,
-		Fitness_OnMainPath,
-		Fitness_BesideMainPath,
+		Fitness_OnMainPath_EnemyTrap,
+		Fitness_OnMainPath_Treasure,
+		Fitness_BesideMainPath_EnemyTrap,
+		Fitness_BesideMainPath_Treasure,
 		Fitness_TwoPronged,
 		NumberOfFitnessFunctionName,
 		SumOfFitnessScore
@@ -58,16 +60,18 @@ namespace ChromosomeDefinition
 		public List<Gene> genesList = new List<Gene>();
 		// FitnessScore
 		public Dictionary<FitnessFunctionName, float> FitnessScore = new Dictionary<FitnessFunctionName, float>() {
-					{ FitnessFunctionName.ImpassableDensity			, 0.0f },
-					{ FitnessFunctionName.RectangleQuality			, 0.0f },
-					{ FitnessFunctionName.CorridorQuality			, 0.0f },
-					{ FitnessFunctionName.ConnectedQuality			, 0.0f },
-					{ FitnessFunctionName.MainPathQuality			, 0.0f },
-					{ FitnessFunctionName.Fitness_Defense			, 0.0f },
-					{ FitnessFunctionName.Fitness_OnMainPath		, 0.0f },
-					{ FitnessFunctionName.Fitness_BesideMainPath	, 0.0f },
-					{ FitnessFunctionName.Fitness_TwoPronged		, 0.0f },
-					{ FitnessFunctionName.SumOfFitnessScore			, 0.0f },
+					{ FitnessFunctionName.ImpassableDensity					, 0.0f },
+					{ FitnessFunctionName.RectangleQuality					, 0.0f },
+					{ FitnessFunctionName.CorridorQuality					, 0.0f },
+					{ FitnessFunctionName.ConnectedQuality					, 0.0f },
+					{ FitnessFunctionName.MainPathQuality					, 0.0f },
+					{ FitnessFunctionName.Fitness_Defense					, 0.0f },
+					{ FitnessFunctionName.Fitness_OnMainPath_EnemyTrap      , 0.0f },
+					{ FitnessFunctionName.Fitness_OnMainPath_Treasure	    , 0.0f },
+					{ FitnessFunctionName.Fitness_BesideMainPath_EnemyTrap  , 0.0f },
+					{ FitnessFunctionName.Fitness_BesideMainPath_Treasure	, 0.0f },
+					{ FitnessFunctionName.Fitness_TwoPronged				, 0.0f },
+					{ FitnessFunctionName.SumOfFitnessScore					, 0.0f },
 				};
 
 		public void copyFitnessScore(Chromosome sourceChromosome)
@@ -78,8 +82,10 @@ namespace ChromosomeDefinition
 			this.FitnessScore[FitnessFunctionName.ConnectedQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.ConnectedQuality];
 			this.FitnessScore[FitnessFunctionName.MainPathQuality] = sourceChromosome.FitnessScore[FitnessFunctionName.MainPathQuality];
 			this.FitnessScore[FitnessFunctionName.Fitness_Defense] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_Defense];
-			this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_OnMainPath];
-			this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath];
+			this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_EnemyTrap] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_EnemyTrap];
+			this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_Treasure] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_Treasure];
+			this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_EnemyTrap] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_EnemyTrap];
+			this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure];
 			this.FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_TwoPronged];
 			this.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = sourceChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 		}
@@ -104,8 +110,10 @@ namespace ChromosomeDefinition
 			ChromosomeClone.FitnessScore[FitnessFunctionName.ConnectedQuality] = this.FitnessScore[FitnessFunctionName.ConnectedQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.MainPathQuality] = this.FitnessScore[FitnessFunctionName.MainPathQuality];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_Defense] = this.FitnessScore[FitnessFunctionName.Fitness_Defense];
-			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_OnMainPath] = this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath];
-			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath] = this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_EnemyTrap] = this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_EnemyTrap];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_Treasure] = this.FitnessScore[FitnessFunctionName.Fitness_OnMainPath_Treasure];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_EnemyTrap] = this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_EnemyTrap];
+			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure] = this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = this.FitnessScore[FitnessFunctionName.Fitness_TwoPronged];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = this.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
 

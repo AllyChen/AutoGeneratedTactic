@@ -65,8 +65,21 @@ namespace GeneticAlgorithmSettingDefinition
 		float weight_RectangleQuality;
 		float weight_CorridorQuality;
 		float weight_ConnectedQuality = 1.0f;
+		bool _isTactic_Bait;
+		bool _isTactic_Ambush;
+		bool _isTactic_TwoProngedAttack;
+		bool _isTactic_Defense;
+		bool _isTactic_Clash;
+		float _weightTactic_Bait;
+		float _weightTactic_Ambush;
+		float _weightTactic_TwoProngedAttack;
+		float _weightTactic_Defense;
+		float _weightTactic_Clash;
 
-		public void DetermineWeightFitness(bool isRectangleQuality, bool isCorridorQuality, float weightRectangleQuality, float weightCorridorQuality)
+		public void DetermineWeightFitness(bool isRectangleQuality, bool isCorridorQuality, float weightRectangleQuality, float weightCorridorQuality
+			, bool isTactic_Bait, bool isTactic_Ambush, bool isTactic_TwoProngedAttack, bool isTactic_Defense, bool isTactic_Clash
+			, float weightTactic_Bait, float weightTactic_Ambush, float weightTactic_TwoProngedAttack, float weightTactic_Defense, float weightTactic_Clash
+			, bool tactic_Fitness_Rectangle, bool tactic_Fitness_Corridor)
 		{
 			if (isRectangleQuality == true)
 			{
@@ -84,6 +97,39 @@ namespace GeneticAlgorithmSettingDefinition
 			{
 				weight_CorridorQuality = 0.0f;
 			}
+			_isTactic_Bait = isTactic_Bait;
+			_isTactic_Ambush = isTactic_Ambush;
+			_isTactic_TwoProngedAttack = isTactic_TwoProngedAttack;
+			_isTactic_Defense = isTactic_Defense;
+			_isTactic_Clash = isTactic_Clash;
+
+			_weightTactic_Bait = weightTactic_Bait;
+			_weightTactic_Ambush = weightTactic_Ambush;
+			_weightTactic_TwoProngedAttack = weightTactic_TwoProngedAttack;
+			_weightTactic_Defense = weightTactic_Defense;
+			_weightTactic_Clash = weightTactic_Clash;
+
+
+			if (_isTactic_Bait == true || _isTactic_Ambush == true
+				|| _isTactic_TwoProngedAttack == true || _isTactic_Defense == true || _isTactic_Clash == true)
+			{
+				if (tactic_Fitness_Rectangle == true)
+				{
+					weight_RectangleQuality = 1.0f;
+				}
+				else
+				{
+					weight_RectangleQuality = 0.0f;
+				}
+				if (tactic_Fitness_Corridor == true)
+				{
+					weight_CorridorQuality = 1.0f;
+				}
+				else
+				{
+					weight_CorridorQuality = 0.0f;
+				}
+			}
 		}
 
 		public void CalculateFitnessScores()
@@ -100,9 +146,7 @@ namespace GeneticAlgorithmSettingDefinition
 				_population[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_population[i], _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_population[i], _mapLength, _mapWidth);
 				_population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] = FitnessFunction.Fitness_ConnectedQuality(_population[i], _mapLength, _mapWidth);
-				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _population[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
-																					+ _population[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
-																					+ _population[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+				_population[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = CalculateSumFitness(_population[i], _isTactic_Bait, _isTactic_Ambush, _isTactic_TwoProngedAttack, _isTactic_Defense, _isTactic_Clash);
 			}
 		}
 		// Calculate the fitness score of chromosomes in specific population.
@@ -120,10 +164,69 @@ namespace GeneticAlgorithmSettingDefinition
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] = FitnessFunction.Fitness_RectangleQuality(_specificPopulation[i], _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] = FitnessFunction.Fitness_CorridorQuality(_specificPopulation[i], _mapLength, _mapWidth);
 				_specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] =  FitnessFunction.Fitness_ConnectedQuality(_specificPopulation[i], _mapLength, _mapWidth);
-				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = ( _specificPopulation[i].FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
-																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
-																							+ _specificPopulation[i].FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+				_specificPopulation[i].FitnessScore[FitnessFunctionName.SumOfFitnessScore] = CalculateSumFitness(_specificPopulation[i], _isTactic_Bait, _isTactic_Ambush, _isTactic_TwoProngedAttack, _isTactic_Defense, _isTactic_Clash);
 			}
+		}
+		// Calculate Sum Of Fitness
+		float CalculateSumFitness(Chromosome chromosome, bool isTactic_Bait, bool isTactic_Ambush, bool isTactic_TwoProngedAttack, bool isTactic_Defense, bool isTactic_Clash)
+		{
+			float sumOfFitnessScore = 0.0f;
+			int numTactic = 0;
+
+			if (isTactic_Bait == true)
+			{
+				numTactic++;
+				sumOfFitnessScore = sumOfFitnessScore
+					+ ( ( chromosome.FitnessScore[FitnessFunctionName.RectangleQuality] * 1.0f
+					+ chromosome.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f ) * _weightTactic_Bait;
+			}
+			if (isTactic_Ambush == true)
+			{
+				numTactic++;
+				sumOfFitnessScore = sumOfFitnessScore
+					+ ( ( chromosome.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f ) * _weightTactic_Ambush;
+			}
+			if (isTactic_TwoProngedAttack == true)
+			{
+				numTactic++;
+				sumOfFitnessScore = sumOfFitnessScore
+					+ ( ( chromosome.FitnessScore[FitnessFunctionName.RectangleQuality] * 1.0f
+					+ chromosome.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f ) * _weightTactic_TwoProngedAttack;
+			}
+			if (isTactic_Defense == true)
+			{
+				numTactic++;
+				sumOfFitnessScore = sumOfFitnessScore
+					+ ( ( chromosome.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f ) * _weightTactic_Defense;
+			}
+			if (isTactic_Clash == true)
+			{
+				numTactic++;
+				sumOfFitnessScore = sumOfFitnessScore
+					+ ( ( chromosome.FitnessScore[FitnessFunctionName.RectangleQuality] * 0.0f
+					+ chromosome.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 2.0f ) * _weightTactic_Clash;
+			}
+
+			if (numTactic == 0)
+			{
+				sumOfFitnessScore = 
+					( chromosome.FitnessScore[FitnessFunctionName.RectangleQuality] * weight_RectangleQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.CorridorQuality] * weight_CorridorQuality
+					+ chromosome.FitnessScore[FitnessFunctionName.ConnectedQuality] * weight_ConnectedQuality ) / 3.0f;
+			}
+			else
+			{
+				sumOfFitnessScore = sumOfFitnessScore / numTactic;
+			}
+
+			return sumOfFitnessScore;
 		}
 
 		#endregion
@@ -453,10 +556,14 @@ namespace GeneticAlgorithmSettingDefinition
 		string[] tileData = new string[6];
 
 		bool isSaveWeight;
+		bool isSaveTactic;
+		bool isSaveWeightTactic;
 		void InitialData()
 		{
 			basicData.Clear();
 			isSaveWeight = false;
+			isSaveTactic = false;
+			isSaveWeightTactic = false;
 
 			// Create the title of data
 			tileData[0] = "Generation";
@@ -482,6 +589,34 @@ namespace GeneticAlgorithmSettingDefinition
 				basicData.Add(weightData);
 
 				isSaveWeight = true;
+			}
+
+			if (isSaveTactic == false)
+			{
+				string[] TacticData = new string[tileData.Length];
+				TacticData[0] = "Tactic_Bait";
+				TacticData[1] = "Tactic_Ambush";
+				TacticData[2] = "Tactic_TwoProngedAttack";
+				TacticData[3] = "Tactic_Defense";
+				TacticData[4] = "Tactic_Clash";
+				TacticData[5] = "";
+				basicData.Add(TacticData);
+
+				isSaveTactic = true;
+			}
+
+			if (isSaveWeightTactic == false)
+			{
+				string[] weightTacticData = new string[tileData.Length];
+				weightTacticData[0] = _isTactic_Bait.ToString() + " * " + _weightTactic_Bait.ToString();
+				weightTacticData[1] = _isTactic_Ambush.ToString() + " * " + _weightTactic_Ambush.ToString();
+				weightTacticData[2] = _isTactic_TwoProngedAttack.ToString() + " * " + _weightTactic_TwoProngedAttack.ToString();
+				weightTacticData[3] = _isTactic_Defense.ToString() + " * " + _weightTactic_Defense.ToString();
+				weightTacticData[4] = _isTactic_Clash.ToString() + " * " + _weightTactic_Clash.ToString();
+				weightTacticData[5] = "";
+				basicData.Add(weightTacticData);
+
+				isSaveWeightTactic = true;
 			}
 
 			for (int indexChromosome = 0; indexChromosome < _numChromosomes; indexChromosome++)

@@ -101,12 +101,15 @@ public class Generate : MonoBehaviour {
 			case 0:
 				// Start GeneticAlgorithm
 				GeneticAlgorithm.InitialPopulation(length, width, length * width, numChromosome, numGeneration);
-				GeneticAlgorithm.DetermineWeightFitness(fitness_Rectangle, fitness_Corridor, weight_RectangleQuality, weight_CorridorQuality);
+				GeneticAlgorithm.DetermineWeightFitness(fitness_Rectangle, fitness_Corridor, weight_RectangleQuality, weight_CorridorQuality
+					, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash
+					, weight_Tactic_Bait, weight_Tactic_Ambush, weight_Tactic_TwoProngedAttack, weight_Tactic_Defense, weight_Tactic_Clash
+					, Tactic_Fitness_Rectangle, Tactic_Fitness_Corridor);
 
 				for (int num_generation = 0; num_generation < numGeneration; num_generation++)
 				{
 					GeneticAlgorithm.CalculateFitnessScores();
-					//GeneticAlgorithm.SaveData(num_generation);
+					GeneticAlgorithm.SaveData(num_generation);
 					GeneticAlgorithm.Selection();
 					GeneticAlgorithm.Crossover(rato_crossover);
 					GeneticAlgorithm.Mutation(rato_mutation);
@@ -114,8 +117,8 @@ public class Generate : MonoBehaviour {
 				}
 
 				BestChromosome_Space = GeneticAlgorithm.BestChromosome().CloneSpace();
-				//GeneticAlgorithm.SaveData(numGeneration);
-				//GeneticAlgorithm.OutputData(spaceID);
+				GeneticAlgorithm.SaveData(numGeneration);
+				GeneticAlgorithm.OutputData(spaceID);
 
 				//GeneticAlgorithm.DebugTest();
 				//Time
@@ -422,38 +425,89 @@ public class Generate : MonoBehaviour {
 		weight_Tactic_TwoProngedAttack = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_TwoProngedAttack();
 		weight_Tactic_Defense = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Defense();
 		weight_Tactic_Clash = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Clash();
-		
+
+		if (Tactic_Bait == true || Tactic_Ambush == true
+			|| Tactic_TwoProngedAttack == true || Tactic_Defense == true || Tactic_Clash == true)
+		{
+			getTacticParameters(Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash);
+		}
+
 		numMinGameObject = new int[5] { 1, 1, minEnemy, minTrap, minTreasure };
 		numMaxGameObject = new int[5] { 1, 1, maxEnemy, maxTrap, maxTreasure };
 	}
 
+	// Parameters of tactic
+	bool Tactic_Fitness_Rectangle;
+	bool Tactic_Fitness_Corridor;
+
+	bool Tactic_Clash_fitness_OnMainPath;
+	bool Tactic_Clash_fitness_BesideMainPath;
+
 	void getTacticParameters(bool isTactic_Bait, bool isTactic_Ambush, bool isTactic_TwoProngedAttack, bool isTactic_Defense, bool isTactic_Clash)
 	{
+		// Random the fitness_Rectangle & fitness_Corridor.
+		Tactic_Fitness_Rectangle = ( UnityEngine.Random.Range(0, 2) == 1 ) ? true : false;
+		Tactic_Fitness_Corridor = ( UnityEngine.Random.Range(0, 2) == 1 ) ? true : false;
+
+		minEnemy = -1;
+		maxEnemy = -1;
+		minTrap = -1;
+		maxTrap = -1;
+		minTreasure = -1;
+		maxTreasure = -1;
+
 		if (isTactic_Bait == true)
 		{
-			minEnemy = 1;
-			minTrap = 0;
-			minTreasure = 1;
-			maxEnemy = 4;
-			maxTrap = 1;
-			maxTreasure = 1;
-			fitness_Rectangle = true;
-			fitness_Corridor = ( UnityEngine.Random.Range(0, 2) == 1 ) ? true : false;
-			fitness_Defense = true;
-			fitness_OnMainPath = true;
-			fitness_BesideMainPath = false;
-			fitness_TwoPronged = false;
+			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 1 : minEnemy;
+			maxEnemy = ( maxEnemy == -1 || maxEnemy < 4 ) ? 4 : maxEnemy;
+			minTrap = ( minTrap == -1 || minTrap > 0 ) ? 0 : minTrap;
+			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
+			minTreasure = ( minTreasure == -1 || minTreasure > 1 ) ? 1 : minTreasure;
+			maxTreasure = ( maxTreasure == -1 || maxTreasure < 1 ) ? 1 : maxTreasure;
+			Tactic_Fitness_Rectangle = true;
+		}
+		if (isTactic_Ambush == true)
+		{
+			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 1 : minEnemy;
+			maxEnemy = ( maxEnemy == -1 || maxEnemy < 4 ) ? 4 : maxEnemy;
+			minTrap = ( minTrap == -1 || minTrap > 0 ) ? 0 : minTrap;
+			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
+			minTreasure = ( minTreasure == -1 || minTreasure > 0 ) ? 0 : minTreasure;
+			maxTreasure = ( maxTreasure == -1 || maxTreasure < 0 ) ? 0 : maxTreasure;
+		}
+		if (isTactic_TwoProngedAttack == true)
+		{
+			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 1 : minEnemy;
+			maxEnemy = ( maxEnemy == -1 || maxEnemy < 4 ) ? 4 : maxEnemy;
+			minTrap = ( minTrap == -1 || minTrap > 0 ) ? 0 : minTrap;
+			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
+			minTreasure = ( minTreasure == -1 || minTreasure > 0 ) ? 0 : minTreasure;
+			maxTreasure = ( maxTreasure == -1 || maxTreasure < 1 ) ? 1 : maxTreasure;
+			Tactic_Fitness_Rectangle = true;
+		}
+		if (isTactic_Defense == true)
+		{
+			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 1 : minEnemy;
+			maxEnemy = ( maxEnemy == -1 || maxEnemy < 4 ) ? 4 : maxEnemy;
+			minTrap = ( minTrap == -1 || minTrap > 0 ) ? 0 : minTrap;
+			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
+			minTreasure = ( minTreasure == -1 || minTreasure > 1 ) ? 1 : minTreasure;
+			maxTreasure = ( maxTreasure == -1 || maxTreasure < 1 ) ? 1 : maxTreasure;
+		}
+		if (isTactic_Clash == true)
+		{
+			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 1 : minEnemy;
+			maxEnemy = ( maxEnemy == -1 || maxEnemy < 4 ) ? 4 : maxEnemy;
+			minTrap = ( minTrap == -1 || minTrap > 0 ) ? 0 : minTrap;
+			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
+			minTreasure = ( minTreasure == -1 || minTreasure > 0 ) ? 0 : minTreasure;
+			maxTreasure = ( maxTreasure == -1 || maxTreasure < 1 ) ? 1 : maxTreasure;
+			Tactic_Fitness_Rectangle = ( isTactic_Bait == true || isTactic_Ambush == true
+										|| isTactic_Ambush == true || isTactic_Ambush == true ) ? Tactic_Fitness_Rectangle : false;
+			Tactic_Fitness_Corridor = true;
 
-			isTreasureOnMainPath = true;
-			isTreasureBesideMainPath = true;
-
-			weight_RectangleQuality
-				= weight_CorridorQuality
-				= weight_Fitness_Defense
-				= weight_Fitness_OnMainPath
-				= weight_Fitness_BesideMainPath
-				= weight_Fitness_TwoPronged
-				= weight_Tactic_Bait * 1.0f;
+			Tactic_Clash_fitness_OnMainPath = ( UnityEngine.Random.Range(0, 2) == 1 ) ? true : false;
+			Tactic_Clash_fitness_BesideMainPath = ( UnityEngine.Random.Range(0, 2) == 1 ) ? true : false;
 		}
 	}
 

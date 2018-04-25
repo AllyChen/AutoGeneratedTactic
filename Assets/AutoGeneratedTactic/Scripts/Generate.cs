@@ -90,10 +90,46 @@ public class Generate : MonoBehaviour {
 
 	public void OnClick_Generate()
 	{
+		//GetParameters(false, false, false, false, false);
+		//completelyGenerate();
+		//OnClick_OutputAutoTacticData();
+
+		for (int time_Bait = 0; time_Bait < 10; time_Bait++)
+		{
+			GetParameters(true, false, false, false, false);
+			completelyGenerate();
+			OnClick_OutputAutoTacticData();
+		}
+		for (int time_Ambush = 0; time_Ambush < 10; time_Ambush++)
+		{
+			GetParameters(false, true, false, false, false);
+			completelyGenerate();
+			OnClick_OutputAutoTacticData();
+		}
+		for (int time_Pronged = 0; time_Pronged < 10; time_Pronged++)
+		{
+			GetParameters(false, false, true, false, false);
+			completelyGenerate();
+			OnClick_OutputAutoTacticData();
+		}
+		for (int time_Defense = 0; time_Defense < 10; time_Defense++)
+		{
+			GetParameters(false, false, false, true, false);
+			completelyGenerate();
+			OnClick_OutputAutoTacticData();
+		}
+		for (int time_Clash = 0; time_Clash < 10; time_Clash++)
+		{
+			GetParameters(false, false, false, false, true);
+			completelyGenerate();
+			OnClick_OutputAutoTacticData();
+		}
+	}
+
+	void completelyGenerate()
+	{
 		var startTime = Time.realtimeSinceStartup;
 		spaceID = DateTime.Now.ToString("MMddhhmmss");
-
-		GetParameters();
 
 		#region GenerateSpace
 		switch (useMethod)
@@ -109,7 +145,7 @@ public class Generate : MonoBehaviour {
 				for (int num_generation = 0; num_generation < numGeneration; num_generation++)
 				{
 					GeneticAlgorithm.CalculateFitnessScores();
-					//GeneticAlgorithm.SaveData(num_generation);
+					GeneticAlgorithm.SaveData(num_generation);
 					GeneticAlgorithm.Selection();
 					GeneticAlgorithm.Crossover(rato_crossover);
 					GeneticAlgorithm.Mutation(rato_mutation);
@@ -117,38 +153,39 @@ public class Generate : MonoBehaviour {
 				}
 
 				BestChromosome_Space = GeneticAlgorithm.BestChromosome().CloneSpace();
-				//GeneticAlgorithm.SaveData(numGeneration);
-				//GeneticAlgorithm.OutputData(spaceID);
+				GeneticAlgorithm.SaveData(numGeneration);
+				GeneticAlgorithm.OutputData(spaceID);
 
 				//GeneticAlgorithm.DebugTest();
 				//Time
 				var GAendTime = Time.realtimeSinceStartup - startTime;
-				Debug.Log(length+" x "+width + "GeneticAlgorithm_Time = "+ GAendTime);
+				Debug.Log(length + " x " + width + "GeneticAlgorithm_Time = " + GAendTime);
 				break;
-			//case 1:
-			//	// Start ParticleSwarmOptimization
-			//	ParticleSwarmOptimization.InitialPopulation(length, width, length * width, numChromosome, numGeneration);
+				//case 1:
+				//	// Start ParticleSwarmOptimization
+				//	ParticleSwarmOptimization.InitialPopulation(length, width, length * width, numChromosome, numGeneration);
 
-			//	for (int num_generation = 0; num_generation < numGeneration; num_generation++)
-			//	{
-			//		ParticleSwarmOptimization.CalculateFitnessScores();
-			//		ParticleSwarmOptimization.SaveData(num_generation);
-			//		ParticleSwarmOptimization.UpdateVelocities();
-			//		ParticleSwarmOptimization.UpdatePosition();
-			//	}
+				//	for (int num_generation = 0; num_generation < numGeneration; num_generation++)
+				//	{
+				//		ParticleSwarmOptimization.CalculateFitnessScores();
+				//		ParticleSwarmOptimization.SaveData(num_generation);
+				//		ParticleSwarmOptimization.UpdateVelocities();
+				//		ParticleSwarmOptimization.UpdatePosition();
+				//	}
 
-			//	BestChromosome = ParticleSwarmOptimization.BestChromosome();
-			//	ParticleSwarmOptimization.SaveData(numGeneration);
-			//	ParticleSwarmOptimization.OutputData(runGenerate);
+				//	BestChromosome = ParticleSwarmOptimization.BestChromosome();
+				//	ParticleSwarmOptimization.SaveData(numGeneration);
+				//	ParticleSwarmOptimization.OutputData(runGenerate);
 
-			//	//ParticleSwarmOptimization.DebugTest();
-			//	//Time
-			//	//var PSOendTime = Time.realtimeSinceStartup - startTime;
-			//	//Debug.Log(length + " x " + width + "ParticleSwarmOptimization_Time = " + PSOendTime);
-			//	break;
+				//	//ParticleSwarmOptimization.DebugTest();
+				//	//Time
+				//	//var PSOendTime = Time.realtimeSinceStartup - startTime;
+				//	//Debug.Log(length + " x " + width + "ParticleSwarmOptimization_Time = " + PSOendTime);
+				//	break;
 		}
 		#endregion
 
+		#region GenerateGameObject
 		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
 		//Debug.Log("GameObjectInitial");
@@ -157,7 +194,7 @@ public class Generate : MonoBehaviour {
 																, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash
 																, weight_Tactic_Bait, weight_Tactic_Ambush, weight_Tactic_TwoProngedAttack, weight_Tactic_Defense, weight_Tactic_Clash
 																, Tactic_Clash_fitness_OnMainPath, Tactic_Clash_fitness_BesideMainPath);
-		
+
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
@@ -182,6 +219,8 @@ public class Generate : MonoBehaviour {
 		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
 		GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
 
+		#endregion
+
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
 		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);
@@ -193,7 +232,7 @@ public class Generate : MonoBehaviour {
 	public void OnClick_GenerateGameObject()
 	{
 		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
-		GetParameters();
+		GetParameters(false, false, false, false, false);
 
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
 		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged, isTreasureOnMainPath, isTreasureBesideMainPath
@@ -243,7 +282,7 @@ public class Generate : MonoBehaviour {
 
 	public void OnClick_OutputAutoTacticData()
 	{
-		StartCoroutine(DataSerialization.OutputAutoTacticData(length + 2, width + 2, transformChromosome(BestChromosome, length, width), gameObjectID));
+		StartCoroutine(DataSerialization.OutputAutoTacticData(length + 2, width + 2, transformChromosome(BestChromosome, length, width), gameObjectID, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash));
 	}
 
 	Chromosome transformChromosome(Chromosome originalChromosome, int originalLength, int originalWidth)
@@ -390,7 +429,7 @@ public class Generate : MonoBehaviour {
 		return newPosition;
 	}
 
-	void GetParameters()
+	void GetParameters(bool isBait, bool isAmbush, bool isPronged, bool isDefense, bool isClash)
 	{
 		length = ParameterSetting.GetComponent<Parameters>().GetTheLenghOfTile();
 		width = ParameterSetting.GetComponent<Parameters>().GetTheWidthOfTile();
@@ -430,12 +469,27 @@ public class Generate : MonoBehaviour {
 		weight_Tactic_Defense = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Defense();
 		weight_Tactic_Clash = ParameterSetting.GetComponent<Parameters>().GetTheWeight_Tactic_Clash();
 
-		if (Tactic_Bait == true || Tactic_Ambush == true
-			|| Tactic_TwoProngedAttack == true || Tactic_Defense == true || Tactic_Clash == true)
+		// This setting is from the experiment
+		if (isBait == true || isAmbush == true
+			|| isPronged == true || isDefense == true || isClash == true)
 		{
+			Tactic_Bait = isBait;
+			Tactic_Ambush = isAmbush;
+			Tactic_TwoProngedAttack = isPronged;
+			Tactic_Defense = isDefense;
+			Tactic_Clash = isClash;
 			getTacticParameters(Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash);
 		}
-
+		else
+		{
+			// This setting is from the parameter
+			if (Tactic_Bait == true || Tactic_Ambush == true
+			|| Tactic_TwoProngedAttack == true || Tactic_Defense == true || Tactic_Clash == true)
+			{
+				getTacticParameters(Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash);
+			}
+		}
+		
 		numMinGameObject = new int[5] { 1, 1, minEnemy, minTrap, minTreasure };
 		numMaxGameObject = new int[5] { 1, 1, maxEnemy, maxTrap, maxTreasure };
 	}

@@ -90,40 +90,96 @@ public class Generate : MonoBehaviour {
 
 	public void OnClick_Generate()
 	{
-		//GetParameters(false, false, false, false, false);
-		//completelyGenerate();
+		GetParameters(false, false, false, false, false);
+		completelyGenerate();
 		//OnClick_OutputAutoTacticData();
 
-		for (int time_Bait = 0; time_Bait < 10; time_Bait++)
-		{
-			GetParameters(true, false, false, false, false);
-			completelyGenerate();
-			OnClick_OutputAutoTacticData();
-		}
-		for (int time_Ambush = 0; time_Ambush < 10; time_Ambush++)
-		{
-			GetParameters(false, true, false, false, false);
-			completelyGenerate();
-			OnClick_OutputAutoTacticData();
-		}
-		for (int time_Pronged = 0; time_Pronged < 10; time_Pronged++)
-		{
-			GetParameters(false, false, true, false, false);
-			completelyGenerate();
-			OnClick_OutputAutoTacticData();
-		}
-		for (int time_Defense = 0; time_Defense < 10; time_Defense++)
-		{
-			GetParameters(false, false, false, true, false);
-			completelyGenerate();
-			OnClick_OutputAutoTacticData();
-		}
-		for (int time_Clash = 0; time_Clash < 10; time_Clash++)
-		{
-			GetParameters(false, false, false, false, true);
-			completelyGenerate();
-			OnClick_OutputAutoTacticData();
-		}
+		//bool[] tacticArray = new bool[5] { false, false, false, false, false };
+		//float[] tacticWeightArray = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+		//for (int partnerA = 0; partnerA < 5; partnerA++)
+		//{
+		//	for (int partnerB = 0; partnerB < 5; partnerB++)
+		//	{
+		//		if (partnerA != partnerB)
+		//		{
+		//			// inital
+		//			for (int i = 0; i < 5; i++)
+		//			{
+		//				tacticArray[i] = false;
+		//				tacticWeightArray[i] = 0.0f;
+		//			}
+		//			// Setting
+		//			tacticArray[partnerA] = true;
+		//			tacticArray[partnerB] = true;
+		//			tacticWeightArray[partnerA] = 0.8f;
+		//			tacticWeightArray[partnerB] = 0.2f;
+
+		//			// Start to generate
+		//			for (int time = 0; time < 2; time++)
+		//			{
+		//				GetParameters(tacticArray[0], tacticArray[1], tacticArray[2], tacticArray[3], tacticArray[4]);
+		//				weight_Tactic_Bait = tacticWeightArray[0];
+		//				weight_Tactic_Ambush = tacticWeightArray[1];
+		//				weight_Tactic_TwoProngedAttack = tacticWeightArray[2];
+		//				weight_Tactic_Defense = tacticWeightArray[3];
+		//				weight_Tactic_Clash = tacticWeightArray[4];
+		//				completelyGenerate();
+		//				OnClick_OutputAutoTacticData();
+		//			}
+					
+
+		//			// Setting
+		//			tacticWeightArray[partnerA] = 0.6f;
+		//			tacticWeightArray[partnerB] = 0.4f;
+
+		//			// Start to generate another weight one
+		//			for (int time = 0; time < 2; time++)
+		//			{
+		//				weight_Tactic_Bait = tacticWeightArray[0];
+		//				weight_Tactic_Ambush = tacticWeightArray[1];
+		//				weight_Tactic_TwoProngedAttack = tacticWeightArray[2];
+		//				weight_Tactic_Defense = tacticWeightArray[3];
+		//				weight_Tactic_Clash = tacticWeightArray[4];
+		//				completelyGenerate();
+		//				OnClick_OutputAutoTacticData();
+		//			}					
+		//		}
+		//	}
+		//}
+
+
+
+		//for (int time_Bait = 0; time_Bait < 10; time_Bait++)
+		//{
+		//	GetParameters(true, false, false, false, false);
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
+		//for (int time_Ambush = 0; time_Ambush < 10; time_Ambush++)
+		//{
+		//	GetParameters(false, true, false, false, false);
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
+		//for (int time_Pronged = 0; time_Pronged < 10; time_Pronged++)
+		//{
+		//	GetParameters(false, false, true, false, false);
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
+		//for (int time_Defense = 0; time_Defense < 10; time_Defense++)
+		//{
+		//	GetParameters(false, false, false, true, false);
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
+		//for (int time_Clash = 0; time_Clash < 10; time_Clash++)
+		//{
+		//	GetParameters(false, false, false, false, true);
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
 	}
 
 	void completelyGenerate()

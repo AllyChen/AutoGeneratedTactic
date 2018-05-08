@@ -287,7 +287,14 @@ namespace GeneticAlgorithmSettingDefinition
 				// 尋找隨機選到的Chromosome
 				while (randomChooseChromosomes > rouletteWheel[index_Chromosome])
 				{
-					index_Chromosome++;
+					if (index_Chromosome < rouletteWheel.Count())
+					{
+						index_Chromosome++;
+					}
+					else
+					{
+						break;
+					}					
 				}
 				_crossoverPoll.Add(_population[index_Chromosome]);
 			}

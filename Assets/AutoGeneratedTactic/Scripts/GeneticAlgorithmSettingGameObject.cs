@@ -1018,8 +1018,8 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				basicData.Add(weightData);
 
 				string[] gameObjectData = new string[tileData.Length];
-				gameObjectData[0] = "MAX[" + _numMinGameObject[0].ToString() + "/ " + _numMinGameObject[1].ToString() + "/ " + _numMinGameObject[2].ToString() + "/ " + _numMinGameObject[3].ToString() + "/ " + _numMinGameObject[4].ToString() + "]"; // numberGameObject
-				gameObjectData[1] = "min[" + _numMaxGameObject[0].ToString() + "/ " + _numMaxGameObject[1].ToString() + "/ " + _numMaxGameObject[2].ToString() + "/ " + _numMaxGameObject[3].ToString() + "/ " + _numMaxGameObject[4].ToString() + "]"; // numberGameObject
+				gameObjectData[0] = "min[" + _numMinGameObject[0].ToString() + "/ " + _numMinGameObject[1].ToString() + "/ " + _numMinGameObject[2].ToString() + "/ " + _numMinGameObject[3].ToString() + "/ " + _numMinGameObject[4].ToString() + "]"; // numberGameObject
+				gameObjectData[1] = "MAX[" + _numMaxGameObject[0].ToString() + "/ " + _numMaxGameObject[1].ToString() + "/ " + _numMaxGameObject[2].ToString() + "/ " + _numMaxGameObject[3].ToString() + "/ " + _numMaxGameObject[4].ToString() + "]"; // numberGameObject
 				gameObjectData[2] = "";
 				gameObjectData[3] = "";
 				gameObjectData[4] = "";

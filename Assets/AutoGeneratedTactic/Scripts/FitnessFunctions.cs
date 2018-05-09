@@ -1057,6 +1057,10 @@ public class FitnessFunctions {
 			fitness_space = fitness_space / ( MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] );
 		}
 
+		// Store the score
+		chromosome.defenseScroe[0] = fitness_space;
+		chromosome.defenseScroe[1] = fitness_GameObject;
+
 		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
 		return fitnessScore;
 	}
@@ -1078,7 +1082,7 @@ public class FitnessFunctions {
 		return value;
 	}
 	
-	bool[] emptyNeightbors = { true, true, true, true, true, true, true, true };
+	bool[] emptyNeightbors;
 	// 0:TopLeft 1:Top 2:TopRight 3:Left 4:Right 5:ButtomLeft 6:Buttom 7:ButtomRight
 	
 	// Calculate the quality of treasure 如果周遭為牆壁，代表很安全。
@@ -1096,7 +1100,9 @@ public class FitnessFunctions {
 		int posBottomLeft = posBottom - 1;
 		int posBottomRight = posBottom + 1;
 		int numForbidden = 0;
-		
+
+		emptyNeightbors = new bool[8] { true, true, true, true, true, true, true, true };
+
 		if (pos_x - 1 >= 0)
 		{
 			if (pos_y - 1 >= 0)
@@ -1236,7 +1242,6 @@ public class FitnessFunctions {
 		{
 			value = numForbidden / 8.0f;
 		}
-
 		return value;
 	}
 
@@ -1315,7 +1320,6 @@ public class FitnessFunctions {
 		{
 			numMainPath++;
 		}
-
 		value = (float)( numEmpty - numMainPath ) / numEmpty;
 		return value;
 	}

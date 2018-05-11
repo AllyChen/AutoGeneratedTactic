@@ -92,7 +92,7 @@ public class Generate : MonoBehaviour {
 	{
 		GetParameters(false, false, false, false, false);
 		completelyGenerate();
-		//OnClick_OutputAutoTacticData();
+		OnClick_OutputAutoTacticData();
 
 		//bool[] tacticArray = new bool[5] { false, false, false, false, false };
 		//float[] tacticWeightArray = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
@@ -127,7 +127,7 @@ public class Generate : MonoBehaviour {
 		//				completelyGenerate();
 		//				OnClick_OutputAutoTacticData();
 		//			}
-					
+
 
 		//			// Setting
 		//			tacticWeightArray[partnerA] = 0.6f;

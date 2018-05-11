@@ -88,6 +88,9 @@ namespace ChromosomeDefinition
 			this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure];
 			this.FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = sourceChromosome.FitnessScore[FitnessFunctionName.Fitness_TwoPronged];
 			this.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = sourceChromosome.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
+
+			this.defenseScroe[0] = sourceChromosome.defenseScroe[0];
+			this.defenseScroe[1] = sourceChromosome.defenseScroe[1];
 		}
 
 		public Chromosome Clone()
@@ -116,6 +119,9 @@ namespace ChromosomeDefinition
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure] = this.FitnessScore[FitnessFunctionName.Fitness_BesideMainPath_Treasure];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.Fitness_TwoPronged] = this.FitnessScore[FitnessFunctionName.Fitness_TwoPronged];
 			ChromosomeClone.FitnessScore[FitnessFunctionName.SumOfFitnessScore] = this.FitnessScore[FitnessFunctionName.SumOfFitnessScore];
+
+			ChromosomeClone.defenseScroe[0] = this.defenseScroe[0];
+			ChromosomeClone.defenseScroe[1] = this.defenseScroe[1];
 
 			return ChromosomeClone;
 		}
@@ -260,6 +266,9 @@ namespace ChromosomeDefinition
 				this.genesList[index].isMainPath = true;
 			}
 		}
+
+		public float[] defenseScroe = new float[2] { 0.0f, 0.0f };
+
 	}
 
 	public class Gene

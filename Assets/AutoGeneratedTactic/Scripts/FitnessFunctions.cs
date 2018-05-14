@@ -1017,6 +1017,8 @@ public class FitnessFunctions {
 
 		// Fitness how will the space impact on Defense pattern!!
 		float fitness_space = 0.0f;
+		float fitness_space_qualityNeighborForbidden = 0.0f;
+		float fitness_space_qualityNeighborMainPath = 0.0f;
 		// Fitness how will the game object impact on Defense pattern!!
 		float fitness_GameObject = 0.0f;
 		List<int> enemySpaceIndex = findGuardSpaceIndex(chromosome, length, width, posEnemy);
@@ -1033,7 +1035,9 @@ public class FitnessFunctions {
 		foreach (var treasure in posTreasure)
 		{
 			treasureNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, treasure);
-			fitness_space = fitness_space + ( qualityNeighborForbidden(chromosome, length, width, treasure) + qualityNeighborMainPath(chromosome, length, width, treasure) ) / 2.0f; //valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
+			fitness_space_qualityNeighborForbidden = fitness_space_qualityNeighborForbidden + qualityNeighborForbidden(chromosome, length, width, treasure);
+			fitness_space_qualityNeighborMainPath = fitness_space_qualityNeighborMainPath + qualityNeighborMainPath(chromosome, length, width, treasure);
+			fitness_space = fitness_space + ( fitness_space_qualityNeighborForbidden + fitness_space_qualityNeighborMainPath ) / 2.0f; //valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
 			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
 			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
 		}
@@ -1051,15 +1055,20 @@ public class FitnessFunctions {
 		if (MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] == 0)
 		{
 			fitness_space = 0;
+			fitness_space_qualityNeighborForbidden = 0;
+			fitness_space_qualityNeighborMainPath = 0;
 		}
 		else
 		{
 			fitness_space = fitness_space / ( MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] );
+			fitness_space_qualityNeighborForbidden = fitness_space_qualityNeighborForbidden / ( MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] );
+			fitness_space_qualityNeighborMainPath = fitness_space_qualityNeighborMainPath / ( MaxNumObject[(int)GeneGameObjectAttribute.treasure - 1] );
 		}
 
 		// Store the score
-		chromosome.defenseScroe[0] = fitness_space;
-		chromosome.defenseScroe[1] = fitness_GameObject;
+		chromosome.defenseScroe[0] = fitness_space_qualityNeighborForbidden;
+		chromosome.defenseScroe[1] = fitness_space_qualityNeighborMainPath;
+		chromosome.defenseScroe[2] = fitness_GameObject;
 
 		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
 		return fitnessScore;

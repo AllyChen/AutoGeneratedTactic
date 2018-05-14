@@ -91,6 +91,7 @@ namespace ChromosomeDefinition
 
 			this.defenseScroe[0] = sourceChromosome.defenseScroe[0];
 			this.defenseScroe[1] = sourceChromosome.defenseScroe[1];
+			this.defenseScroe[2] = sourceChromosome.defenseScroe[2];
 		}
 
 		public Chromosome Clone()
@@ -122,6 +123,7 @@ namespace ChromosomeDefinition
 
 			ChromosomeClone.defenseScroe[0] = this.defenseScroe[0];
 			ChromosomeClone.defenseScroe[1] = this.defenseScroe[1];
+			ChromosomeClone.defenseScroe[2] = this.defenseScroe[2];
 
 			return ChromosomeClone;
 		}
@@ -267,7 +269,7 @@ namespace ChromosomeDefinition
 			}
 		}
 
-		public float[] defenseScroe = new float[2] { 0.0f, 0.0f };
+		public float[] defenseScroe = new float[3] { 0.0f, 0.0f, 0.0f };
 
 	}
 

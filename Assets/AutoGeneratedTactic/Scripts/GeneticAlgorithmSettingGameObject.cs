@@ -978,7 +978,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 
 		#region OutputData
 		private List<string[]> basicData = new List<string[]>();
-		string[] tileData = new string[12];
+		string[] tileData = new string[13];
 
 		bool isSaveWeight;
 		void InitialData()
@@ -997,8 +997,9 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			tileData[7] = "Fitness_BesideMainPath_Treasure";
 			tileData[8] = "Fitness_TwoPronged";
 			tileData[9] = "Fitness_SumOfFitnessScore";
-			tileData[10] = "Fitness_Defense_Space";
-			tileData[11] = "Fitness_Defense_GameObject";
+			tileData[10] = "Fitness_Defense_Space_F";
+			tileData[11] = "Fitness_Defense_Space_M";
+			tileData[12] = "Fitness_Defense_GameObject";
 			basicData.Add(tileData);
 		}
 
@@ -1016,9 +1017,10 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				weightData[6] = weight_Fitness_BesideMainPath.ToString(); // weight_Fitness_BesideMainPath
 				weightData[7] = weight_Fitness_BesideMainPath.ToString(); // weight_Fitness_BesideMainPath
 				weightData[8] = weight_Fitness_TwoPronged.ToString(); // weight_Fitness_TwoPronged
-				weightData[9] = ""; // Fitness_SumOfFitnessScore
-				weightData[10] = ""; // Fitness_SumOfFitnessScore
-				weightData[11] = ""; // Fitness_SumOfFitnessScore
+				weightData[9] = "";
+				weightData[10] = "";
+				weightData[11] = "";
+				weightData[12] = ""; 
 				basicData.Add(weightData);
 
 				string[] gameObjectData = new string[tileData.Length];
@@ -1034,6 +1036,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				gameObjectData[9] = "";
 				gameObjectData[10] = "";
 				gameObjectData[11] = "";
+				gameObjectData[12] = "";
 				basicData.Add(gameObjectData);
 
 				isSaveWeight = true;
@@ -1054,6 +1057,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				contentData[9] = _population[indexChromosome].FitnessScore[FitnessFunctionName.SumOfFitnessScore].ToString(); // Fitness_SumOfFitnessScore
 				contentData[10] = _population[indexChromosome].defenseScroe[0].ToString(); // defenseScroe
 				contentData[11] = _population[indexChromosome].defenseScroe[1].ToString(); // defenseScroe
+				contentData[12] = _population[indexChromosome].defenseScroe[2].ToString(); // defenseScroe
 				basicData.Add(contentData);
 			}
 		}

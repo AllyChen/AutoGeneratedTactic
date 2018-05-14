@@ -25,6 +25,8 @@ public class Generate : MonoBehaviour {
 	private Chromosome BestChromosome_Space = new Chromosome();
 	private Chromosome BestChromosome = new Chromosome();
 
+	private bool outputData = true;
+
 	// Use this for initialization
 	void Start () {
 		ParameterSetting = GameObject.Find("ParameterSetting");
@@ -92,7 +94,10 @@ public class Generate : MonoBehaviour {
 	{
 		GetParameters(false, false, false, false, false);
 		completelyGenerate();
-		OnClick_OutputAutoTacticData();
+		if (outputData == true)
+		{
+			OnClick_OutputAutoTacticData();
+		}
 
 		//bool[] tacticArray = new bool[5] { false, false, false, false, false };
 		//float[] tacticWeightArray = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
@@ -201,7 +206,10 @@ public class Generate : MonoBehaviour {
 				for (int num_generation = 0; num_generation < numGeneration; num_generation++)
 				{
 					GeneticAlgorithm.CalculateFitnessScores();
-					GeneticAlgorithm.SaveData(num_generation);
+					if (outputData == true)
+					{
+						GeneticAlgorithm.SaveData(num_generation);
+					}					
 					GeneticAlgorithm.Selection();
 					GeneticAlgorithm.Crossover(rato_crossover);
 					GeneticAlgorithm.Mutation(rato_mutation);
@@ -209,9 +217,11 @@ public class Generate : MonoBehaviour {
 				}
 
 				BestChromosome_Space = GeneticAlgorithm.BestChromosome().CloneSpace();
-				GeneticAlgorithm.SaveData(numGeneration);
-				GeneticAlgorithm.OutputData(spaceID);
-
+				if (outputData == true)
+				{
+					GeneticAlgorithm.SaveData(numGeneration);
+					GeneticAlgorithm.OutputData(spaceID);
+				}
 				//GeneticAlgorithm.DebugTest();
 				//Time
 				var GAendTime = Time.realtimeSinceStartup - startTime;
@@ -244,7 +254,6 @@ public class Generate : MonoBehaviour {
 		#region GenerateGameObject
 		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
 		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
-		//Debug.Log("GameObjectInitial");
 		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged, isTreasureOnMainPath, isTreasureBesideMainPath
 																, weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath, weight_Fitness_TwoPronged
 																, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash
@@ -254,17 +263,14 @@ public class Generate : MonoBehaviour {
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			//Debug.Log("CalculateFitnessScores");
-			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
-			//Debug.Log("SaveData");
+			if (outputData == true)
+			{
+				GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			}		
 			GeneticAlgorithmSettingGameObject.Selection();
-			//Debug.Log("Selection");
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
-			//Debug.Log("Crossover");
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
-			//Debug.Log("Mutation");
 			GeneticAlgorithmSettingGameObject.Replace();
-			//Debug.Log("Replace");
 		}
 		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
 
@@ -272,9 +278,11 @@ public class Generate : MonoBehaviour {
 		var GAGOendTime = Time.realtimeSinceStartup - startTime;
 		Debug.Log(length + " x " + width + "GeneticAlgorithmGameObject_Time = " + GAGOendTime);
 
-		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
-
+		if (outputData == true)
+		{
+			GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+			GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
+		}
 		#endregion
 
 		// Render the tiles.
@@ -300,16 +308,23 @@ public class Generate : MonoBehaviour {
 		for (int num_generation = 0; num_generation < numGenerationGameObject; num_generation++)
 		{
 			GeneticAlgorithmSettingGameObject.CalculateFitnessScores();
-			GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			if (outputData == true)
+			{
+				GeneticAlgorithmSettingGameObject.SaveData(num_generation);
+			}			
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
 			GeneticAlgorithmSettingGameObject.Replace();
 		}
 		BestChromosome = GeneticAlgorithmSettingGameObject.BestChromosome();
-		GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
-		GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
 
+		if (outputData == true)
+		{
+			GeneticAlgorithmSettingGameObject.SaveData(numGenerationGameObject);
+			GeneticAlgorithmSettingGameObject.OutputData(spaceID, gameObjectID);
+		}
+		
 		// Render the tiles.
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
 		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);

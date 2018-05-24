@@ -94,10 +94,10 @@ public class Generate : MonoBehaviour {
 	{
 		GetParameters(false, false, false, false, false);
 		completelyGenerate();
-		if (outputData == true)
-		{
-			OnClick_OutputAutoTacticData();
-		}
+		//if (outputData == true)
+		//{
+		//	OnClick_OutputAutoTacticData();
+		//}
 
 		//bool[] tacticArray = new bool[5] { false, false, false, false, false };
 		//float[] tacticWeightArray = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
@@ -585,6 +585,15 @@ public class Generate : MonoBehaviour {
 		minTreasure = -1;
 		maxTreasure = -1;
 
+		if (isTactic_Ambush == true)
+		{
+			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 2 : minEnemy;
+			maxEnemy = ( maxEnemy == -1 || maxEnemy < 4 ) ? 4 : maxEnemy;
+			minTrap = ( minTrap == -1 || minTrap > 0 ) ? 0 : minTrap;
+			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
+			minTreasure = ( minTreasure == -1 || minTreasure > 0 ) ? 0 : minTreasure;
+			maxTreasure = ( maxTreasure == -1 || maxTreasure < 0 ) ? 0 : maxTreasure;
+		}
 		if (isTactic_Bait == true)
 		{
 			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 1 : minEnemy;
@@ -594,15 +603,6 @@ public class Generate : MonoBehaviour {
 			minTreasure = ( minTreasure == -1 || minTreasure > 1 ) ? 1 : minTreasure;
 			maxTreasure = ( maxTreasure == -1 || maxTreasure < 1 ) ? 1 : maxTreasure;
 			Tactic_Fitness_Rectangle = true;
-		}
-		if (isTactic_Ambush == true)
-		{
-			minEnemy = ( minEnemy == -1 || minEnemy > 1 ) ? 1 : minEnemy;
-			maxEnemy = ( maxEnemy == -1 || maxEnemy < 4 ) ? 4 : maxEnemy;
-			minTrap = ( minTrap == -1 || minTrap > 0 ) ? 0 : minTrap;
-			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
-			minTreasure = ( minTreasure == -1 || minTreasure > 0 ) ? 0 : minTreasure;
-			maxTreasure = ( maxTreasure == -1 || maxTreasure < 0 ) ? 0 : maxTreasure;
 		}
 		if (isTactic_TwoProngedAttack == true)
 		{
@@ -622,6 +622,7 @@ public class Generate : MonoBehaviour {
 			maxTrap = ( maxTrap == -1 || maxTrap < 1 ) ? 1 : maxTrap;
 			minTreasure = ( minTreasure == -1 || minTreasure > 1 ) ? 1 : minTreasure;
 			maxTreasure = ( maxTreasure == -1 || maxTreasure < 1 ) ? 1 : maxTreasure;
+			Tactic_Fitness_Rectangle = true;
 		}
 		if (isTactic_Clash == true)
 		{

@@ -60,9 +60,9 @@ public class Parameters : MonoBehaviour {
 	void Start () {
 		GameObject.Find("InputField_Length").GetComponent<InputField>().text = "8";
 		GameObject.Find("InputField_Width").GetComponent<InputField>().text = "8";
-		GameObject.Find("InputField_minEnemy").GetComponent<InputField>().text = "1";
-		GameObject.Find("InputField_minTrap").GetComponent<InputField>().text = "1";
-		GameObject.Find("InputField_minTreasure").GetComponent<InputField>().text = "1";
+		GameObject.Find("InputField_minEnemy").GetComponent<InputField>().text = "0";
+		GameObject.Find("InputField_minTrap").GetComponent<InputField>().text = "0";
+		GameObject.Find("InputField_minTreasure").GetComponent<InputField>().text = "0";
 		GameObject.Find("InputField_MAXEnemy").GetComponent<InputField>().text = "1";
 		GameObject.Find("InputField_MAXTrap").GetComponent<InputField>().text = "1";
 		GameObject.Find("InputField_MAXTreasure").GetComponent<InputField>().text = "1";

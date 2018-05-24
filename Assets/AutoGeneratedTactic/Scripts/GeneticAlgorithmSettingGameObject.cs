@@ -211,7 +211,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 
 		#region Fitness
 		FitnessFunctions FitnessFunction = new FitnessFunctions();
-		float weight_MainPathQuality = 1.0f;
+		float weight_MainPathQuality = 0.0f;
 		float weight_Fitness_Defense;
 		float weight_Fitness_OnMainPath;
 		float weight_Fitness_BesideMainPath;

@@ -1037,7 +1037,7 @@ public class FitnessFunctions {
 			treasureNeighborSpaceIndex = findNeighborSpaceIndex(chromosome, length, width, treasure);
 			fitness_space_qualityNeighborForbidden = fitness_space_qualityNeighborForbidden + qualityNeighborForbidden(chromosome, length, width, treasure);
 			fitness_space_qualityNeighborMainPath = fitness_space_qualityNeighborMainPath + qualityNeighborMainPath(chromosome, length, width, treasure);
-			fitness_space = fitness_space + ( fitness_space_qualityNeighborForbidden + fitness_space_qualityNeighborMainPath ) / 2.0f; //valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
+			fitness_space = fitness_space + ( 0.5f * fitness_space_qualityNeighborForbidden + 0.5f * fitness_space_qualityNeighborMainPath ); //valueSaveSpace(chromosome, treasureNeighborSpaceIndex);
 			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, enemySpaceIndex, GeneGameObjectAttribute.enemy);
 			fitness_GameObject = fitness_GameObject + valueBeProtected(chromosome, treasureNeighborSpaceIndex, trapSpaceIndex, GeneGameObjectAttribute.trap);
 		}
@@ -1070,7 +1070,7 @@ public class FitnessFunctions {
 		chromosome.defenseScroe[1] = fitness_space_qualityNeighborMainPath;
 		chromosome.defenseScroe[2] = fitness_GameObject;
 
-		fitnessScore = ( fitness_space + fitness_GameObject ) / 2.0f;
+		fitnessScore = ( 0.5f * fitness_space + 0.5f * fitness_GameObject );
 		return fitnessScore;
 	}
 

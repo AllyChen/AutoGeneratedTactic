@@ -294,9 +294,13 @@ namespace GeneticAlgorithmSettingDefinition
 					else
 					{
 						break;
-					}					
+					}
 				}
 				_crossoverPoll.Add(_population[index_Chromosome]);
+
+				//// 尋找隨機選到的Chromosome (Random)
+				//int index_Random_Chromosome = Random.Range(0, _population.Count);
+				//_crossoverPoll.Add(_population[index_Random_Chromosome]);
 			}
 		}
 
@@ -345,7 +349,7 @@ namespace GeneticAlgorithmSettingDefinition
 		void CrossoverMethod(Chromosome parent_1, Chromosome parent_2)
 		{
 			int start = Random.Range(0, parent_1.genesList.Count);
-			int end = Random.Range(start, parent_1.genesList.Count);
+			int end = Random.Range(start + 1, parent_1.genesList.Count);
 
 			for (int i = start; i < end; i++)
 			{
@@ -460,7 +464,7 @@ namespace GeneticAlgorithmSettingDefinition
 		void MutationMethod_ChangeGeneType(List<Gene> originalGenesList)
 		{
 			int maxNumGene = _numGenes;
-			int numMutateGenes = 1;//Random.Range(1, _numGenes % 5);
+			int numMutateGenes = Random.Range(1, _numGenes % 5);
 			int index_MutateGeneType;
 
 			// Step.1
@@ -535,6 +539,14 @@ namespace GeneticAlgorithmSettingDefinition
 				}
 				count++;
 			}
+
+			//// only select child population
+			//_population.Clear();
+			//foreach (var child in _childsPopulation)
+			//{
+			//	_population.Add(child.Clone());
+			//}
+			//_childsPopulation.Clear();
 		}
 		#endregion
 

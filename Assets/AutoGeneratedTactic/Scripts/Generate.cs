@@ -49,6 +49,7 @@ public class Generate : MonoBehaviour {
 	float ratio_GameObjectMutation = 1.0f;
 	string spaceID = "";
 	string gameObjectID = "";
+	int runGenerateGameObject = 0;
 
 	// Get the Parameters
 	int length;
@@ -94,6 +95,8 @@ public class Generate : MonoBehaviour {
 	{
 		GetParameters(false, false, false, false, false);
 		completelyGenerate();
+
+
 		//if (outputData == true)
 		//{
 		//	OnClick_OutputAutoTacticData();
@@ -253,7 +256,7 @@ public class Generate : MonoBehaviour {
 
 		#region GenerateGameObject
 		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject, runGenerateGameObject);
 		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged, isTreasureOnMainPath, isTreasureBesideMainPath
 																, weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath, weight_Fitness_TwoPronged
 																, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash
@@ -266,7 +269,7 @@ public class Generate : MonoBehaviour {
 			if (outputData == true)
 			{
 				GeneticAlgorithmSettingGameObject.SaveData(num_generation);
-			}		
+			}
 			GeneticAlgorithmSettingGameObject.Selection();
 			GeneticAlgorithmSettingGameObject.Crossover(ratio_GameObjectCrossover);
 			GeneticAlgorithmSettingGameObject.Mutation(ratio_GameObjectMutation);
@@ -292,13 +295,13 @@ public class Generate : MonoBehaviour {
 		runGenerate++;
 	}
 
-	int runGenerateGameObject = 1;
 	public void OnClick_GenerateGameObject()
 	{
+		runGenerateGameObject++;
 		gameObjectID = DateTime.Now.ToString("MMddhhmmss");
 		GetParameters(false, false, false, false, false);
 
-		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject);
+		GeneticAlgorithmSettingGameObject.InitialPopulation(length, width, length * width, numChromosomeGameObject, numGenerationGameObject, BestChromosome_Space, numMinGameObject, numMaxGameObject, runGenerateGameObject);
 		GeneticAlgorithmSettingGameObject.DetermineWeightFitness(fitness_Defense, fitness_OnMainPath, fitness_BesideMainPath, fitness_TwoPronged, isTreasureOnMainPath, isTreasureBesideMainPath
 																, weight_Fitness_Defense, weight_Fitness_OnMainPath, weight_Fitness_BesideMainPath, weight_Fitness_TwoPronged
 																, Tactic_Bait, Tactic_Ambush, Tactic_TwoProngedAttack, Tactic_Defense, Tactic_Clash
@@ -329,7 +332,6 @@ public class Generate : MonoBehaviour {
 		TacticRenderHandlar.CleanBoard(AutoTacticRender);
 		TacticRenderHandlar.RenderTileOfTactic(length, width, AutoTacticRender, BestChromosome);
 		isClickOnlySpace = false;
-		runGenerateGameObject++;
 	}
 
 	bool isClickOnlySpace = false;

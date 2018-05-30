@@ -14,6 +14,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 	{
 		#region Initial
 		// Define the basic parameters.
+		private int runTime;
 		private int _mapLength;
 		private int _mapWidth;
 		private int _numGenes;
@@ -27,7 +28,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 		private Chromosome _spaceChromosome;
 		private Grid spaceGrid; // grid of space for using the A* 
 
-		public void InitialPopulation(int length, int width, int numGene, int numChromosome, int numGeneration, Chromosome spaceChromosome, int[] numMinGameObject, int[] numMaxGameObject)
+		public void InitialPopulation(int length, int width, int numGene, int numChromosome, int numGeneration, Chromosome spaceChromosome, int[] numMinGameObject, int[] numMaxGameObject, int run)
 		{
 			// Clean all the population.
 			_population.Clear();
@@ -35,6 +36,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			EmptyTiles.Clear();
 
 			// Get the data of parameters.
+			runTime = run;
 			_mapLength = length;
 			_mapWidth = width;
 			_numGenes = numGene;
@@ -471,12 +473,28 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				int index_Chromosome = 0;
 				float randomChooseChromosomes = Random.Range(0.0f, 1.0f);
 
-				// 尋找隨機選到的Chromosome
-				while (randomChooseChromosomes > rouletteWheel[index_Chromosome])
+				if (runTime < 10)
 				{
-					index_Chromosome++;
+					// 尋找隨機選到的Chromosome (輪盤選擇法)
+					while (randomChooseChromosomes > rouletteWheel[index_Chromosome])
+					{
+						if (index_Chromosome < rouletteWheel.Count())
+						{
+							index_Chromosome++;
+						}
+						else
+						{
+							break;
+						}
+					}
+					_crossoverPoll.Add(_population[index_Chromosome]);
 				}
-				_crossoverPoll.Add(_population[index_Chromosome]);
+				else
+				{
+					// 尋找隨機選到的Chromosome (Random)
+					int index_Random_Chromosome = Random.Range(0, _population.Count);
+					_crossoverPoll.Add(_population[index_Random_Chromosome]);
+				}
 			}
 		}
 		#endregion
@@ -688,6 +706,141 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			}
 			return GameObjectListClone;
 		}
+
+		void PMCrossoverMethod(List<GameObjectInfo> parent_1, List<GameObjectInfo> parent_2)
+		{
+			List<GameObjectInfo> child_1 = gameObjectListClone(parent_1);
+			List<GameObjectInfo> child_2 = gameObjectListClone(parent_2);
+
+			int numSwap = ( child_1.Count > child_2.Count ) ? Random.Range(1, child_2.Count) : Random.Range(1, child_1.Count);
+			// start & end point of Child_1
+			int start_child_1 = Random.Range(0, child_1.Count);
+			start_child_1 = ( ( start_child_1 + numSwap ) > child_1.Count ) ? ( start_child_1 - numSwap + 1 ) : start_child_1;
+
+			// start & end point of Child_2
+			int start_child_2 = Random.Range(0, child_2.Count);
+			start_child_2 = ( ( start_child_2 + numSwap ) > child_2.Count ) ? ( start_child_2 - numSwap + 1 ) : start_child_2;
+			#region Dictionary
+			// Create the Dictionary about the swap mapping.
+			Dictionary<int, int> MappedSwap = new Dictionary<int, int>();
+			List<int> orlKey = new List<int>();
+			for (int i = 0; i < numSwap; i++)
+			{
+				int newKey = parent_1[start_child_1 + i].Position;
+				int newValue = parent_2[start_child_2 + i].Position;
+				bool sameKey = false;
+
+				// If new key is equal old vale. e.g. old:1->3 ,new:3->4 => old:1->3->4 = 1->4 
+				foreach (var item in MappedSwap)
+				{
+					if (item.Value == newKey)
+					{
+						MappedSwap[item.Key] = newValue;
+						sameKey = true;
+						break;
+					}
+				}
+				if (sameKey == false)
+				{
+					MappedSwap.Add(newKey, newValue);
+					orlKey.Add(newKey);
+				}			
+			}
+
+			// Find the same key in Dictionary
+			foreach (var oK in orlKey)
+			{
+				if (MappedSwap.ContainsValue(oK) == true)
+				{
+					foreach (var item in MappedSwap)
+					{
+						if (item.Value == oK)
+						{
+							MappedSwap[item.Key] = MappedSwap[oK]; // value = value
+							MappedSwap.Remove(oK); // Remove the same one
+							break;
+						}
+					}
+				}
+			}
+			// Double create Dictionary
+			Dictionary<int, int> MappedSwapInverted = new Dictionary<int, int>();
+			foreach (var item in MappedSwap)
+			{
+				MappedSwapInverted.Add(item.Value, item.Key);
+			}
+			#endregion
+
+			// Create Child 1
+			for (int i = 0; i < parent_1.Count; i++)
+			{
+				int parentPosition;
+				if (i < start_child_1)
+				{
+					parentPosition = parent_1[i].Position;
+					if (MappedSwap.ContainsKey(parentPosition) == true)
+					{
+						child_1[i].Position = MappedSwap[parentPosition];
+					}
+					else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+					{
+						child_1[i].Position = MappedSwapInverted[parentPosition];
+					}
+				}
+				else if (start_child_1 <= i && i < ( start_child_1 + numSwap ))
+				{
+					child_1[i].Position = parent_2[start_child_2 + ( i - start_child_1 )].Position;
+				}
+				else if (( start_child_1 + numSwap ) <= i)
+				{
+					parentPosition = parent_1[i].Position;
+					if (MappedSwap.ContainsKey(parentPosition) == true)
+					{
+						child_1[i].Position = MappedSwap[parentPosition];
+					}
+					else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+					{
+						child_1[i].Position = MappedSwapInverted[parentPosition];
+					}
+				}
+			}
+			// Create Child 2
+			for (int i = 0; i < parent_2.Count; i++)
+			{
+				int parentPosition;
+				if (i < start_child_2)
+				{
+					parentPosition = parent_2[i].Position;
+					if (MappedSwap.ContainsKey(parentPosition) == true)
+					{
+						child_2[i].Position = MappedSwap[parentPosition];
+					}
+					else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+					{
+						child_2[i].Position = MappedSwapInverted[parentPosition];
+					}
+				}
+				else if (start_child_2 <= i && i < ( start_child_2 + numSwap ))
+				{
+					child_2[i].Position = parent_1[start_child_1 + ( i - start_child_2 )].Position;
+				}
+				else if (( start_child_2 + numSwap ) <= i)
+				{
+					parentPosition = parent_2[i].Position;
+					if (MappedSwap.ContainsKey(parentPosition) == true)
+					{
+						child_2[i].Position = MappedSwap[parentPosition];
+					}
+					else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+					{
+						child_2[i].Position = MappedSwapInverted[parentPosition];
+					}
+				}
+			}
+			_childsGameObjectListPopulation.Add(child_1);
+			_childsGameObjectListPopulation.Add(child_2);
+		}
+
 		#endregion
 
 		#region Mutation
@@ -929,11 +1082,14 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			// Only calculate Childs, because only Childs are in this population.
 			CalculatePopulationFitnessScores(_parentsChildsPopulation);
 
-			// Copy the chromosomes from parentsPopulation to this population.
-			for (int index = 0; index < _population.Count; index++)
+			if (runTime < 10)
 			{
-				_parentsChildsPopulation.Add(_population[index].CloneSpaceGameObject());
-				_parentsChildsPopulation[_parentsChildsPopulation.Count - 1].copyFitnessScore(_population[index]);
+				// Copy the chromosomes from parentsPopulation to this population.
+				for (int index = 0; index < _population.Count; index++)
+				{
+					_parentsChildsPopulation.Add(_population[index].CloneSpaceGameObject());
+					_parentsChildsPopulation[_parentsChildsPopulation.Count - 1].copyFitnessScore(_population[index]);
+				}
 			}
 
 			// Sort the chromosomes

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
+using System.IO;
 using System.Linq;
-using System;
 
 using ChromosomeDefinition;
 using GeneticAlgorithmSettingDefinition;
@@ -85,6 +86,57 @@ public class TestFitnessFunction : MonoBehaviour {
 		//																	+ TestMap.FitnessScore[FitnessFunctionName.Fitness_Defense] * weight_Fitness_Defense ) / 2.0f;
 
 		//Test();
+
+		//List<GameObjectInfo> parent1 = new List<GameObjectInfo>();
+		//List<GameObjectInfo> parent2 = new List<GameObjectInfo>();
+		//GameObjectInfo gane11 = new GameObjectInfo();
+		//GameObjectInfo gane12 = new GameObjectInfo();
+		//GameObjectInfo gane13 = new GameObjectInfo();
+		//GameObjectInfo gane14 = new GameObjectInfo();
+		//GameObjectInfo gane15 = new GameObjectInfo();
+		//GameObjectInfo gane16 = new GameObjectInfo();
+		//GameObjectInfo gane17 = new GameObjectInfo();
+		//GameObjectInfo gane21 = new GameObjectInfo();
+		//GameObjectInfo gane22 = new GameObjectInfo();
+		//GameObjectInfo gane23 = new GameObjectInfo();
+		//GameObjectInfo gane24 = new GameObjectInfo();
+		//GameObjectInfo gane25 = new GameObjectInfo();
+		//GameObjectInfo gane26 = new GameObjectInfo();
+		//GameObjectInfo gane27 = new GameObjectInfo();
+
+		//gane11.Position = 1;
+		//gane12.Position = 2;
+		//gane13.Position = 3;
+		//gane14.Position = 4;
+		//gane15.Position = 5;
+		//gane16.Position = 6;
+		//gane17.Position = 7;
+
+		//gane21.Position = 1;
+		//gane22.Position = 3;
+		//gane23.Position = 5;
+		//gane24.Position = 7;
+		//gane25.Position = 9;
+		//gane26.Position = 7;
+		//gane27.Position = 2;
+
+		//parent1.Add(gane11);
+		//parent1.Add(gane12);
+		//parent1.Add(gane13);
+		//parent1.Add(gane14);
+		//parent1.Add(gane15);
+		//parent1.Add(gane16);
+		//parent1.Add(gane17);
+
+		//parent2.Add(gane21);
+		//parent2.Add(gane22);
+		//parent2.Add(gane23);
+		//parent2.Add(gane24);
+		//parent2.Add(gane25);
+		////parent2.Add(gane26);
+		////parent2.Add(gane27);
+
+		//PMCrossoverMethod(parent1, parent2);
 	}
 
 	#region InitialTestMap
@@ -140,6 +192,170 @@ public class TestFitnessFunction : MonoBehaviour {
 	}
 
 
-	
+
 	#endregion
+
+	void PMCrossoverMethod(List<GameObjectInfo> parent_1, List<GameObjectInfo> parent_2)
+	{
+		List<GameObjectInfo> child_1 = gameObjectListClone(parent_1);
+		List<GameObjectInfo> child_2 = gameObjectListClone(parent_2);
+
+		int numSwap = 3;//( child_1.Count > child_2.Count ) ? Random.Range(1, child_2.Count) : Random.Range(1, child_1.Count);
+						// start & end point of Child_1
+		int start_child_1 = 2;//Random.Range(0, child_1.Count);
+		start_child_1 = ( ( start_child_1 + numSwap ) > child_1.Count ) ? ( start_child_1 - numSwap + 1 ) : start_child_1;
+
+		// start & end point of Child_2
+		int start_child_2 = 2;//Random.Range(0, child_2.Count);
+		start_child_2 = ( ( start_child_2 + numSwap ) > child_2.Count ) ? ( start_child_2 - numSwap + 1 ) : start_child_2;
+		#region Dictionary
+		// Create the Dictionary about the swap mapping.
+		Dictionary<int, int> MappedSwap = new Dictionary<int, int>();
+		List<int> orlKey = new List<int>();
+		for (int i = 0; i < numSwap; i++)
+		{
+			int newKey = parent_1[start_child_1 + i].Position;
+			int newValue = parent_2[start_child_2 + i].Position;
+			bool sameKey = false;
+
+			// If new key is equal old vale. e.g. old:1->3 ,new:3->4 => old:1->3->4 = 1->4 
+			foreach (var item in MappedSwap)
+			{
+				if (item.Value == newKey)
+				{
+					MappedSwap[item.Key] = newValue;
+					sameKey = true;
+					break;
+				}
+			}
+			if (sameKey == false)
+			{
+				MappedSwap.Add(newKey, newValue);
+				orlKey.Add(newKey);
+			}
+		}
+
+		// Find the same key in Dictionary
+		foreach (var oK in orlKey)
+		{
+			if (MappedSwap.ContainsValue(oK) == true)
+			{
+				foreach (var item in MappedSwap)
+				{
+					if (item.Value == oK)
+					{
+						MappedSwap[item.Key] = MappedSwap[oK]; // value = value
+						MappedSwap.Remove(oK); // Remove the same one
+						break;
+					}
+				}
+			}
+		}
+		// Double create Dictionary
+		Dictionary<int, int> MappedSwapInverted = new Dictionary<int, int>();
+		foreach (var item in MappedSwap)
+		{
+			MappedSwapInverted.Add(item.Value, item.Key);
+		}
+		#endregion
+		Debug.Log("======MappedSwap======");
+		foreach (var item in MappedSwap)
+		{
+			Debug.Log("KEY = " + item.Key + " , VALUE = " + item.Value);
+		}
+		Debug.Log("======MappedSwapInverted======");
+		foreach (var item in MappedSwapInverted)
+		{
+			Debug.Log("KEY = " + item.Key + " , VALUE = " + item.Value);
+		}
+
+		// Create Child 1
+		for (int i = 0; i < parent_1.Count; i++)
+		{
+			int parentPosition;
+			if (i < start_child_1)
+			{
+				parentPosition = parent_1[i].Position;
+				if (MappedSwap.ContainsKey(parentPosition) == true)
+				{
+					child_1[i].Position = MappedSwap[parentPosition];
+				}
+				else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+				{
+					child_1[i].Position = MappedSwapInverted[parentPosition];
+				}
+			}
+			else if (start_child_1 <= i && i < ( start_child_1 + numSwap ))
+			{
+				child_1[i].Position = parent_2[start_child_2 + ( i - start_child_1 )].Position;
+			}
+			else if (( start_child_1 + numSwap ) <= i)
+			{
+				parentPosition = parent_1[i].Position;
+				if (MappedSwap.ContainsKey(parentPosition) == true)
+				{
+					child_1[i].Position = MappedSwap[parentPosition];
+				}
+				else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+				{
+					child_1[i].Position = MappedSwapInverted[parentPosition];
+				}
+			}
+		}
+		// Create Child 2
+		for (int i = 0; i < parent_2.Count; i++)
+		{
+			int parentPosition;
+			if (i < start_child_2)
+			{
+				parentPosition = parent_2[i].Position;
+				if (MappedSwap.ContainsKey(parentPosition) == true)
+				{
+					child_2[i].Position = MappedSwap[parentPosition];
+				}
+				else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+				{
+					child_2[i].Position = MappedSwapInverted[parentPosition];
+				}
+			}
+			else if (start_child_2 <= i && i < ( start_child_2 + numSwap ))
+			{
+				child_2[i].Position = parent_1[start_child_1 + ( i - start_child_2 )].Position;
+			}
+			else if (( start_child_2 + numSwap ) <= i)
+			{
+				parentPosition = parent_2[i].Position;
+				if (MappedSwap.ContainsKey(parentPosition) == true)
+				{
+					child_2[i].Position = MappedSwap[parentPosition];
+				}
+				else if (MappedSwapInverted.ContainsKey(parentPosition) == true)
+				{
+					child_2[i].Position = MappedSwapInverted[parentPosition];
+				}
+			}
+		}
+		Debug.Log("====C1====");
+		foreach (var item in child_1)
+		{
+			Debug.Log(item.Position);
+		}
+		Debug.Log("====C2====");
+		foreach (var item in child_2)
+		{
+			Debug.Log(item.Position);
+		}
+	}
+	// Clone List<GameObjectInfo>
+	List<GameObjectInfo> gameObjectListClone(List<GameObjectInfo> originalGameObjectList)
+	{
+		var GameObjectListClone = new List<GameObjectInfo>();
+		foreach (var item in originalGameObjectList)
+		{
+			GameObjectListClone.Add(new GameObjectInfo());
+			GameObjectListClone[GameObjectListClone.Count - 1].Position = item.Position;
+			GameObjectListClone[GameObjectListClone.Count - 1].GameObjectAttribute = item.GameObjectAttribute;
+		}
+		return GameObjectListClone;
+	}
 }

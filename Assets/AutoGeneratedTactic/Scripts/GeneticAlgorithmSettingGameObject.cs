@@ -473,28 +473,19 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				int index_Chromosome = 0;
 				float randomChooseChromosomes = Random.Range(0.0f, 1.0f);
 
-				if (runTime < 10)
+				// 尋找隨機選到的Chromosome (輪盤選擇法)
+				while (randomChooseChromosomes > rouletteWheel[index_Chromosome])
 				{
-					// 尋找隨機選到的Chromosome (輪盤選擇法)
-					while (randomChooseChromosomes > rouletteWheel[index_Chromosome])
+					if (index_Chromosome < rouletteWheel.Count())
 					{
-						if (index_Chromosome < rouletteWheel.Count())
-						{
-							index_Chromosome++;
-						}
-						else
-						{
-							break;
-						}
+						index_Chromosome++;
 					}
-					_crossoverPoll.Add(_population[index_Chromosome]);
+					else
+					{
+						break;
+					}
 				}
-				else
-				{
-					// 尋找隨機選到的Chromosome (Random)
-					int index_Random_Chromosome = Random.Range(0, _population.Count);
-					_crossoverPoll.Add(_population[index_Random_Chromosome]);
-				}
+				_crossoverPoll.Add(_population[index_Chromosome]);
 			}
 		}
 		#endregion
@@ -1082,14 +1073,11 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			// Only calculate Childs, because only Childs are in this population.
 			CalculatePopulationFitnessScores(_parentsChildsPopulation);
 
-			if (runTime < 10)
+			// Copy the chromosomes from parentsPopulation to this population.
+			for (int index = 0; index < _population.Count; index++)
 			{
-				// Copy the chromosomes from parentsPopulation to this population.
-				for (int index = 0; index < _population.Count; index++)
-				{
-					_parentsChildsPopulation.Add(_population[index].CloneSpaceGameObject());
-					_parentsChildsPopulation[_parentsChildsPopulation.Count - 1].copyFitnessScore(_population[index]);
-				}
+				_parentsChildsPopulation.Add(_population[index].CloneSpaceGameObject());
+				_parentsChildsPopulation[_parentsChildsPopulation.Count - 1].copyFitnessScore(_population[index]);
 			}
 
 			// Sort the chromosomes

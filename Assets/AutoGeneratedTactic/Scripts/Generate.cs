@@ -25,7 +25,7 @@ public class Generate : MonoBehaviour {
 	private Chromosome BestChromosome_Space = new Chromosome();
 	private Chromosome BestChromosome = new Chromosome();
 
-	private bool outputData = true;
+	private bool outputData = false;
 
 	// Use this for initialization
 	void Start () {
@@ -95,8 +95,38 @@ public class Generate : MonoBehaviour {
 	{
 		GetParameters(false, false, false, false, false);
 		completelyGenerate();
+		//OnClick_OutputAutoTacticData();
+
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	fitness_Rectangle = true;
+		//	fitness_Corridor = false;
+		//	weight_RectangleQuality = 1.0f;
+		//	weight_CorridorQuality = 1.0f;
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	fitness_Rectangle = true;
+		//	fitness_Corridor = true;
+		//	weight_RectangleQuality = 0.4f;
+		//	weight_CorridorQuality = 0.6f;
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	fitness_Rectangle = false;
+		//	fitness_Corridor = true;
+		//	weight_RectangleQuality = 1.0f;
+		//	weight_CorridorQuality = 1.0f;
+		//	completelyGenerate();
+		//	OnClick_OutputAutoTacticData();
+		//}
 
 
+		#region Experiment
 		//if (outputData == true)
 		//{
 		//	OnClick_OutputAutoTacticData();
@@ -104,6 +134,96 @@ public class Generate : MonoBehaviour {
 
 		//bool[] tacticArray = new bool[5] { false, false, false, false, false };
 		//float[] tacticWeightArray = new float[5] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+		//for (int partnerA = 0; partnerA < 5; partnerA++)
+		//{
+		//	if (partnerA != 3)
+		//	{
+		//		// inital
+		//		for (int i = 0; i < 5; i++)
+		//		{
+		//			tacticArray[i] = false;
+		//			tacticWeightArray[i] = 0.0f;
+		//		}
+
+		//		// Setting
+		//		tacticArray[partnerA] = true;
+		//		tacticArray[3] = true;
+		//		tacticWeightArray[partnerA] = 0.8f;
+		//		tacticWeightArray[3] = 0.2f;
+
+		//		// Start to generate
+		//		for (int time = 0; time < 10; time++)
+		//		{
+		//			GetParameters(tacticArray[0], tacticArray[1], tacticArray[2], tacticArray[3], tacticArray[4]);
+		//			weight_Tactic_Bait = tacticWeightArray[0];
+		//			weight_Tactic_Ambush = tacticWeightArray[1];
+		//			weight_Tactic_TwoProngedAttack = tacticWeightArray[2];
+		//			weight_Tactic_Defense = tacticWeightArray[3];
+		//			weight_Tactic_Clash = tacticWeightArray[4];
+		//			completelyGenerate();
+		//			OnClick_OutputAutoTacticData();
+		//		}
+
+
+		//		// Setting
+		//		tacticArray[partnerA] = true;
+		//		tacticArray[3] = true;
+		//		tacticWeightArray[partnerA] = 0.6f;
+		//		tacticWeightArray[3] = 0.4f;
+
+		//		// Start to generate
+		//		for (int time = 0; time < 10; time++)
+		//		{
+		//			GetParameters(tacticArray[0], tacticArray[1], tacticArray[2], tacticArray[3], tacticArray[4]);
+		//			weight_Tactic_Bait = tacticWeightArray[0];
+		//			weight_Tactic_Ambush = tacticWeightArray[1];
+		//			weight_Tactic_TwoProngedAttack = tacticWeightArray[2];
+		//			weight_Tactic_Defense = tacticWeightArray[3];
+		//			weight_Tactic_Clash = tacticWeightArray[4];
+		//			completelyGenerate();
+		//			OnClick_OutputAutoTacticData();
+		//		}
+
+		//		// Setting
+		//		tacticArray[partnerA] = true;
+		//		tacticArray[3] = true;
+		//		tacticWeightArray[partnerA] = 0.4f;
+		//		tacticWeightArray[3] = 0.6f;
+
+		//		// Start to generate
+		//		for (int time = 0; time < 10; time++)
+		//		{
+		//			GetParameters(tacticArray[0], tacticArray[1], tacticArray[2], tacticArray[3], tacticArray[4]);
+		//			weight_Tactic_Bait = tacticWeightArray[0];
+		//			weight_Tactic_Ambush = tacticWeightArray[1];
+		//			weight_Tactic_TwoProngedAttack = tacticWeightArray[2];
+		//			weight_Tactic_Defense = tacticWeightArray[3];
+		//			weight_Tactic_Clash = tacticWeightArray[4];
+		//			completelyGenerate();
+		//			OnClick_OutputAutoTacticData();
+		//		}
+
+		//		// Setting
+		//		tacticArray[partnerA] = true;
+		//		tacticArray[3] = true;
+		//		tacticWeightArray[partnerA] = 0.2f;
+		//		tacticWeightArray[3] = 0.8f;
+
+		//		// Start to generate
+		//		for (int time = 0; time < 10; time++)
+		//		{
+		//			GetParameters(tacticArray[0], tacticArray[1], tacticArray[2], tacticArray[3], tacticArray[4]);
+		//			weight_Tactic_Bait = tacticWeightArray[0];
+		//			weight_Tactic_Ambush = tacticWeightArray[1];
+		//			weight_Tactic_TwoProngedAttack = tacticWeightArray[2];
+		//			weight_Tactic_Defense = tacticWeightArray[3];
+		//			weight_Tactic_Clash = tacticWeightArray[4];
+		//			completelyGenerate();
+		//			OnClick_OutputAutoTacticData();
+		//		}
+		//	}
+		//}
 
 		//for (int partnerA = 0; partnerA < 5; partnerA++)
 		//{
@@ -151,7 +271,7 @@ public class Generate : MonoBehaviour {
 		//				weight_Tactic_Clash = tacticWeightArray[4];
 		//				completelyGenerate();
 		//				OnClick_OutputAutoTacticData();
-		//			}					
+		//			}
 		//		}
 		//	}
 		//}
@@ -188,6 +308,7 @@ public class Generate : MonoBehaviour {
 		//	completelyGenerate();
 		//	OnClick_OutputAutoTacticData();
 		//}
+		#endregion
 	}
 
 	void completelyGenerate()

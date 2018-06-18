@@ -377,7 +377,7 @@ namespace GeneticAlgorithmSettingDefinition
 			for (int i = 0; i < lengthArray; i++)
 			{
 				index_parent_A = indexChromosomesArray[i % lengthArray];
-				index_parent_B = indexChromosomesArray[i % lengthArray];
+				index_parent_B = indexChromosomesArray[( i + 1 ) % lengthArray];
 				// Clone the chromosomes which need to crossover.
 				parent_A = _crossoverPoll[index_parent_A].Clone();
 				parent_B = _crossoverPoll[index_parent_B].Clone();

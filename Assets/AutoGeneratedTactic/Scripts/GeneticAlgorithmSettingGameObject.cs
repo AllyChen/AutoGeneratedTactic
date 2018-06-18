@@ -476,7 +476,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				// 尋找隨機選到的Chromosome (輪盤選擇法)
 				while (randomChooseChromosomes > rouletteWheel[index_Chromosome])
 				{
-					if (index_Chromosome < rouletteWheel.Count())
+					if (index_Chromosome < rouletteWheel.Count()-1)
 					{
 						index_Chromosome++;
 					}
@@ -534,7 +534,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			for (int i = 0; i < lengthArray; i++)
 			{
 				index_parent_A = indexChromosomesArray[i % lengthArray];
-				index_parent_B = indexChromosomesArray[i % lengthArray];
+				index_parent_B = indexChromosomesArray[( i + 1 ) % lengthArray];
 				// Clone the chromosomes which need to crossover.
 				parent_A = gameObjectListClone(_crossoverPoll[index_parent_A].gameObjectList);
 				parent_B = gameObjectListClone(_crossoverPoll[index_parent_B].gameObjectList);
@@ -1156,10 +1156,10 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 				weightData[1] = "-->"; // ChromosomeIndex
 				weightData[2] = weight_MainPathQuality.ToString(); // weight_MainPathQuality
 				weightData[3] = weight_Fitness_Defense.ToString(); // weight_Fitness_Defense
-				weightData[4] = weight_Fitness_OnMainPath.ToString(); // weight_Fitness_OnMainPath
-				weightData[5] = weight_Fitness_OnMainPath.ToString(); // weight_Fitness_OnMainPath
-				weightData[6] = weight_Fitness_BesideMainPath.ToString(); // weight_Fitness_BesideMainPath
-				weightData[7] = weight_Fitness_BesideMainPath.ToString(); // weight_Fitness_BesideMainPath
+				weightData[4] = ( isTreasureOnMainPath != true ) ? weight_Fitness_OnMainPath.ToString() : "0"; // weight_Fitness_OnMainPath
+				weightData[5] = ( isTreasureOnMainPath == true ) ? weight_Fitness_OnMainPath.ToString() : "0"; // weight_Fitness_OnMainPath
+				weightData[6] = ( isTreasureBesideMainPath != true ) ? weight_Fitness_BesideMainPath.ToString() : "0"; // weight_Fitness_BesideMainPath
+				weightData[7] = ( isTreasureBesideMainPath == true ) ? weight_Fitness_BesideMainPath.ToString() : "0"; // weight_Fitness_BesideMainPath
 				weightData[8] = weight_Fitness_TwoPronged.ToString(); // weight_Fitness_TwoPronged
 				weightData[9] = "";
 				weightData[10] = "";

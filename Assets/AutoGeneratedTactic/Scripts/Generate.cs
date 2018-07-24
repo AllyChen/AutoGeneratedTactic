@@ -42,11 +42,11 @@ public class Generate : MonoBehaviour {
 	int numGeneration = 50;
 	int numChromosome = 100;
 	float rato_crossover = 0.8f;
-	float rato_mutation = 1.0f;
+	float rato_mutation = 0.8f;
 	int numGenerationGameObject = 50;
 	int numChromosomeGameObject = 100;
 	float ratio_GameObjectCrossover = 0.8f;
-	float ratio_GameObjectMutation = 1.0f;
+	float ratio_GameObjectMutation = 0.8f;
 	string spaceID = "";
 	string gameObjectID = "";
 	int runGenerateGameObject = 0;
@@ -117,8 +117,9 @@ public class Generate : MonoBehaviour {
 		//}
 		//for (int i = 0; i < 10; i++)
 		//{
-		//	fitness_Rectangle = false;
-		//	fitness_Corridor = true;
+		//	GetParameters(false, false, false, false, false);
+		//	fitness_Rectangle = true;
+		//	fitness_Corridor = false;
 		//	weight_RectangleQuality = 1.0f;
 		//	weight_CorridorQuality = 1.0f;
 		//	completelyGenerate();

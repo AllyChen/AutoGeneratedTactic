@@ -1072,7 +1072,7 @@ namespace GeneticAlgorithmSettingGameObjectDefinition
 			}
 			// Only calculate Childs, because only Childs are in this population.
 			CalculatePopulationFitnessScores(_parentsChildsPopulation);
-
+			
 			// Copy the chromosomes from parentsPopulation to this population.
 			for (int index = 0; index < _population.Count; index++)
 			{
